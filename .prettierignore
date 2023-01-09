@@ -2,3 +2,11 @@
 
 /dist
 /coverage
+/tmp
+/node_modules
+/tools
+
+#NextJS build assets
+/packages/frontend/.next
+
+.iyarc
