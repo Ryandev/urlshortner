@@ -13,24 +13,23 @@ jobs:
     setup:
         name: Setup
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.x, 18.x]
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
-              with:
-                  node-version: '16.x'
-                  registry-url: 'https://registry.npmjs.org'
             - run: yarn setup
 
     checks:
         name: Checks
         needs: Setup
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.x, 18.x]
         steps:
             - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: '16.x'
-                  registry-url: 'https://registry.npmjs.org'
             - run: yarn check-pretty
             - run: yarn check-spell
             - run: yarn check-licensing
@@ -63,15 +62,6 @@ jobs:
                   registry-url: 'https://registry.npmjs.org'
             - run: yarn package
 
-    coverage:
-        name: Coverage
-        needs: Test
-        steps:
-            - uses: coverallsapp/github-action@master
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: './coverage/lcov.info'
-
     publish:
         name: Publish
         needs: Package
@@ -100,3 +90,9 @@ jobs:
               with:
                   name: lighthouse
                   path: reports
+
+            - run: echo 'publishing coveralls'
+            - uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: './coverage/lcov.info'
