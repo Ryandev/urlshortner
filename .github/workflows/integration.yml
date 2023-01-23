@@ -10,7 +10,7 @@ on:
             - issue/*
 
 env:
-    FOSSA_API_KEY: {{ secrets.FOSSA_API_KEY }}
+    FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
 jobs:
     checks:
