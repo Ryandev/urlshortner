@@ -9,6 +9,9 @@ on:
             - feature/*
             - issue/*
 
+env:
+    FOSSA_API_KEY: {{ secrets.FOSSA_API_KEY }}
+
 jobs:
     checks:
         name: Checks
@@ -16,8 +19,6 @@ jobs:
         strategy:
             matrix:
                 node-version: [16.x, 18.x]
-        env:
-            FOSSA_API_KEY: {{ secrets.FOSSA_API_KEY }}
         steps:
             - uses: actions/checkout@v2
             - run: 'curl -H "Cache-Control: no-cache" https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.sh | bash'
