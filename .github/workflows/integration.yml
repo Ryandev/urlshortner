@@ -10,27 +10,15 @@ on:
             - issue/*
 
 jobs:
-    setup:
-        name: Setup
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [16.x, 18.x]
-        steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
-            - run: yarn setup
-            - run: yarn global add @nrwl/cli
-
     checks:
         name: Checks
-        needs: Setup
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 node-version: [16.x, 18.x]
         steps:
             - uses: actions/checkout@v2
+            - run: yarn setup
             - run: yarn check-pretty
             - run: yarn check-spell
             - run: yarn check-licensing
@@ -39,7 +27,6 @@ jobs:
 
     test:
         name: Test
-        needs: Setup
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -47,13 +34,14 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
             - run: yarn test --coverage
             - run: yarn e2e
             - run: yarn lighthouse
 
     package:
         name: Package
-        needs: Setup
+        needs: [Checks, Test]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -61,13 +49,7 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
-            - run: yarn package
-
-    publish:
-        name: Publish
-        needs: Package
-        runs-on: ubuntu-latest
-        steps:
+            - run: yarn setup
             - run: echo 'publishing frontend'
             - uses: actions/upload-artifact@v3
               with:
