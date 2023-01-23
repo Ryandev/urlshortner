@@ -1,0 +1,19 @@
+version: 3
+
+server: https://app.fossa.com
+
+project:
+    id: urlshortner
+    policy: MIT
+    url: git@github.org:ryandev/urlshortner.git
+
+paths:
+    exclude:
+        - .github
+        - .husky
+        - .vscode
+        - coverage
+        - reports
+        - dist
+        - scripts
+        - node_modules
