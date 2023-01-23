@@ -20,6 +20,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
             - run: yarn setup
+            - run: yarn global add @nrwl/cli
 
     checks:
         name: Checks
