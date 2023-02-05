@@ -42,6 +42,26 @@ jobs:
             - run: yarn test --coverage
             - run: yarn e2e
 
+            - run: echo 'publishing coverage'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: api
+                  path: coverage
+
+            - run: echo 'publishing coveralls - frontend'
+            - uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: './reports/coverage/package/frontend/lcov.info'
+                  base-path: './packages/frontend'
+
+            - run: echo 'publishing coveralls - api'
+            - uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: './reports/coverage/package/api/lcov.info'
+                  base-path: './packages/api'
+
     package:
         name: Package
         needs: [Checks, Test]
@@ -65,24 +85,6 @@ jobs:
                   name: api
                   path: dist/packages/api
 
-            - run: echo 'publishing coverage'
-            - uses: actions/upload-artifact@v3
-              with:
-                  name: api
-                  path: coverage
-
-            - run: echo 'publishing lighthouse'
-            - uses: actions/upload-artifact@v3
-              with:
-                  name: lighthouse
-                  path: reports
-
-            - run: echo 'publishing coveralls'
-            - uses: coverallsapp/github-action@master
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: './coverage/lcov.info'
-
     BuildValidation:
         name: Build-Validation
         needs: [Package]
@@ -101,3 +103,9 @@ jobs:
                   name: frontend
                   path: dist/packages/frontend
             - run: yarn lighthouse
+
+            - run: echo 'publishing lighthouse'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: lighthouse
+                  path: ./reports/lighthouse
