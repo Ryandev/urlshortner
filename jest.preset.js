@@ -19,6 +19,7 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     testPathIgnorePatterns: [...(nxPreset?.testPathIgnorePatterns ?? []), '.*/helper.test.ts[x]?$'],
     reporters: ['default', 'jest-junit'],
+    collectCoverage: true,
     coverageDirectory: './reports/coverage',
     coverageReporters: ['json', 'lcov', 'text-summary', 'cobertura'],
     collectCoverageFrom: ['**/*.{ts,tsx}'],
