@@ -1,6 +1,8 @@
 #!/bin/bash
+# Supply with lighthouserc.js & path to html & run
 
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+PROJECT_DIR="$SCRIPT_DIR/../../"
 
 function abort {
     echo "$1" >&2 && exit 1
@@ -9,7 +11,7 @@ function abort {
 function loadArgs {
     #Set defaults
     args['ROOT_ONLY']=false
-    args['OUTPUT_DIR']="$SCRIPTDIR/../../reports/lighthouse"
+    args['OUTPUT_DIR']="$PROJECT_DIR/reports/lighthouse"
 
     #Load args to #args var
     POSITIONAL=()
@@ -53,10 +55,10 @@ function loadArgs {
     set -- "${POSITIONAL[@]}" # restore positional parameters
 
     [[ -z "${args['LIGHTHOUSE_CONFIG']}" ]] && abort "Missing arg: LIGHTHOUSE_CONFIG, aborting"
-    [[ ! -f "${args['LIGHTHOUSE_CONFIG']}" ]] && abort "Missing file: LIGHTHOUSE_CONFIG, aborting"
+    [[ ! -f "${args['LIGHTHOUSE_CONFIG']}" ]] && abort "Missing/invalid file: LIGHTHOUSE_CONFIG, aborting"
 
     [[ -z "${args['SOURCE_DIR']}" ]] && abort  "Missing arg: SOURCE_DIR, aborting"
-    [[ ! -d "${args['SOURCE_DIR']}" ]] && abort "Missing dir: SOURCE_DIR, aborting"
+    [[ ! -d "${args['SOURCE_DIR']}" ]] && abort "Missing/invalid dir: SOURCE_DIR, aborting"
 
     return 0
 }
@@ -64,54 +66,57 @@ function loadArgs {
 #Find all html paths from $1 as relative paths
 function nestedHtmlPaths() {
     local dirSearch=$1
-    pushd . 1>2 2>/dev/null
-    cd "$dirSearch" 1>2 2>/dev/null
+    pushd . 1>&2 2>/dev/null
+    cd "$dirSearch" 1>&2 2>/dev/null
     ls **/*.html
-    popd 1>2 2>/dev/null
+    popd 1>&2 2>/dev/null
     return 0
 }
 
 #Find the path this html file is expected to be hosted from
 function getExpectedHostedPath() {
     local htmlPath=$1
-    # 1. Find & remove any text leading upto & including <base href, 
-    # 2. remove the first instance of /> & all text after
-    # 3. remove all [=,",'] instances
-    local hostedDir=$(cat "$htmlPath" | sed 's/^.*\<base href//g' | sed 's/\/>.*$//g' | sed 's/=//g' | sed 's/\"//g' | sed "s/\'//g")
+    local htmlData=$(cat "$htmlPath")
+    local hostedDir='/'
+
+    if [ "$htmlData" == *'base href'* ]; then
+        # 1. Find & remove any text leading upto & including <base href, 
+        # 2. remove the first instance of /> & all text after
+        # 3. remove all [=,",'] instances
+        local hostedDir=$(cat "$htmlPath" | sed 's/^.*\<base href//g' | sed 's/\/>.*$//g' | sed 's/=//g' | sed 's/\"//g' | sed "s/\'//g")
+    fi
 
     if [ -z "$hostedDir" ]; then
         #No base-href value, assume root
         echo "/"
-    else
-        echo "$hostedDir"
     fi
+
+    echo "$hostedDir"
     return 0
 }
 
 ##### START #####
 
 unset args
-declare -A args
-[ $? -ne 0 ] && abort "Associative arrays not supported!, Needs **bash** version > 4."
+declare -A args || abort "Associative arrays not supported!, Needs **bash** version > 4."
 
-loadArgs $@
-[ $? -ne 0 ] && abort "Invalid arguments! Aborting"
+loadArgs $@ || abort "Invalid arguments! Aborting"
 
-#Get all paths from the pwa to test
+#Get all paths from the source-dir
 relativePaths=$(nestedHtmlPaths "${args['SOURCE_DIR']}")
 
-if [ "${args['ROOT_ONLY']}" = true ]; then
+if [ "${args['ROOT_ONLY']}" == true ]; then
     relativePaths="/"
 fi
 
-#Where it wants to be deployed i.e. '/c/demo'
-dirPath=$(getExpectedHostedPath "${args['SOURCE_DIR']}/index.html")
-
-#Where we are going to copy it to to mimic under `serve` command
-testDir="$SCRIPTDIR""$dirPath"
+#Get the base href (if present) from index.html i.e '/'
+hostedPath=$(getExpectedHostedPath "${args['SOURCE_DIR']}/index.html")
 
 #What dir we are going to serve so we can get to http://localhost:3000/c/demo
-hostDir="$SCRIPTDIR"
+hostDir="$SCRIPT_DIR/lhci"
+
+#Where we are going to copy it to to mimic under `serve` command
+testDir="$hostDir""$hostedPath"
 
 [ -d "$testDir" ] && [ "$testDir" != '/' ] && rm -rf "$testDir"
 parentDir=$(dirname "$testDir") #Create the parent dir only
@@ -119,24 +124,23 @@ mkdir -p "$parentDir"
 cp -rf "${args['SOURCE_DIR']}" "$testDir"
 
 #Take each path & prefix '--url $base-href'
-cmdUrls=$(echo "$relativePaths" | while read htmlPath; do echo " --url $dirPath/$htmlPath"; done)
+cmdUrls=$(echo "$relativePaths" | while read htmlPath; do echo " --url $hostedPath/$htmlPath"; done)
 #Replace any '//' for '/' & repeat incase some were '///', remove the newline characters for the cli
 lhciUrls=$(echo "$cmdUrls" | sed 's/\/\//\//g' | sed 's/\/\//\//g' | tr -d '\n')
 
-yarn run lhci healthcheck --config="${args['LIGHTHOUSE_CONFIG']}"
-[ $? -ne 0 ] && abort "lhci healthcheck failed!"
+yarn run lhci healthcheck --config="${args['LIGHTHOUSE_CONFIG']}" || abort "lhci healthcheck failed!"
 
-yarn run lhci collect --config="${args['LIGHTHOUSE_CONFIG']}" --collect.staticDistDir="$hostDir" $lhciUrls
-[ $? -ne 0 ] && abort "lhci healthcheck failed!"
+yarn run lhci collect --config="${args['LIGHTHOUSE_CONFIG']}" --collect.staticDistDir="$hostDir" $lhciUrls || abort "lhci healthcheck failed!"
 
-yarn run lhci assert --config="${args['LIGHTHOUSE_CONFIG']}"
-[ $? -ne 0 ] && abort "lhci healthcheck failed!"
+yarn run lhci assert --config="${args['LIGHTHOUSE_CONFIG']}" || abort "lhci healthcheck failed!"
 
 if [ ! -z "${args['OUTPUT_DIR']}" ]; then
     [ -d "${args['OUTPUT_DIR']}" ] rm -rf "${args['OUTPUT_DIR']}"
     mkdir -p "${args['OUTPUT_DIR']}"
-    mv "$SCRIPTDIR/../../.lighthouseci" "${args['OUTPUT_DIR']}"
+    mv "$PROJECT_DIR/.lighthouseci" "${args['OUTPUT_DIR']}"
 fi
+
+rm -rf "$hostDir"
 
 echo "Lighthouse complete"
 
