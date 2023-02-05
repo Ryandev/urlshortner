@@ -52,14 +52,14 @@ jobs:
             - uses: coverallsapp/github-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: './reports/coverage/package/frontend/lcov.info'
+                  path-to-lcov: './reports/coverage/frontend/lcov.info'
                   base-path: './packages/frontend'
 
             - run: echo 'publishing coveralls - api'
             - uses: coverallsapp/github-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: './reports/coverage/package/api/lcov.info'
+                  path-to-lcov: './reports/coverage/api/lcov.info'
                   base-path: './packages/api'
 
     package:
