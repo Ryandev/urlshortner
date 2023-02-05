@@ -46,20 +46,20 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                   name: api
-                  path: ./reports/coverage
+                  path: ${{ env.GITHUB_WORKSPACE }}/reports/coverage
 
             - run: echo 'publishing coveralls - frontend'
             - uses: coverallsapp/github-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: './reports/coverage/frontend/lcov.info'
+                  path-to-lcov: ${{ env.GITHUB_WORKSPACE }}/reports/coverage/frontend/lcov.info
                   base-path: './packages/frontend'
 
             - run: echo 'publishing coveralls - api'
             - uses: coverallsapp/github-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: './reports/coverage/api/lcov.info'
+                  path-to-lcov: ${{ env.GITHUB_WORKSPACE }}/reports/coverage/api/lcov.info
                   base-path: './packages/api'
 
     package:
@@ -77,13 +77,13 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                   name: frontend
-                  path: dist/packages/frontend
+                  path: ${{ env.GITHUB_WORKSPACE }}/dist/packages/frontend
 
             - run: echo 'publishing api'
             - uses: actions/upload-artifact@v3
               with:
                   name: api
-                  path: dist/packages/api
+                  path: ${{ env.GITHUB_WORKSPACE }}/dist/packages/api
 
     BuildValidation:
         name: Build-Validation
@@ -101,11 +101,11 @@ jobs:
             - uses: actions/download-artifact@v3
               with:
                   name: frontend
-                  path: dist/packages/frontend
+                  path: ${{ env.GITHUB_WORKSPACE }}/dist/packages/frontend
             - run: yarn lighthouse
 
             - run: echo 'publishing lighthouse'
             - uses: actions/upload-artifact@v3
               with:
                   name: lighthouse
-                  path: ./reports/lighthouse
+                  path: ${{ env.GITHUB_WORKSPACE }}/reports/lighthouse
