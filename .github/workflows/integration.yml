@@ -46,7 +46,7 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                   name: api
-                  path: coverage
+                  path: ./reports/coverage
 
             - run: echo 'publishing coveralls - frontend'
             - uses: coverallsapp/github-action@master

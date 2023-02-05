@@ -1,17 +1,22 @@
+import path from 'path';
+
 const coverage = {
     statements: 0,
     branches: 0,
     functions: 0,
     lines: 0,
 };
-const subPath = __dirname.split('/').slice(-2).join('/');
+const packageName = __dirname.split(path.sep).slice(-1).join(path.sep);
 
 export default Object.freeze({
-    preset: '../../jest.preset.js',
+    preset: path.join('..', '..', 'jest.preset.js'),
     rootDir: __dirname,
-    displayName: __dirname.split('/').pop() ?? 'unknown',
-    reporters: ['default', ['jest-junit', { outputDirectory: `reports/test/${subPath}` }]],
-    coverageDirectory: `../../reports/coverage/${subPath}`,
+    displayName: packageName,
+    reporters: [
+        'default',
+        ['jest-junit', { outputDirectory: path.join('reports', 'test', packageName) }],
+    ],
+    coverageDirectory: path.join('..', '..', 'reports', 'coverage', packageName),
     coverageThreshold: {
         global: coverage,
     },
