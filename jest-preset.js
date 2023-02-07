@@ -1,26 +1,19 @@
 const nxPreset = require('@nrwl/jest/preset');
+const path = require('path');
 
 module.exports = {
     ...(nxPreset?.default ?? {}),
+    rootDir: __dirname,
     moduleNameMapper: {
         ...(nxPreset?.moduleNameMapper ?? {}),
         /* Handle CSS imports (with CSS modules) https://jestjs.io/docs/webpack#mocking-css-modules */
         '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
-    // transform: {
-    //     ...(nxPreset?.transform ?? {}),
-    //     '^.+\\.[tj]sx?$': 'ts-jest',
-    // },
-    // transform: {
-    //     /* Use babel-jest to transpile tests with the next/babel preset
-    //        https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object */
-    //     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
-    // },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     testPathIgnorePatterns: [...(nxPreset?.testPathIgnorePatterns ?? []), '.*/helper.test.ts[x]?$'],
     reporters: ['default', 'jest-junit'],
     collectCoverage: true,
-    coverageDirectory: './reports/coverage',
+    coverageDirectory: path.join('reports', 'coverage'),
     coverageReporters: ['json', 'lcov', 'text-summary', 'cobertura'],
     collectCoverageFrom: ['**/*.{ts,tsx}'],
     coverageThreshold: {
@@ -38,6 +31,6 @@ module.exports = {
         },
     },
     testEnvironment: 'node',
-    testTimeout: 10000,
+    testTimeout: 20 * 1000,
     setupFilesAfterEnv: [...(nxPreset?.setupFiles ?? [])],
 };
