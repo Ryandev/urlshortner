@@ -24,6 +24,7 @@
         "upgrade-nx": "yarn run nx migrate latest --verbose && yarn run nx migrate --run-migrations"
     },
     "dependencies": {
+        "@lhci/cli": "^0.11.0",
         "@nestjs/common": "^9.0.0",
         "@nestjs/core": "^9.0.0",
         "@nestjs/platform-express": "^9.0.0",

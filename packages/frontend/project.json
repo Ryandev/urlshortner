@@ -65,7 +65,7 @@
                 "parallel": false,
                 "commands": [
                     {
-                        "command": "bash ./scripts/test/run-lighthouse.sh -l ./packages/frontend/lighthouserc.js -s ./dist/packages/frontend/exported -r true -o 'reports/lighthouse/frontend'",
+                        "command": "bash ./scripts/ci/run-lighthouse.sh -l ./packages/frontend/lighthouserc.js -s ./dist/packages/frontend/exported -r true -o 'reports/lighthouse/frontend'",
                         "forwardAllArgs": false
                     }
                 ]

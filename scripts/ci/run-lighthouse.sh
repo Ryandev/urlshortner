@@ -135,7 +135,7 @@ yarn run lhci collect --config="${args['LIGHTHOUSE_CONFIG']}" --collect.staticDi
 yarn run lhci assert --config="${args['LIGHTHOUSE_CONFIG']}" || abort "lhci healthcheck failed!"
 
 if [ ! -z "${args['OUTPUT_DIR']}" ]; then
-    [ -d "${args['OUTPUT_DIR']}" ] rm -rf "${args['OUTPUT_DIR']}"
+    [ -d "${args['OUTPUT_DIR']}" ] && rm -rf "${args['OUTPUT_DIR']}"
     mkdir -p "${args['OUTPUT_DIR']}"
     mv "$PROJECT_DIR/.lighthouseci" "${args['OUTPUT_DIR']}"
 fi
