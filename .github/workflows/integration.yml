@@ -39,8 +39,9 @@ jobs:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
             - run: yarn setup
-            - run: yarn test --coverage
-            - run: yarn e2e
+            # Must ensure no-cache, otherwise the side-effects of report generation doesn't happen
+            - run: yarn test --coverage --skip-nx-cache
+            - run: yarn e2e --skip-nx-cache
 
             - run: echo 'publishing coverage'
             - uses: actions/upload-artifact@v3
