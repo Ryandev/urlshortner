@@ -73,6 +73,8 @@ jobs:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
             - run: yarn setup
+            - run: yarn build
+            - run: yarn package
             - run: echo 'publishing frontend'
             - uses: actions/upload-artifact@v3
               with:
