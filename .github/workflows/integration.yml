@@ -112,3 +112,57 @@ jobs:
               with:
                   name: lighthouse
                   path: reports/lighthouse
+
+    DeployProductionEnvironment:
+        name: DeployProdEnv
+        needs: [Build-Validation]
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
+            - run: './scripts/azure/deploy-production.sh > deploy.log'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: deploy
+                  path: deploy.log
+
+    DeployStagingEnvironment:
+        name: DeployStagingEnv
+        needs: [Build-Validation]
+        if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
+            - run: './scripts/azure/deploy-staging.sh > deploy.log'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: deploy
+                  path: deploy.log
+
+    DeployDevelopmentEnvironment:
+        name: DeployStagingEnv
+        needs: [Build-Validation]
+        if: github.ref == 'refs/heads/feature/CI-Support' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
+            - run: './scripts/azure/deploy-development.sh > deploy.log'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: deploy
+                  path: deploy.log

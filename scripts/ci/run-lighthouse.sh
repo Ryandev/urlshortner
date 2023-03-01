@@ -5,10 +5,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PROJECT_DIR="$SCRIPT_DIR/../../"
 
 function abort {
-    echo "$1" >&2 && exit 1
+    echo "$*" >&2 && exit 1
 }
 
-function loadArgs {
+function loadGlobalArgs {
     #Set defaults
     args['ROOT_ONLY']=false
     args['OUTPUT_DIR']="$PROJECT_DIR/reports/lighthouse"
@@ -100,7 +100,7 @@ function getExpectedHostedPath() {
 unset args
 declare -A args || abort "Associative arrays not supported!, Needs **bash** version > 4."
 
-loadArgs $@ || abort "Invalid arguments! Aborting"
+loadGlobalArgs $@ || abort "Invalid arguments! Aborting"
 
 #Get all paths from the source-dir
 relativePaths=$(nestedHtmlPaths "${args['SOURCE_DIR']}")

@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+        "subscriptionId": {
+            "value": "4c95f521-9c43-43ab-9cbf-cd6b3fb67c3c"
+        }
+    },
+    "parameters": {
+        "tags": {
+            "value": {
+                "Application": "urlshortner",
+                "Environment": "Development",
+                "DataClassification": "Public",
+                "Criticality": "Low"
+            }
+        },
+        "location": {
+            "value": "westeurope"
+        },
+        "resourceGroupName": {
+            "value": "rg-urlshortner-dev"
+        },
+        "budget": {
+            "value": 50
+        },
+        "contactEmail": {
+            "value": "urlshortner@ryanpowell.dev"
+        }
+    }
+}
