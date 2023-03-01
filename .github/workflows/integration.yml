@@ -88,8 +88,8 @@ jobs:
                   name: api
                   path: dist/packages/api
 
-    BuildValidation:
-        name: Build-Validation
+    buildvalidation:
+        name: BuildValidation
         needs: [Package]
         runs-on: ubuntu-latest
         steps:
@@ -113,9 +113,9 @@ jobs:
                   name: lighthouse
                   path: reports/lighthouse
 
-    DeployProductionEnvironment:
+    deployproductionenvironment:
         name: DeployProdEnv
-        needs: [Build-Validation]
+        needs: [BuildValidation]
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         runs-on: ubuntu-latest
         steps:
@@ -131,9 +131,9 @@ jobs:
                   name: deploy
                   path: deploy.log
 
-    DeployStagingEnvironment:
+    deploystagingenvironment:
         name: DeployStagingEnv
-        needs: [Build-Validation]
+        needs: [BuildValidation]
         if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
         runs-on: ubuntu-latest
         steps:
@@ -149,9 +149,9 @@ jobs:
                   name: deploy
                   path: deploy.log
 
-    DeployDevelopmentEnvironment:
+    deploydevelopmentenvironment:
         name: DeployStagingEnv
-        needs: [Build-Validation]
+        needs: [BuildValidation]
         if: github.ref == 'refs/heads/feature/CI-Support' && github.event_name == 'push'
         runs-on: ubuntu-latest
         steps:
