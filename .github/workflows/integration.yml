@@ -124,12 +124,16 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - name: Log in with Azure
+              uses: azure/login@v1
+              with:
+                  creds: '${{ secrets.AZURE_CREDENTIALS }}'
             - run: yarn setup
-            - run: './scripts/azure/deploy-production.sh > deploy.log'
+            - run: './scripts/azure/provision-production.sh > provision.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
-                  path: deploy.log
+                  path: provision.log
 
     deploystagingenvironment:
         name: DeployStagingEnv
@@ -142,12 +146,16 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - name: Log in with Azure
+              uses: azure/login@v1
+              with:
+                  creds: '${{ secrets.AZURE_CREDENTIALS }}'
             - run: yarn setup
-            - run: './scripts/azure/deploy-staging.sh > deploy.log'
+            - run: './scripts/azure/provision-staging.sh > provision.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
-                  path: deploy.log
+                  path: provision.log
 
     deploydevelopmentenvironment:
         name: DeployStagingEnv
@@ -160,9 +168,13 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - name: Log in with Azure
+              uses: azure/login@v1
+              with:
+                  creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
             - run: yarn setup
-            - run: './scripts/azure/deploy-development.sh > deploy.log'
+            - run: './scripts/azure/provision-development.sh > provision.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
-                  path: deploy.log
+                  path: provision.log
