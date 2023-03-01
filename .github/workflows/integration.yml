@@ -11,6 +11,7 @@ on:
 
 env:
     FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+    AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
 
 jobs:
     checks:
