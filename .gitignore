@@ -45,3 +45,7 @@ Thumbs.db
 # Test output
 junit.xml
 reports/*
+
+# Build output
+deploy.log
+dist

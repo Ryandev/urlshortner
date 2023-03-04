@@ -129,15 +129,20 @@ jobs:
               uses: azure/actions/login@v1
               with:
                   creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            - name: Azure CLI provision
+              uses: azure/CLI@v1
+              with:
+                  azcliversion: 2.0.72
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.production.json -o deploy.log'
             - name: Azure CLI script
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.0.72
-                  inlineScript: './scripts/azure/provision-production.sh > provision.log'
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
-                  path: provision.log
+                  path: deploy.log
 
     deploystagingenvironment:
         name: DeployStagingEnv
@@ -155,15 +160,20 @@ jobs:
               with:
                   creds: '${{ secrets.AZURE_CREDENTIALS }}'
             - run: yarn setup
-            - name: Azure CLI script
+            - name: Azure CLI provision
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.0.72
-                  inlineScript: './scripts/azure/provision-staging.sh > provision.log'
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.staging.json -o deploy.log'
+            - name: Azure CLI deploy
+              uses: azure/CLI@v1
+              with:
+                  azcliversion: 2.0.72
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
-                  path: provision.log
+                  path: deploy.log
 
     deploydevelopmentenvironment:
         name: DeployDevelopmentEnv
@@ -177,15 +187,20 @@ jobs:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
             - name: Log in with Azure
-              uses: azure/actions/login@v1
+              uses: azure/login@v1
               with:
                   creds: '${{ secrets.AZURE_CREDENTIALS }}'
-            - name: Azure CLI script
+            - name: Azure CLI provision
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.0.72
-                  inlineScript: './scripts/azure/provision-development.sh > provision.log'
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.development.json -o deploy.log'
+            - name: Azure CLI deploy
+              uses: azure/CLI@v1
+              with:
+                  azcliversion: 2.0.72
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
-                  path: provision.log
+                  path: deploy.log

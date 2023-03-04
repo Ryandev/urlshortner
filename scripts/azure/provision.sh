@@ -2,13 +2,43 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-BICEP_FILE="$SCRIPT_DIR/parameters.development.json"
-
 function abort {
     echo "$*" >&2; exit 1
 }
 
-which az 1>/dev/null || abort "Missing az cli, aborting deploy"
+function usage {
+    abort "Usage: $0 [-b bicep_file] [-o deployment_output_path]"
+}
+
+BICEP_FILE=""
+DEPLOYMENT_OUTPUT="/tmp/provision.log"
+
+function loadGlobalArgs {
+    while getopts "b:o:" arg; do
+        case $arg in
+            b)
+                BICEP_FILE=${OPTARG}
+                ;;
+            o)
+                DEPLOYMENT_OUTPUT=${OPTARG}
+                ;;
+            *)
+                usage
+                ;;
+        esac
+    done
+
+    [ -z "$BICEP_FILE" ] && usage
+    [ -f "$BICEP_FILE" ] || abort "Cannot find bicep file: $BICEP_FILE"
+    return 0
+}
+
+function checkEnv {
+    which az 1>/dev/null || abort "Missing az cli, aborting deploy"
+    return 0
+}
+
+checkEnv && loadGlobalArgs $@ || usage
 
 SUBSCRIPTION_ID=$(cat "$BICEP_FILE" | jq -cre '.metadata.subscriptionId.value')
 [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
@@ -21,7 +51,6 @@ RESOURCE_GROUP_NAME=$(cat "$BICEP_FILE" | jq -cre '.parameters.resourceGroupName
 
 # Must remove all locks before removeing budgets
 "$SCRIPT_DIR/util/lock-resource-group-delete.sh" \
-     -s "$SUBSCRIPTION_ID" \
      -g "$RESOURCE_GROUP_NAME" \
      || abort "Failed to delete resource group locks"
 
@@ -36,7 +65,7 @@ az deployment sub create \
     --subscription "$SUBSCRIPTION_ID" \
     --location "$LOCATION" \
     --template-file "$SCRIPT_DIR"/bicep/deploy.bicep \
-    --parameter @"$BICEP_FILE" \
+    --parameter @"$BICEP_FILE" > "$DEPLOYMENT_OUTPUT" \
     || abort "Deployment failed"
 
 echo 'Deployment success!'

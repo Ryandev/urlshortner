@@ -3,41 +3,42 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+#Global args
+RESOURCE_GROUP=''
+
 function abort {
     echo "$*" >&2; exit 1
 }
 
-#Global args
-RESOURCE_GROUP=''
+function usage {
+    abort "Usage: $0 [-g resource_group]"
+}
 
 function loadGlobalArgs {
-    #Load args to #args var
-    POSITIONAL=()
-    while [[ $# -gt 0 ]]
-    do
-        key="$1"
-        shift
-
-        value="$1"
-        shift
-
-        case $key in
-            -g|--resource-group)
-            RESOURCE_GROUP="$value"
-            ;;
-            *)    # unknown option
-            POSITIONAL+=("$1") # save it in an array for later
-            shift # past argument    
+    while getopts "g:" arg; do
+        case $arg in
+            g)
+                RESOURCE_GROUP=${OPTARG}
+                ;;
+            *)
+                usage
+                ;;
         esac
     done
-    set -- "${POSITIONAL[@]}" # restore positional parameters
 
-    [[ -z "$RESOURCE_GROUP" ]] && abort "Abort, no RESOURCE-GROUP arg"
+    [ -z "$RESOURCE_GROUP" ] && echo 'Invalid resource group' && usage
 
     return 0
 }
 
-loadGlobalArgs $@
+function checkEnv {
+    which az 1>/dev/null || abort "Missing az cli, aborting deploy"
+    return 0
+}
+
+
+checkEnv && loadGlobalArgs $@ || usage
+
 ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cre '.[].id')
 
 for LOCK_ID in "$ALL_LOCK_IDS"; do
@@ -47,5 +48,4 @@ for LOCK_ID in "$ALL_LOCK_IDS"; do
     fi
 done
 
-echo "Deleted all locks for resource group: $RESOURCE_GROUP_NAME"
-exit 0
+echo "Deleted all locks for resource group: $RESOURCE_GROUP"
