@@ -72,7 +72,7 @@ if [ "$MUST_REMOVE_EXISTING" == 'true' ]; then
     az storage blob delete-batch --auth-mode key --subscription "$SUBSCRIPTION_ID" --account-name "$STORAGE_NAME" --source "$STORAGE_CONTAINER" --pattern '/*' || abort "Failed to delete existing files"
 fi
 
-az storage blob upload-batch --subscription "$SUBSCRIPTION_ID" --account-name "$STORAGE_NAME" --source "$BUILD_OUTPUT_FRONTEND" --destination "$STORAGE_CONTAINER" --destination-path "/" --overwrite || abort "Failed to publish new frontend to storage"
+az storage blob upload-batch --subscription "$SUBSCRIPTION_ID" --account-name "$STORAGE_NAME" --source "$BUILD_OUTPUT_FRONTEND" --destination "$STORAGE_CONTAINER" --destination-path "/" || abort "Failed to publish new frontend to storage"
 
 echo "2. Publishing new backend api to appservice:$APPSERVICE_NAME"
 rm "$TMP_ZIP_PATH" 2>/dev/null
