@@ -1,5 +1,10 @@
+targetScope = 'resourceGroup'
+
 @description('name')
 param name string = 'AppService-${uniqueString(resourceGroup().id)}'
+
+@description('Deployemnt location')
+param location string = resourceGroup().location
 
 @description('Resource tags')
 param tags object = {}
@@ -9,6 +14,10 @@ param actionGroupId string = ''
 
 module appServicePlan './appserviceplan.bicep' = {
   name: 'asp-${name}'
+  params: {
+    location: location
+    tags: tags
+  }
 }
 
 output appServicePlan object = appServicePlan.outputs.appServicePlan
@@ -19,6 +28,8 @@ module appService './appservice.bicep' = {
   params: {
     name: name
     appServicePlanId: appServicePlan.outputs.appServicePlan.id
+    location: location
+    tags: tags
   }
 }
 

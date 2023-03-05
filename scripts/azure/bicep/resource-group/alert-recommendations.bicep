@@ -15,7 +15,7 @@ resource alert 'microsoft.insights/activityLogAlerts@2020-10-01' = {
   location: 'Global'
   properties: {
     scopes: [
-      '/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}'
+      subscription().id
     ]
     condition: {
       allOf: [

@@ -129,12 +129,12 @@ jobs:
               uses: azure/actions/login@v1
               with:
                   creds: '${{ secrets.AZURE_CREDENTIALS }}'
-            - name: Azure CLI provision
+            - name: Azure Provision
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.30.0
                   inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.production.json -o deploy.log'
-            - name: Azure CLI script
+            - name: Azure Deploy
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.30.0
@@ -160,12 +160,12 @@ jobs:
               with:
                   creds: '${{ secrets.AZURE_CREDENTIALS }}'
             - run: yarn setup
-            - name: Azure CLI provision
+            - name: Azure Provision
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.30.0
                   inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.staging.json -o deploy.log'
-            - name: Azure CLI deploy
+            - name: Azure Deploy
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.30.0
@@ -190,12 +190,12 @@ jobs:
               uses: azure/login@v1
               with:
                   creds: '${{ secrets.AZURE_CREDENTIALS }}'
-            - name: Azure CLI provision
+            - name: Azure Provision
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.30.0
                   inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.development.json -o deploy.log'
-            - name: Azure CLI deploy
+            - name: Azure Deploy
               uses: azure/CLI@v1
               with:
                   azcliversion: 2.30.0

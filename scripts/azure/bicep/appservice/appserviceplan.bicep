@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 @description('The name of the app service plan resource')
 param name string = 'asp-AppServicePlan'
 

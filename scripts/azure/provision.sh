@@ -71,6 +71,8 @@ az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account
      -g "$RESOURCE_GROUP" \
      || abort "Failed to delete outstanding budgets"
 
+echo 'Provisioning Azure resources'
+
 az deployment sub create \
     --name "$SUBSCRIPTION_ID" \
     --subscription "$SUBSCRIPTION_ID" \

@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 @description('The app service name')
 param name string
 

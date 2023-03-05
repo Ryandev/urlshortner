@@ -50,7 +50,7 @@ resource alertHealthModule 'microsoft.insights/activityLogAlerts@2020-10-01' = {
   location: 'Global'
   properties: {
     scopes: [
-      '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}'
+      subscription().id
     ]
     condition: {
       allOf: [

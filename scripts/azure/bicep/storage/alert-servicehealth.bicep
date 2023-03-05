@@ -1,4 +1,5 @@
 /* Ref: https://docs.microsoft.com/en-us/azure/service-health/service-health-notifications-properties */
+targetScope = 'resourceGroup'
 
 @description('Name of alert')
 param name string = 'al-sa-HealthSubscription'
@@ -46,7 +47,7 @@ resource alertHealthModule 'microsoft.insights/activityLogAlerts@2020-10-01' = {
   location: 'Global'
   properties: {
     scopes: [
-      '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}'
+      subscription().id
     ]
     condition: {
       allOf: [

@@ -28,7 +28,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   tags: tags
   sku: {
     name: storageType
-    tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {

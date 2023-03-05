@@ -49,6 +49,7 @@ module appServiceModule './appservice/index.bicep' = {
   dependsOn: [ resourceGroupModule ]
   params: {
     actionGroupId: resourceGroupModule.outputs.actionGroup.id
+    location: location
     tags: tags
   }
 }

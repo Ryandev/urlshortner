@@ -1,4 +1,5 @@
 /* Alert when the hostname is unavailable */
+targetScope = 'resourceGroup'
 
 @description('Id of action group to notify on alerts')
 param actionGroupId string
