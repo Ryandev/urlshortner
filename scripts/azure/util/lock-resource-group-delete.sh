@@ -46,9 +46,9 @@ checkEnv && loadGlobalArgs $@ || usage
 
 echo "Deleting resource locks for subscription:$SUBSCRIPTION_ID with resource-group:$RESOURCE_GROUP"
 
-ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cre '.[].id')
-
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
+
+ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cre '.[].id')
 
 for LOCK_ID in "$ALL_LOCK_IDS"; do
     if [ ! -z "$LOCK_ID" ]; then
