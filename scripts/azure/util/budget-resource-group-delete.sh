@@ -32,6 +32,7 @@ function loadGlobalArgs {
 
     [ -z "$SUBSCRIPTION_ID" ] && usage
     [ -z "$RESOURCE_GROUP" ] && usage
+
     return 0
 }
 

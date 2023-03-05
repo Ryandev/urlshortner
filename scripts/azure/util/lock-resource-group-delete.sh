@@ -4,6 +4,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 #Global args
+SUBSCRIPTION_ID=''
 RESOURCE_GROUP=''
 
 function abort {
@@ -15,8 +16,11 @@ function usage {
 }
 
 function loadGlobalArgs {
-    while getopts "g:" arg; do
+    while getopts "s:g:" arg; do
         case $arg in
+            s)
+                SUBSCRIPTION_ID=${OPTARG}
+                ;;
             g)
                 RESOURCE_GROUP=${OPTARG}
                 ;;
@@ -26,7 +30,8 @@ function loadGlobalArgs {
         esac
     done
 
-    [ -z "$RESOURCE_GROUP" ] && echo 'Invalid resource group' && usage
+    [ -z "$SUBSCRIPTION_ID" ] && usage
+    [ -z "$RESOURCE_GROUP" ] && usage
 
     return 0
 }
@@ -40,6 +45,8 @@ function checkEnv {
 checkEnv && loadGlobalArgs $@ || usage
 
 ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cre '.[].id')
+
+az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 for LOCK_ID in "$ALL_LOCK_IDS"; do
     if [ ! -z "$LOCK_ID" ]; then
