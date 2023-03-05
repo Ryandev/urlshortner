@@ -216,7 +216,11 @@ jobs:
             - name: Azure Provision
               uses: azure/CLI@v1
               with:
-                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.development.json -o deploy.log && ./scripts/azure/deploy.sh -d deploy.log'
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.development.json -o deploy.log'
+            - name: Azure Deploy
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
                   name: deploy
