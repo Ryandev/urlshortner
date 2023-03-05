@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#Global args
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 BUILD_OUTPUT_FRONTEND="$SCRIPT_DIR/../../dist/packages/frontend/exported"
 BUILD_OUTPUT_API="$SCRIPT_DIR/../../dist/packages/api"
@@ -7,6 +8,11 @@ STORAGE_NAME=''
 STORAGE_CONTAINER='$web'
 APPSERVICE_NAME=''
 DEPLOYMENT_FILE=""
+SUBSCRIPTION_ID=''
+RESOURCE_GROUP=''
+STORAGE_NAME=''
+APPSERVICE_NAME=''
+
 
 function abort {
     echo "$*" >&2; exit 1
@@ -29,6 +35,20 @@ function loadGlobalArgs {
     done
 
     [ -f "$DEPLOYMENT_OUTPUT" ] || abort "Cannot find deployment file: $DEPLOYMENT_OUTPUT"
+
+    SUBSCRIPTION_ID=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.name')
+    [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
+    [ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
+
+    RESOURCE_GROUP=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.resourceGroup.value.parameters.name.value')
+    [ -z "$RESOURCE_GROUP" ] && abort "Missing RESOURCE_GROUP"
+
+    STORAGE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.storage.value.outputs.storage.value.resourceId' | sed 's/Microsoft.Storage\/storageAccounts\///g')
+    [ -z "$STORAGE_NAME" ] && abort "Missing STORAGE_NAME"
+
+    APPSERVICE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.appService.value.outputs.appService.value.properties.deploymentId')
+    [ -z "$APPSERVICE_NAME" ] && abort "Missing APPSERVICE_NAME"
+
     return 0
 }
 
@@ -41,23 +61,10 @@ function checkEnv {
 
 checkEnv && loadGlobalArgs $@ || usage
 
-SUBSCRIPTION_ID=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.name')
-[ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
-[ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
-
-RESOURCE_GROUP=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.resourceGroup.value.parameters.name.value')
-[ -z "$RESOURCE_GROUP" ] && abort "Missing RESOURCE_GROUP"
-
-STORAGE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.storage.value.outputs.storage.value.resourceId' | sed 's/Microsoft.Storage\/storageAccounts\///g')
-[ -z "$STORAGE_NAME" ] && abort "Missing STORAGE_NAME"
-
-APPSERVICE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.appService.value.outputs.appService.value.properties.deploymentId')
-[ -z "$APPSERVICE_NAME" ] && abort "Missing APPSERVICE_NAME"
-
-
-az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 echo "1. Publishing new frontend to storageaccount:$STORAGE_NAME"
+
+az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 MUST_REMOVE_EXISTING=$(az storage blob exists --subscription "$SUBSCRIPTION_ID" --auth-mode key --account-name "$STORAGE_NAME" --container-name "$STORAGE_CONTAINER" --name "index.html" | jq -cre '.exists')
 
