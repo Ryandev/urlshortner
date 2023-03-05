@@ -75,7 +75,7 @@ fi
 az storage blob upload-batch --subscription "$SUBSCRIPTION_ID" --account-name "$STORAGE_NAME" --source "$BUILD_OUTPUT_FRONTEND" --destination "$STORAGE_CONTAINER" --destination-path "/" --overwrite || abort "Failed to publish new frontend to storage"
 
 echo "2. Publishing new backend api to appservice:$APPSERVICE_NAME"
-rm "$TMP_ZIP_PATH"
+rm "$TMP_ZIP_PATH" 2>/dev/null
 TMP_ZIP_PATH="$SCRIPT_DIR/deploy_as.zip"
 zip -jr "$TMP_ZIP_PATH" "$BUILD_OUTPUT_API"
 az webapp deploy --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" --name "$APPSERVICE_NAME" --src-path "$TMP_ZIP_PATH" --type=startup || abort "Failed to deploy API appservice"
