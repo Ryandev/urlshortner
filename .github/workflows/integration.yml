@@ -132,12 +132,12 @@ jobs:
             - name: Azure CLI provision
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
+                  azcliversion: 2.30.0
                   inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.production.json -o deploy.log'
             - name: Azure CLI script
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
+                  azcliversion: 2.30.0
                   inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
@@ -163,12 +163,12 @@ jobs:
             - name: Azure CLI provision
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
+                  azcliversion: 2.30.0
                   inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.staging.json -o deploy.log'
             - name: Azure CLI deploy
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
+                  azcliversion: 2.30.0
                   inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
@@ -193,12 +193,12 @@ jobs:
             - name: Azure CLI provision
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
+                  azcliversion: 2.30.0
                   inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.development.json -o deploy.log'
             - name: Azure CLI deploy
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
+                  azcliversion: 2.30.0
                   inlineScript: './scripts/azure/deploy.sh -d deploy.log'
             - uses: actions/upload-artifact@v3
               with:
