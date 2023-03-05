@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Supply with lighthouserc.js & path to html & run
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"

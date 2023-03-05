@@ -48,7 +48,8 @@ echo "Deleting resource locks for subscription:$SUBSCRIPTION_ID with resource-gr
 
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
-ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cre '.[].id')
+ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cr '.[].id')
+[ $? -ne 0 ] && abort "Failed to get lock list"
 
 for LOCK_ID in "$ALL_LOCK_IDS"; do
     if [ ! -z "$LOCK_ID" ]; then

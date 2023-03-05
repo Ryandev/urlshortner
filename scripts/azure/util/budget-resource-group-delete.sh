@@ -49,18 +49,20 @@ echo "Deleting budgets for subscription:$SUBSCRIPTION_ID with resource-group:$RE
 
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
+az account get-access-token -s "$SUBSCRIPTION_ID"
 ACCESS_TOKEN=$(az account get-access-token -s "$SUBSCRIPTION_ID" | jq -cre '.accessToken') || abort "Failed to get az access-token"
-[ -z "$ACCESS_TOKEN" ] && abort "Failed to get access token from response"
+[ -z "$ACCESS_TOKEN" ] && abort "Failed to get access token from response: $ACCESS_TOKEN"
 
 REST_BUDGET_LIST_API="https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Consumption/budgets?api-version=2021-10-01"
 
-BUDGET_NAMES=$(curl -X GET --header "Authorization: Bearer $ACCESS_TOKEN" "$REST_BUDGET_LIST_API" | jq -cre '.value[].name')
+BUDGET_NAMES=$(curl -X GET --header "Authorization: Bearer $ACCESS_TOKEN" "$REST_BUDGET_LIST_API" | jq -cr '.value[].name')
+[ $? -ne 0 ] && abort "Failed to get budget names: $BUDGET_NAMES"
 
 for BUDGET_NAME in "$BUDGET_NAMES"; do
     if [ ! -z "$BUDGET_NAME" ]; then
         echo "Removing budget: $BUDGET_NAME"
         REST_BUDGET_DELETE_API="https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Consumption/budgets/$BUDGET_NAME?api-version=2021-10-01"
-        curl -s -X DELETE --header "Authorization: Bearer $ACCESS_TOKEN" "$REST_BUDGET_DELETE_API" || abort "Failed to delete budget $budgetName" 1>/dev/null || abort "Failed to delete budget: $BUDGET_NAME"
+        curl -X DELETE --header "Authorization: Bearer $ACCESS_TOKEN" "$REST_BUDGET_DELETE_API" || abort "Failed to delete budget $budgetName" 1>/dev/null || abort "Failed to delete budget: $BUDGET_NAME"
     fi
 done
 
