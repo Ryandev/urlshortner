@@ -12,7 +12,7 @@ function abort {
 }
 
 function usage {
-    abort "Usage: $0 [-g resource_group]"
+    abort "Usage: $0 [-s subscription_id] [-g resource_group]"
 }
 
 function loadGlobalArgs {
@@ -56,3 +56,4 @@ for LOCK_ID in "$ALL_LOCK_IDS"; do
 done
 
 echo "Deleted all locks for resource group: $RESOURCE_GROUP"
+

@@ -53,6 +53,7 @@ az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account
 
 # Must remove all locks before removeing budgets
 "$SCRIPT_DIR/util/lock-resource-group-delete.sh" \
+     -s "$SUBSCRIPTION_ID" \
      -g "$RESOURCE_GROUP_NAME" \
      || abort "Failed to delete resource group locks"
 

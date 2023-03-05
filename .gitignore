@@ -6,6 +6,7 @@ tmp
 /out-tsc
 dist/
 deploy.log
+scripts/azure/deploy_as.zip
 
 # dependencies
 node_modules
