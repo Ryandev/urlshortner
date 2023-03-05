@@ -47,14 +47,16 @@ checkEnv && loadGlobalArgs $@ || usage
 
 echo "Deleting resource locks for subscription:$SUBSCRIPTION_ID with resource-group:$RESOURCE_GROUP"
 
-ALL_LOCK_IDS=$(az lock list -s "$SUBSCRIPTION_ID" -g "$RESOURCE_GROUP" | jq -cre '.[].id')
+ALL_LOCK_IDS=$(az lock list -g "$RESOURCE_GROUP" | jq -cre '.[].id')
 
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 for LOCK_ID in "$ALL_LOCK_IDS"; do
     if [ ! -z "$LOCK_ID" ]; then
         echo "Removing lock: $LOCK_ID"
-        az lock delete -s "$SUBSCRIPTION_ID" -g "$RESOURCE_GROUP" --ids "$LOCK_ID" || abort "Failed to delete lock: $LOCK_ID"
+        DELETE_RESPONSE=$(az lock delete -g "$RESOURCE_GROUP" --ids "$LOCK_ID") || abort "Failed to delete lock: $LOCK_ID"
+        DELETE_ERROR_MESSAGE=$(echo "$DELETE_RESPONSE" | jq -cre '.error.message')
+        [ -z "$DELETE_ERROR_MESSAGE" ] && abort "Failed to delete lock, error: $DELETE_ERROR_MESSAGE"
     fi
 done
 
