@@ -53,7 +53,7 @@ az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account
 for LOCK_ID in "$ALL_LOCK_IDS"; do
     if [ ! -z "$LOCK_ID" ]; then
         echo "Removing lock: $LOCK_ID"
-        az lock delete -g "$RESOURCE_GROUP" --ids "$LOCK_ID" || abort "Failed to delete lock: $LOCK_ID"
+        az lock delete -s "$SUBSCRIPTION_ID" -g "$RESOURCE_GROUP" --ids "$LOCK_ID" || abort "Failed to delete lock: $LOCK_ID"
     fi
 done
 

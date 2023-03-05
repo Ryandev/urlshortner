@@ -58,7 +58,7 @@ az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account
 
 echo "1. Publishing new frontend to storageaccount:$STORAGE_NAME"
 
-MUST_REMOVE_EXISTING=$(az storage blob exists --auth-mode key --subscription "$SUBSCRIPTION_ID" --account-name "$STORAGE_NAME" --container-name "$STORAGE_CONTAINER" --name "index.html" | jq -cre '.exists')
+MUST_REMOVE_EXISTING=$(az storage blob exists --subscription "$SUBSCRIPTION_ID" --auth-mode key --account-name "$STORAGE_NAME" --container-name "$STORAGE_CONTAINER" --name "index.html" | jq -cre '.exists')
 
 if [ "$MUST_REMOVE_EXISTING" == 'true' ]; then
     az storage blob delete-batch --auth-mode key --subscription "$SUBSCRIPTION_ID" --account-name "$STORAGE_NAME" --source "$STORAGE_CONTAINER" --pattern '/*' || abort "Failed to delete existing files"

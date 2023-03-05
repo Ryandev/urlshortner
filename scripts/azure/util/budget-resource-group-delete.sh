@@ -48,7 +48,7 @@ echo "Deleting budgets for subscription:$SUBSCRIPTION_ID with resource-group:$RE
 
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
-ACCESS_TOKEN=$(az account get-access-token | jq -cre '.accessToken') || abort "Failed to get az access-token"
+ACCESS_TOKEN=$(az account get-access-token -s "$SUBSCRIPTION_ID" | jq -cre '.accessToken') || abort "Failed to get az access-token"
 [ -z "$ACCESS_TOKEN" ] && abort "Failed to get access token from response"
 
 REST_BUDGET_LIST_API="https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Consumption/budgets?api-version=2021-10-01"

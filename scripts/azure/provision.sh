@@ -49,6 +49,8 @@ LOCATION=$(cat "$BICEP_FILE" | jq -cre '.parameters.location.value')
 RESOURCE_GROUP_NAME=$(cat "$BICEP_FILE" | jq -cre '.parameters.resourceGroupName.value')
 [ -z "$RESOURCE_GROUP_NAME" ] && abort "Missing RESOURCE_GROUP_NAME"
 
+echo "Using bicep file $BICEP_FILE to provisioning azure with subscription:$SUBSCRIPTION_ID, resource-group:$RESOURCE_GROUP_NAME, location:$LOCATION"
+
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 # Must remove all locks before removeing budgets
