@@ -41,7 +41,6 @@ function checkEnv {
 
 checkEnv && loadGlobalArgs $@ || usage
 
-
 SUBSCRIPTION_ID=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.name')
 [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
 
@@ -53,6 +52,9 @@ STORAGE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.storage.v
 
 APPSERVICE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.appService.value.outputs.appService.value.properties.deploymentId')
 [ -z "$APPSERVICE_NAME" ] && abort "Missing APPSERVICE_NAME"
+
+
+az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 echo "1. Publishing new frontend to storageaccount:$STORAGE_NAME"
 
