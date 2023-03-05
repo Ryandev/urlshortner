@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 @description('ID of parent subscription')
 param subscriptionId string = subscription().subscriptionId
 

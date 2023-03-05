@@ -1,4 +1,5 @@
 /* Ref: https://docs.microsoft.com/en-us/azure/service-health/service-health-notifications-properties */
+targetScope = 'resourceGroup'
 
 @description('Name of alert')
 param name string = 'al-as-HealthSubscription'

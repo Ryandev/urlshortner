@@ -1,6 +1,5 @@
 /* https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.consumption/create-budget-onefilter/main.bicep */
-
-// targetScope = 'resourceGroup'
+targetScope = 'resourceGroup'
 
 param resourceGroupName string
 

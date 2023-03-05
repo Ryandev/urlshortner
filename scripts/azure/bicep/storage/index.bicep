@@ -1,4 +1,5 @@
 /* Taken from: https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cdn/front-door-standard-premium-storage-static-website/modules/storage-static-website.bicep */
+targetScope = 'resourceGroup'
 
 @description('Resource deployment location')
 param location string = resourceGroup().location

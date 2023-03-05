@@ -125,6 +125,15 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - uses: actions/download-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
             - name: Log in with Azure
               uses: azure/actions/login@v1
               with:
@@ -155,6 +164,15 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - uses: actions/download-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
             - name: Log in with Azure
               uses: azure/actions/login@v1
               with:
@@ -186,6 +204,15 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - uses: actions/download-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
             - name: Log in with Azure
               uses: azure/login@v1
               with:

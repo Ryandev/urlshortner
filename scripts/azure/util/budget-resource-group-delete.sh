@@ -65,4 +65,4 @@ for BUDGET_NAME in "$BUDGET_NAMES"; do
     fi
 done
 
-echo "Deleted budgets for resource group: $RESOURCE_GROUP_NAME"
+echo "Deleted budgets for resource group: $RESOURCE_GROUP"

@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 @description('Email address on alerts')
 param contactEmail string
 
