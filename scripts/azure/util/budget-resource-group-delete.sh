@@ -49,7 +49,6 @@ echo "Deleting budgets for subscription:$SUBSCRIPTION_ID with resource-group:$RE
 
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
-az account set --subscription "$SUBSCRIPTION_ID" && az account get-access-token -s "$SUBSCRIPTION_ID"
 ACCESS_TOKEN=$(az account set --subscription "$SUBSCRIPTION_ID"  && az account get-access-token -s "$SUBSCRIPTION_ID" | jq -cre '.accessToken') || abort "Failed to get az access-token"
 [ -z "$ACCESS_TOKEN" ] && abort "Failed to get access token from response: $ACCESS_TOKEN"
 

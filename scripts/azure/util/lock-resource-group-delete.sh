@@ -55,7 +55,7 @@ for LOCK_ID in "$ALL_LOCK_IDS"; do
     if [ ! -z "$LOCK_ID" ]; then
         echo "Removing lock: $LOCK_ID"
         DELETE_RESPONSE=$(az lock delete -g "$RESOURCE_GROUP" --ids "$LOCK_ID") || abort "Failed to delete lock: $LOCK_ID"
-        DELETE_ERROR_MESSAGE=$(echo "$DELETE_RESPONSE" | jq -cre '.error.message')
+        DELETE_ERROR_MESSAGE=$(echo "$DELETE_RESPONSE" | jq -cr '.error.message')
         [ -z "$DELETE_ERROR_MESSAGE" ] && abort "Failed to delete lock, error: $DELETE_ERROR_MESSAGE"
     fi
 done
