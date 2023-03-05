@@ -42,27 +42,28 @@ checkEnv && loadGlobalArgs $@ || usage
 
 SUBSCRIPTION_ID=$(cat "$BICEP_FILE" | jq -cre '.metadata.subscriptionId.value')
 [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
+[ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
 
 LOCATION=$(cat "$BICEP_FILE" | jq -cre '.parameters.location.value')
 [ -z "$LOCATION" ] && abort "Missing LOCATION"
 
-RESOURCE_GROUP_NAME=$(cat "$BICEP_FILE" | jq -cre '.parameters.resourceGroupName.value')
-[ -z "$RESOURCE_GROUP_NAME" ] && abort "Missing RESOURCE_GROUP_NAME"
+RESOURCE_GROUP=$(cat "$BICEP_FILE" | jq -cre '.parameters.resourceGroupName.value')
+[ -z "$RESOURCE_GROUP" ] && abort "Missing RESOURCE_GROUP"
 
-echo "Using bicep file $BICEP_FILE to provisioning azure with subscription:$SUBSCRIPTION_ID, resource-group:$RESOURCE_GROUP_NAME, location:$LOCATION"
+echo "Using bicep file $BICEP_FILE to provisioning azure with subscription:$SUBSCRIPTION_ID, resource-group:$RESOURCE_GROUP, location:$LOCATION"
 
 az account set --subscription "$SUBSCRIPTION_ID" || abort "Failed to set account to: $SUBSCRIPTION_ID"
 
 # Must remove all locks before removeing budgets
 "$SCRIPT_DIR/util/lock-resource-group-delete.sh" \
      -s "$SUBSCRIPTION_ID" \
-     -g "$RESOURCE_GROUP_NAME" \
+     -g "$RESOURCE_GROUP" \
      || abort "Failed to delete resource group locks"
 
 # We cannot modify the start date to an existing budget in bicep, therefore we *must* remove it before starting
 "$SCRIPT_DIR/util/budget-resource-group-delete.sh" \
      -s "$SUBSCRIPTION_ID" \
-     -g "$RESOURCE_GROUP_NAME" \
+     -g "$RESOURCE_GROUP" \
      || abort "Failed to delete outstanding budgets"
 
 az deployment sub create \
@@ -73,4 +74,4 @@ az deployment sub create \
     --parameter @"$BICEP_FILE" > "$DEPLOYMENT_OUTPUT" \
     || abort "Deployment failed"
 
-echo 'Deployment success!'
+echo 'Provision success!'

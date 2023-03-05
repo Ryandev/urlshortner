@@ -31,6 +31,7 @@ function loadGlobalArgs {
     done
 
     [ -z "$SUBSCRIPTION_ID" ] && usage
+    [ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
     [ -z "$RESOURCE_GROUP" ] && usage
 
     return 0

@@ -43,9 +43,10 @@ checkEnv && loadGlobalArgs $@ || usage
 
 SUBSCRIPTION_ID=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.name')
 [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
+[ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
 
-RESOURCE_GROUP_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.resourceGroup.value.parameters.name.value')
-[ -z "$RESOURCE_GROUP_NAME" ] && abort "Missing RESOURCE_GROUP_NAME"
+RESOURCE_GROUP=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.resourceGroup.value.parameters.name.value')
+[ -z "$RESOURCE_GROUP" ] && abort "Missing RESOURCE_GROUP"
 
 STORAGE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.storage.value.outputs.storage.value.resourceId' | sed 's/Microsoft.Storage\/storageAccounts\///g')
 [ -z "$STORAGE_NAME" ] && abort "Missing STORAGE_NAME"
@@ -70,7 +71,7 @@ echo "2. Publishing new backend api to appservice:$APPSERVICE_NAME"
 rm "$TMP_ZIP_PATH"
 TMP_ZIP_PATH="$SCRIPT_DIR/deploy_as.zip"
 zip -jr "$TMP_ZIP_PATH" "$BUILD_OUTPUT_API"
-az webapp deploy --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP_NAME" --name "$APPSERVICE_NAME" --src-path "$TMP_ZIP_PATH" --type=startup || abort "Failed to deploy API appservice"
+az webapp deploy --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" --name "$APPSERVICE_NAME" --src-path "$TMP_ZIP_PATH" --type=startup || abort "Failed to deploy API appservice"
 rm "$TMP_ZIP_PATH"
 
 echo 'Deployment complete'
