@@ -77,7 +77,8 @@ az storage blob upload-batch --subscription "$SUBSCRIPTION_ID" --account-name "$
 echo "2. Publishing new backend api to appservice:$APPSERVICE_NAME"
 rm "$TMP_ZIP_PATH" 2>/dev/null
 TMP_ZIP_PATH="$SCRIPT_DIR/deploy_as.zip"
-zip -jr "$TMP_ZIP_PATH" "$BUILD_OUTPUT_API"
+zip -jr "$TMP_ZIP_PATH" "$BUILD_OUTPUT_API" -i "$BUILD_OUTPUT_API/*.js" || abort "Failed to generate deployment zip"
+[ -f "$TMP_ZIP_PATH" ] || abort "Missing deployment zip"
 az webapp deploy --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" --name "$APPSERVICE_NAME" --src-path "$TMP_ZIP_PATH" --type=startup || abort "Failed to deploy API appservice"
 rm "$TMP_ZIP_PATH"
 
