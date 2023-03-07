@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import type { IAppData } from './app.interface';
 
 @Injectable()
 export default class AppService {
-    getData(): { message: string } {
-        return { message: `${this} Welcome to api!` };
+    public getData(): IAppData {
+        return { message: `AppService:${JSON.stringify(this)} Welcome to api!` };
     }
 }
