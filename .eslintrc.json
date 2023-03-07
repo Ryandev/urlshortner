@@ -1,14 +1,21 @@
 {
+    "globals": {
+        "jest": true,
+        "JSX": true
+    },
     "extends": [
+        "plugin:import/recommended",
         "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
+        "eslint:all",
+        "plugin:react/recommended",
+        "plugin:jest/recommended",
+        "plugin:react-hooks/recommended",
         "plugin:prettier/recommended",
-        "airbnb"
-        // "react-app/jest",
+        "plugin:@typescript-eslint/all",
+        "plugin:jsx-a11y/recommended"
     ],
     "root": true,
-    "plugins": ["@nrwl/nx", "prettier", "jest"],
+    "plugins": ["@nrwl/nx", "prettier", "jest", "react"],
     "rules": {
         "prettier/prettier": "error"
     },
@@ -27,23 +34,113 @@
             "node": {
                 "extensions": [".js", ".jsx", ".ts", ".tsx"]
             }
+        },
+        "react": {
+            "version": "detect"
         }
     },
     "overrides": [
         {
+            "files": [
+                "*.test.ts",
+                "*.test.tsx",
+                "*.test.js",
+                "*.test.jsx",
+                "*.spec.ts",
+                "*.spec.tsx",
+                "*.spec.js",
+                "*.spec.jsx"
+            ],
+            "rules": {
+                "@typescript-eslint/no-unsafe-call": "off" /* jest.Expect is flagged as any type */
+            }
+        },
+        {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+            "extends": ["plugin:@nrwl/nx/typescript"],
             "parserOptions": {
-                "project": ["./tsconfig.base.json"]
+                "project": [
+                    "./tsconfig.base.json",
+                    "packages/api/tsconfig.json",
+                    "packages/api/tsconfig.app.json",
+                    "packages/api/tsconfig.spec.json",
+                    "packages/**/tsconfig.*?.?json"
+                ]
             },
             "rules": {
+                /* eslint */
+                "no-magic-numbers": "off" /* Disable in-favour of typescript variant below (which can factor in enums) */,
+                "camelcase": [
+                    "error",
+                    {
+                        "ignoreDestructuring": true
+                    }
+                ],
+                /* Mix of arrow & function declarations used */
+                "func-style": "off",
+                /* File extensions not needed for TS files */
+                "import/extensions": "off",
+                /* React function components are pascal cased */
+                "new-cap": "off",
+                /* Multiple imports can occur, 1 for type, 2 for values under TS files */
+                "no-duplicate-imports": "off",
+                /* Prefer separate declarations */
+                "one-var": ["error", "never"],
+                /* Prettier auto formats imports, ignore */
+                "sort-keys": "off",
+                "sort-imports": "off",
+
+                /* jest */
+                "jest/expect-expect": "off" /* Incorrectly flagging files without test classes */,
+
+                /* react */
+                "react/jsx-props-no-spreading": "off",
+                "react/jsx-uses-react": "off",
+                "react/react-in-jsx-scope": "off",
+
+                /* typescript */
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": "variable",
+                        "format": [
+                            "PascalCase",
+                            "UPPER_CASE",
+                            "camelCase"
+                        ] /* Pascal for Classes, UPPER_SNAKE for constants & camel for everything else */,
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "forbid"
+                    }
+                ],
+
+                "@typescript-eslint/no-magic-numbers": [
+                    "warn",
+                    {
+                        "ignoreEnums": true,
+                        "ignore": [
+                            -1, 0, 1, 10, 100
+                        ] /* All magic numbers for enums & -1,0,1,10,100 */
+                    }
+                ],
+                "@typescript-eslint/prefer-readonly-parameter-types": [
+                    "error",
+                    {
+                        "checkParameterProperties": false
+                    }
+                ],
+                /* Styling preferences */
+                "@typescript-eslint/object-curly-spacing": "off",
+                "@typescript-eslint/quotes": ["error", "single"],
+                "@typescript-eslint/space-before-function-pare": "off",
+                "@typescript-eslint/comma-dangle": "off",
+                "@typescript-eslint/space-before-function-paren": "off",
+
+                /* Prettier */
                 "indent": ["error", 4],
                 "react/jsx-indent": ["error", 4],
                 "react/jsx-indent-props": ["error", 4],
-                "react/jsx-props-no-spreading": "off",
                 "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
                 "react/jsx-filename-extension": ["error", { "extensions": [".tsx", ".ts"] }],
-                "react/jsx-uses-react": "off",
-                "react/react-in-jsx-scope": "off",
                 "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }],
                 "import/no-extraneous-dependencies": [
                     "error",

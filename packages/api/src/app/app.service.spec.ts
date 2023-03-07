@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import AppService from './app.service';
 
 describe('AppService', () => {
-    let service: AppService;
+    let service: AppService | null = null;
 
     beforeAll(async () => {
         const app = await Test.createTestingModule({
@@ -15,7 +15,10 @@ describe('AppService', () => {
 
     describe('getData', () => {
         it('should return "Welcome to api!"', () => {
-            expect(service.getData()).toEqual({ message: '[object Object] Welcome to api!' });
+            const message = service?.getData() ?? { message: '' };
+            expect(message).toEqual({
+                message: '[object Object] Welcome to api!',
+            });
         });
     });
 });
