@@ -61,10 +61,8 @@
             "parserOptions": {
                 "project": [
                     "./tsconfig.base.json",
-                    "packages/api/tsconfig.json",
-                    "packages/api/tsconfig.app.json",
-                    "packages/api/tsconfig.spec.json",
-                    "packages/**/tsconfig.*?.?json"
+                    "packages/**/tsconfig.*?.?json",
+                    "packages/**/.storybook/tsconfig.json"
                 ]
             },
             "rules": {

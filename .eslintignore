@@ -10,5 +10,4 @@ tools/
 *.d.ts
 lighthouserc.js
 next.config.js
-jest.config.ts
 jest.preset.js

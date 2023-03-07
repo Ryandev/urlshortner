@@ -1,4 +1,4 @@
-import path = require('path');
+import * as path from 'path';
 
 const coverage = Object.freeze({
     statements: 0,
@@ -8,7 +8,7 @@ const coverage = Object.freeze({
 });
 const packageName = __dirname.split(path.sep).slice(-1).join(path.sep);
 
-export default {
+const settings = {
     rootDir: __dirname,
     preset: ['..', '..', 'jest-preset.js'].join(path.sep),
     displayName: packageName || 'unknown',
@@ -21,3 +21,5 @@ export default {
         global: coverage,
     },
 };
+
+export default settings;

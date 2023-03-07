@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 
 const coverage = Object.freeze({
     statements: 0,
@@ -8,7 +8,7 @@ const coverage = Object.freeze({
 });
 const packageName = __dirname.split(path.sep).slice(-1).join(path.sep) || 'unknown';
 
-export default {
+const settings = {
     rootDir: __dirname,
     preset: ['..', '..', 'jest-preset.js'].join(path.sep),
     displayName: packageName || 'unknown',
@@ -20,11 +20,15 @@ export default {
     coverageThreshold: {
         global: coverage,
     },
-    /* overrides */
+    /* Overrides */
     transform: {
-        /* Use babel-jest to transpile tests with the next/babel preset
-           https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object */
+        /*
+         * Use babel-jest to transpile tests with the next/babel preset
+         * https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+         */
         '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
     },
     testEnvironment: 'jsdom',
 };
+
+export default settings;
