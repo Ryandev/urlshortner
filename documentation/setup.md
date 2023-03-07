@@ -7,6 +7,7 @@
 
 ```
 SUBSCRIPTION_ID='ADD_HERE'
+az ad sp create-for-rbac --name "urlshortner-ci" --role contributor --scopes /subscriptions/$SUBSCRIPTION_ID --sdk-auth
 TENANT_ID=$(az account show | jq -cre '.id')
 ADAPP=$(az ad sp create-for-rbac --name "urlshortner-ci" --role contributor --scopes /subscriptions/$SUBSCRIPTION_ID)
 APP_ID=$(echo "$ADAPP" | jq -cre '.appId')
