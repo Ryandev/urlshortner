@@ -1,21 +1,25 @@
-const coverage = {
+import path from 'path';
+
+const coverage = Object.freeze({
     statements: 0,
     branches: 0,
     functions: 0,
     lines: 0,
-};
-const subPath = __dirname.split('/').slice(-2).join('/');
+});
+const packageName = __dirname.split(path.sep).slice(-1).join(path.sep) || 'unknown';
 
-export default Object.freeze({
-    preset: '../../jest.preset.js',
+export default {
     rootDir: __dirname,
-    displayName: __dirname.split('/').pop() ?? 'unknown',
-    reporters: ['default', ['jest-junit', { outputDirectory: `reports/test/${subPath}` }]],
-    coverageDirectory: `../../reports/coverage/${subPath}`,
+    preset: ['..', '..', 'jest-preset.js'].join(path.sep),
+    displayName: packageName || 'unknown',
+    reporters: [
+        'default',
+        ['jest-junit', { outputDirectory: path.join('reports', 'test', packageName) }],
+    ],
+    coverageDirectory: path.join('..', '..', 'reports', 'coverage', packageName),
     coverageThreshold: {
         global: coverage,
     },
-
     /* overrides */
     transform: {
         /* Use babel-jest to transpile tests with the next/babel preset
@@ -23,22 +27,4 @@ export default Object.freeze({
         '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
     },
     testEnvironment: 'jsdom',
-});
-
-// const nxPreset = require('@nrwl/jest/preset');
-
-// export default {
-//     ...nxPreset.default,
-//     testMatch: [
-//         '<rootDir>/**/*.(test).{js,jsx,ts,tsx}',
-//         '<rootDir>/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
-//     ],
-//     displayName: 'frontend',
-//     // preset: '@nrwl/jest/preset',
-//     transform: {
-//         '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
-//         '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nrwl/next/babel'] }],
-//     },
-//     coverageDirectory: '../../coverage/packages/frontend',
-//     setupFiles: [],
-// };
+};

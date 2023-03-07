@@ -1,0 +1,227 @@
+name: Checks, Build and Deploy
+
+on:
+    push:
+        branches:
+            - main
+            - master
+            - develop
+            - feature/*
+            - issue/*
+
+env:
+    FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+    AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+
+jobs:
+    checks:
+        name: Checks
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.x, 18.x]
+        steps:
+            - uses: actions/checkout@v2
+            - run: 'curl -H "Cache-Control: no-cache" https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.sh | bash'
+            - run: yarn setup
+            - run: yarn check-pretty
+            - run: yarn check-spell
+            - run: yarn check-licensing
+            - run: yarn check-audit
+            - run: yarn lint
+
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
+            # Must ensure no-cache, otherwise the side-effects of report generation doesn't happen
+            - run: yarn test --coverage --skip-nx-cache
+            - run: yarn e2e --skip-nx-cache
+
+            - run: echo 'publishing coverage'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: api
+                  path: reports/coverage
+
+            - run: echo 'publishing coveralls - frontend'
+            - uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: reports/coverage/frontend/lcov.info
+                  base-path: './packages/frontend'
+
+            - run: echo 'publishing coveralls - api'
+            - uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: reports/coverage/api/lcov.info
+                  base-path: './packages/api'
+
+    package:
+        name: Package
+        needs: [Checks, Test]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
+            - run: yarn build
+            - run: yarn package
+            - run: echo 'publishing frontend'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+
+            - run: echo 'publishing api'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
+
+    buildvalidation:
+        name: BuildValidation
+        needs: [Package]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: yarn setup
+            - run: echo 'downloading frontend'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - run: yarn lighthouse
+
+            - run: echo 'publishing lighthouse'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: lighthouse
+                  path: reports/lighthouse
+
+    deployproductionenvironment:
+        name: DeployProductionEnv
+        needs: [BuildValidation]
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - uses: actions/download-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
+            - name: Log in with Azure
+              uses: azure/actions/login@v1
+              with:
+                  creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            - name: Azure Provision
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.production.json -o deploy.log'
+            - name: Azure Deploy
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: deploy
+                  path: deploy.log
+
+    deploystagingenvironment:
+        name: DeployStagingEnv
+        needs: [BuildValidation]
+        if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - uses: actions/download-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
+            - name: Log in with Azure
+              uses: azure/actions/login@v1
+              with:
+                  creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            - run: yarn setup
+            - name: Azure Provision
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.staging.json -o deploy.log'
+            - name: Azure Deploy
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: deploy
+                  path: deploy.log
+
+    deploydevelopmentenvironment:
+        name: DeployDevelopmentEnv
+        needs: [BuildValidation]
+        if: github.ref == 'refs/heads/feature/CI-Support' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: mkdir -p dist/packages
+            - uses: actions/download-artifact@v3
+              with:
+                  name: frontend
+                  path: dist/packages/frontend
+            - uses: actions/download-artifact@v3
+              with:
+                  name: api
+                  path: dist/packages/api
+            - name: Log in with Azure
+              uses: azure/login@v1
+              with:
+                  creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            - name: Azure Provision
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/provision.sh -b ./scripts/azure/parameters.development.json -o deploy.log'
+            - name: Azure Deploy
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: './scripts/azure/deploy.sh -d deploy.log'
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: deploy
+                  path: deploy.log

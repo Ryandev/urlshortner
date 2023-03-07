@@ -57,6 +57,19 @@
             "options": {
                 "lintFilePatterns": ["packages/frontend/**/*.{ts,tsx,js,jsx}"]
             }
+        },
+        "lighthouse": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "cwd": ".",
+                "parallel": false,
+                "commands": [
+                    {
+                        "command": "bash ./scripts/ci/run-lighthouse.sh -l ./packages/frontend/lighthouserc.js -s ./dist/packages/frontend/exported -r true -o 'reports/lighthouse/frontend'",
+                        "forwardAllArgs": false
+                    }
+                ]
+            }
         }
     },
     "tags": []
