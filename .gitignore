@@ -4,6 +4,9 @@
 dist
 tmp
 /out-tsc
+dist/
+deploy.log
+scripts/azure/deploy_as.zip
 
 # dependencies
 node_modules
@@ -34,6 +37,7 @@ yarn-error.log
 testem.log
 /typings
 package-lock.json
+.secrets
 
 # System Files
 .DS_Store
@@ -45,3 +49,4 @@ Thumbs.db
 # Test output
 junit.xml
 reports/*
+
