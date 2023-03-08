@@ -1,22 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
-
 import AppController from './app.controller';
+import type { IAppData } from './app.interface';
 import AppService from './app.service';
 
-describe('AppController', () => {
-    let app: TestingModule;
-
-    beforeAll(async () => {
-        app = await Test.createTestingModule({
-            controllers: [AppController],
-            providers: [AppService],
-        }).compile();
-    });
-
+describe('App.Controller', () => {
     describe('getData', () => {
-        it('should return "[object Object] Welcome to api!"', () => {
-            const appController = app.get<AppController>(AppController);
-            expect(appController.getData()).toEqual({ message: '[object Object] Welcome to api!' });
+        it('Validate getData() response', () => {
+            const controller = new AppController(new AppService());
+            const actualValue: IAppData = controller.getData();
+            const expectedValue: IAppData = {
+                message: 'AppService:{} Welcome to api!',
+            };
+            expect(expectedValue).toEqual(actualValue);
         });
     });
 });

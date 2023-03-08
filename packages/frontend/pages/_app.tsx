@@ -1,8 +1,12 @@
-import { AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import type { Immutable } from '../util/immutable';
 import './styles.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+/* eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types */
+function CustomApp(props: Immutable<AppProps>): JSX.Element {
+    const { Component } = props;
+    const pageProps = props.pageProps as Immutable<Record<string, unknown>>;
     return (
         <>
             <Head>
