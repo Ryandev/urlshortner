@@ -1,0 +1,74 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "airbnb"
+        // "react-app/jest",
+    ],
+    "root": true,
+    "plugins": ["@nrwl/nx", "prettier", "jest"],
+    "rules": {
+        "prettier/prettier": "error"
+    },
+    "env": {
+        "jest/globals": true
+    },
+    "settings": {
+        "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+            "typescript": {
+                "directory": "./tsconfig.json"
+            },
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+            "parserOptions": {
+                "project": ["./tsconfig.base.json"]
+            },
+            "rules": {
+                "indent": ["error", 4],
+                "react/jsx-indent": ["error", 4],
+                "react/jsx-indent-props": ["error", 4],
+                "react/jsx-props-no-spreading": "off",
+                "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
+                "react/jsx-filename-extension": ["error", { "extensions": [".tsx", ".ts"] }],
+                "react/jsx-uses-react": "off",
+                "react/react-in-jsx-scope": "off",
+                "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }],
+                "import/no-extraneous-dependencies": [
+                    "error",
+                    {
+                        "devDependencies": [
+                            "**/*.test.ts",
+                            "**/*.test.tsx",
+                            "**/*.spec.ts",
+                            "**/*.spec.tsx",
+                            "**/*.config.js",
+                            "**/*.config.ts"
+                        ]
+                    }
+                ],
+                "import/extensions": [
+                    "error",
+                    "ignorePackages",
+                    {
+                        "js": "never",
+                        "jsx": "never",
+                        "ts": "never",
+                        "tsx": "never"
+                    }
+                ]
+            }
+        }
+    ]
+}

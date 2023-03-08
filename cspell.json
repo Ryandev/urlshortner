@@ -1,0 +1,36 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": [
+        "**/coverage/**",
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/fixtures/**",
+        "**/public/**",
+        "CHANGELOG.md",
+        "**/changelog.mdx",
+        "**/mimeType.ts"
+    ],
+    "ignoreRegExpList": [],
+    "dictionaries": [
+        "typescript",
+        "softwareTerms",
+        "node",
+        "en_US",
+        "en_GB",
+        "npm",
+        "html",
+        "companies",
+        "misc",
+        "filetypes",
+        "lorem-ipsum",
+        "project-dictionary"
+    ],
+    "dictionaryDefinitions": [
+        {
+            "name": "project-dictionary",
+            "path": ".dictionary.txt",
+            "addWords": true
+        }
+    ]
+}

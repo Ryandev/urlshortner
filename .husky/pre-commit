@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+function abort {
+    # Print message & exit program
+    echo "$1" >&2
+    exit 1
+}
+
+### Start ###
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+PROJECT_DIR="$SCRIPT_DIR/../"
+HUSKY_INIT_SCRIPT="$SCRIPT_DIR/_/husky.sh"
+VALIDATE_TASKS=(
+    'yarn run clear-cache' 
+    'yarn run check-spell' 
+    'yarn run check-pretty' 
+    'yarn run check-audit' 
+    'yarn run lint' 
+    'yarn run test --skip-nx-cache --coverage' 
+    'yarn run e2e --skip-nx-cache' 
+    'yarn run build --skip-nx-cache'
+)
+
+
+echo "Initializing husky"
+[ -z "$HUSKY_INIT_SCRIPT" ] && abort "Missing husky init script"
+. "$HUSKY_INIT_SCRIPT"
+
+cd "$PROJECT_DIR"
+[ $? -ne 0 ] && abort "Failed to navigate to project dir"
+
+for task in "${VALIDATE_TASKS[@]}"; do
+    echo "Running validate task: $task"
+    eval "$task"
+    [ $? -ne 0 ] && abort "Failed task: $task"
+done
+
+echo '*** All checks passed ***'
+
+exit 0

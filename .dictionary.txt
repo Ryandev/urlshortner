@@ -1,0 +1,13 @@
+#Project words
+shortner
+
+#Third Party Libraries
+Mongo
+mongodb
+nrwl
+nx
+airbnb
+NestJS
+cobertura
+lcov
+bcov
