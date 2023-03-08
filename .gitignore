@@ -38,6 +38,7 @@ testem.log
 /typings
 package-lock.json
 .secrets
+.mailmap
 
 # System Files
 .DS_Store
