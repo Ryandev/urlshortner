@@ -69,7 +69,6 @@
             },
             "rules": {
                 /* eslint */
-                "no-magic-numbers": "off" /* Disable in-favour of typescript variant below (which can factor in enums) */,
                 "camelcase": [
                     "error",
                     {
@@ -84,6 +83,8 @@
                 "new-cap": "off",
                 /* Multiple imports can occur, 1 for type, 2 for values under TS files */
                 "no-duplicate-imports": "off",
+                "no-magic-numbers": "off" /* Disable in-favour of typescript variant below (which can factor in enums) */,
+                "no-ternary": "off",
                 /* Prefer separate declarations */
                 "one-var": ["error", "never"],
                 /* Prettier auto formats imports, ignore */

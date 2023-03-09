@@ -24,7 +24,13 @@
         "upgrade-nx": "yarn run nx migrate latest --verbose && yarn run nx migrate --run-migrations"
     },
     "dependencies": {
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
         "@lhci/cli": "^0.11.0",
+        "@mui/icons-material": "^5.11.11",
+        "@mui/joy": "^5.0.0-alpha.70",
+        "@mui/material": "^5.11.12",
+        "@mui/styled-engine-sc": "^5.11.11",
         "@nestjs/common": "^9.0.0",
         "@nestjs/core": "^9.0.0",
         "@nestjs/platform-express": "^9.0.0",
@@ -32,9 +38,11 @@
         "next": "13.1.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "recharts": "^2.4.3",
         "reflect-metadata": "^0.1.13",
         "regenerator-runtime": "0.13.7",
         "rxjs": "^7.0.0",
+        "styled-components": "^5.3.8",
         "tslib": "^2.3.0"
     },
     "devDependencies": {
