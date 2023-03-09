@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "command": "yarn run nx build api",
+            "group": "build",
+            "label": "api: build",
+            "detail": "yarn run nx build api"
+        }
+    ]
+}

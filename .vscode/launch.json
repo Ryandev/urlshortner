@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "DEBUG: frontend",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceRoot}/packages/frontend/pages",
+            "osx": {
+                "runtimeArgs": [
+                    // https://peter.sh/experiments/chromium-command-line-switches/
+                    "--disk-cache-dir=${workspaceRoot}/.cache/betachrome",
+                    "--user-data-dir=${workspaceRoot}/.data/betachrome"
+                ]
+            },
+            "runtimeArgs": [
+                "--auto-open-devtools-for-tabs",
+                "--remote-debugging-port=9222",
+                "--allow-insecure-localhost",
+                "--aggressive-cache-discard",
+                "--disable-notifications",
+                "--disable-session-crashed-bubble",
+                "--disable-infobar",
+                "--disable-restore-session-state",
+                "--unsafely-treat-insecure-origin-as-secure",
+                "--allow-insecure-localhost",
+                "--enable-logging",
+                "--v=1"
+            ]
+        },
+        {
+            "name": "DEBUG: api",
+            "program": "${workspaceFolder}/dist/packages/api/main.js",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "pwa-node",
+            "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
+            "preLaunchTask": "api: build",
+            "envFile": "${workspaceFolder}/packages/api/.env",
+            "outFiles": ["${workspaceFolder}/dist/packages/api/**/*.js", "!**/node_modules/**"]
+        },
+        {
+            "name": "TEST: api",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/jest",
+            "args": [
+                "test",
+                "--config=${workspaceRoot}/packages/api/jest.config.cjs",
+                "--runInBand",
+                "--no-cache",
+                "--watchAll"
+            ],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "env": ["NODE_TLS_REJECT_UNAUTHORIZED=0"]
+        }
+    ]
+}
