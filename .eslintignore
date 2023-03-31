@@ -12,3 +12,5 @@ lighthouserc.js
 next.config.js
 jest.config.ts
 jest.preset.js
+sentry.client.config.js
+sentry.server.config.js
