@@ -35,7 +35,7 @@ jobs:
         name: Test
         runs-on: ubuntu-latest
         env:
-            DSN_SENTRY: ${{ secrets.DSN_SENTRY }} # Sentry.io key
+            SENTRY_DSN: ${{ secrets.SENTRY_DSN }} # Sentry.io key
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
@@ -72,7 +72,7 @@ jobs:
         needs: [Checks, Test]
         runs-on: ubuntu-latest
         env:
-            DSN_SENTRY: ${{ secrets.DSN_SENTRY }} # Sentry.io key
+            SENTRY_DSN: ${{ secrets.SENTRY_DSN }} # Sentry.io key
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
