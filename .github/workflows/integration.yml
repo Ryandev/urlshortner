@@ -34,6 +34,8 @@ jobs:
     test:
         name: Test
         runs-on: ubuntu-latest
+        env:
+            DSN_SENTRY: ${{ secrets.DSN_SENTRY }} # Sentry.io key
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
@@ -69,6 +71,8 @@ jobs:
         name: Package
         needs: [Checks, Test]
         runs-on: ubuntu-latest
+        env:
+            DSN_SENTRY: ${{ secrets.DSN_SENTRY }} # Sentry.io key
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
@@ -90,7 +94,7 @@ jobs:
                   name: api
                   path: dist/packages/api
 
-    buildvalidation:
+    build_validation:
         name: BuildValidation
         needs: [Package]
         runs-on: ubuntu-latest
@@ -115,7 +119,7 @@ jobs:
                   name: lighthouse
                   path: reports/lighthouse
 
-    deployproductionenvironment:
+    deploy_production_environment:
         name: DeployProductionEnv
         needs: [BuildValidation]
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
@@ -152,7 +156,7 @@ jobs:
                   name: deploy
                   path: deploy.log
 
-    deploystagingenvironment:
+    deploy_staging_environment:
         name: DeployStagingEnv
         needs: [BuildValidation]
         if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
@@ -190,7 +194,7 @@ jobs:
                   name: deploy
                   path: deploy.log
 
-    deploydevelopmentenvironment:
+    deploy_development_environment:
         name: DeployDevelopmentEnv
         needs: [BuildValidation]
         if: github.ref == 'refs/heads/feature/CI-Support' && github.event_name == 'push'
