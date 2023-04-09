@@ -2,7 +2,7 @@
 
 [![Checks, Build and Deploy](https://github.com/Ryandev/urlshortner/actions/workflows/integration.yml/badge.svg)](https://github.com/Ryandev/urlshortner/actions/workflows/integration.yml)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FRyandev%2Furlshortner.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FRyandev%2Furlshortner?ref=badge_shield)
-
+[![CodeQL](https://github.com/MichaelCurrin/badge-generator/workflows/CodeQL/badge.svg)](https://github.com/MichaelCurrin/badge-generator/actions?query=workflow%3ACodeQL 'Code quality workflow status')
 #WIP only, do **NOT** use
 
 ### Commands
