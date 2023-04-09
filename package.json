@@ -28,6 +28,8 @@
         "@nestjs/common": "^9.0.0",
         "@nestjs/core": "^9.0.0",
         "@nestjs/platform-express": "^9.0.0",
+        "@sentry/nextjs": "^7.46.0",
+        "@sentry/node": "^7.46.0",
         "core-js": "^3.6.5",
         "next": "13.1.1",
         "react": "18.2.0",

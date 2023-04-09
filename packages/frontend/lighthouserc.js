@@ -43,6 +43,8 @@ module.exports = {
                 'service-worker': ['warn', { minScore: 0.0 }],
                 'splash-screen': ['warn', { minScore: 0.0 }],
                 'themed-omnibox': ['warn', { minScore: 0.0 }],
+                /* Sentry.IO unused during testing */
+                'unused-javascript': ['warn', { minScore: 0.0 }],
             },
         },
     },

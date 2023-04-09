@@ -15,7 +15,7 @@ env:
     AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
 
 jobs:
-    checks:
+    Checks:
         name: Checks
         runs-on: ubuntu-latest
         strategy:
@@ -31,9 +31,11 @@ jobs:
             - run: yarn check-audit
             - run: yarn lint
 
-    test:
+    Test:
         name: Test
         runs-on: ubuntu-latest
+        env:
+            SENTRY_DSN: ${{ secrets.SENTRY_DSN }} # Sentry.io key
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
@@ -65,10 +67,12 @@ jobs:
                   path-to-lcov: reports/coverage/api/lcov.info
                   base-path: './packages/api'
 
-    package:
+    Package:
         name: Package
         needs: [Checks, Test]
         runs-on: ubuntu-latest
+        env:
+            SENTRY_DSN: ${{ secrets.SENTRY_DSN }} # Sentry.io key
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
@@ -90,7 +94,7 @@ jobs:
                   name: api
                   path: dist/packages/api
 
-    buildvalidation:
+    BuildValidation:
         name: BuildValidation
         needs: [Package]
         runs-on: ubuntu-latest
@@ -115,7 +119,7 @@ jobs:
                   name: lighthouse
                   path: reports/lighthouse
 
-    deployproductionenvironment:
+    DeployProductionEnv:
         name: DeployProductionEnv
         needs: [BuildValidation]
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
@@ -152,7 +156,7 @@ jobs:
                   name: deploy
                   path: deploy.log
 
-    deploystagingenvironment:
+    DeployStagingEnv:
         name: DeployStagingEnv
         needs: [BuildValidation]
         if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
@@ -190,7 +194,7 @@ jobs:
                   name: deploy
                   path: deploy.log
 
-    deploydevelopmentenvironment:
+    DeployDevelopmentEnv:
         name: DeployDevelopmentEnv
         needs: [BuildValidation]
         if: github.ref == 'refs/heads/feature/CI-Support' && github.event_name == 'push'

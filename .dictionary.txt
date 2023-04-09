@@ -11,3 +11,7 @@ NestJS
 cobertura
 lcov
 bcov
+
+#Github Actions
+coverallsapp
+creds
