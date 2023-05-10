@@ -20,8 +20,15 @@
         "target": "es2015",
         "module": "esnext",
         "lib": ["es2017", "dom"],
+        "allowJs": false,
+        "checkJs": false,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "@url/frontend": ["packages/frontend/src/index.ts"],
+            "@url/frontend/*": ["packages/frontend/src/*"],
+            "@url/api": ["packages/api/src/index.ts"],
+            "@url/api/*": ["packages/api/src/*"]
+        }
     },
     "exclude": ["node_modules", "tmp"]
 }

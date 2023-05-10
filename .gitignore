@@ -41,6 +41,7 @@ package-lock.json
 .mailmap
 .cache
 .data
+.dccache
 
 # System Files
 .DS_Store

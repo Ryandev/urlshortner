@@ -21,7 +21,8 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/frontend-e2e/**/*.{js,ts}"]
+                "lintFilePatterns": ["packages/frontend-e2e/**/*.{js,ts}"],
+                "maxWarnings": 0
             }
         }
     },

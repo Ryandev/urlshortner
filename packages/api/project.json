@@ -19,32 +19,31 @@
                 "production": {
                     "optimization": true,
                     "extractLicenses": true,
-                    "inspect": false,
-                    "fileReplacements": [
-                        {
-                            "replace": "packages/api/src/environments/environment.ts",
-                            "with": "packages/api/src/environments/environment.prod.ts"
-                        }
-                    ]
+                    "inspect": false
+                },
+                "development": {
+                    "optimization": false,
+                    "extractLicenses": true,
+                    "inspect": true
                 }
             }
         },
         "serve": {
             "executor": "@nrwl/js:node",
             "options": {
-                "buildTarget": "api:build"
-            },
-            "configurations": {
-                "production": {
-                    "buildTarget": "api:build:production"
-                }
+                "buildTarget": "api:build:development",
+                "host": "localhost",
+                "port": 9229,
+                "inspect": "inspect",
+                "watch": true
             }
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/api/**/*.ts"]
+                "lintFilePatterns": ["packages/api/**/*.ts"],
+                "maxWarnings": 0
             }
         },
         "test": {

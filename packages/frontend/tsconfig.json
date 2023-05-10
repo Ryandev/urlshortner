@@ -1,12 +1,29 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
+        /* BUG: Unable to use import Head without synthetic imports enabled
+        https://github.com/vercel/next.js/issues/40835 */
+        "allowSyntheticDefaultImports": true,
         "jsx": "preserve",
         "noEmit": true,
         "isolatedModules": true,
         "types": ["jest", "node"],
         "allowJs": true
     },
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
-    "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts", "index.d.ts"],
+    "exclude": [
+        "node_modules",
+        "jest.config.ts",
+        "src/**/*.spec.ts",
+        "src/**/*.test.ts",
+        "**/*.stories.ts",
+        "**/*.stories.js",
+        "**/*.stories.jsx",
+        "**/*.stories.tsx"
+    ],
+    "references": [
+        {
+            "path": "./.storybook/tsconfig.json"
+        }
+    ]
 }

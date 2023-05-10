@@ -14,7 +14,7 @@
             },
             "configurations": {
                 "development": {
-                    "outputPath": "packages/frontend"
+                    "outputPath": "dist/packages/frontend"
                 },
                 "production": {}
             }
@@ -55,7 +55,8 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/frontend/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["packages/frontend/**/*.{ts,tsx,js,jsx}"],
+                "maxWarnings": 789
             }
         },
         "lighthouse": {
@@ -69,6 +70,33 @@
                         "forwardAllArgs": false
                     }
                 ]
+            }
+        },
+        "storybook": {
+            "executor": "@nrwl/storybook:storybook",
+            "options": {
+                "port": 4400,
+                "configDir": "packages/frontend/.storybook",
+                "uiFramework": "@storybook/react"
+            },
+            "configurations": {
+                "ci": {
+                    "quiet": true
+                }
+            }
+        },
+        "build-storybook": {
+            "executor": "@nrwl/storybook:build",
+            "outputs": ["{options.outputDir}"],
+            "options": {
+                "outputDir": "dist/storybook/frontend",
+                "configDir": "packages/frontend/.storybook",
+                "uiFramework": "@storybook/react"
+            },
+            "configurations": {
+                "ci": {
+                    "quiet": true
+                }
             }
         }
     },

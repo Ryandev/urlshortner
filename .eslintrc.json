@@ -10,17 +10,27 @@
         "plugin:react/recommended",
         "plugin:jest/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:prettier/recommended",
+        "plugin:@nrwl/nx/react-typescript",
         "plugin:@typescript-eslint/all",
         "plugin:jsx-a11y/recommended"
     ],
     "root": true,
-    "plugins": ["@nrwl/nx", "prettier", "jest", "react"],
-    "rules": {
-        "prettier/prettier": "error"
-    },
+    "plugins": ["@nrwl/nx", "jest", "react"],
+    "rules": {},
     "env": {
-        "jest/globals": true
+        "jest/globals": true,
+        "es6": true,
+        "node": true,
+        "browser": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "tsconfigRootDir": ".",
+        "project": [
+            "./tsconfig.base.json",
+            "packages/*/tsconfig.json",
+            "packages/*/tsconfig.app.json"
+        ]
     },
     "settings": {
         "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -29,7 +39,7 @@
         },
         "import/resolver": {
             "typescript": {
-                "directory": "./tsconfig.json"
+                "directory": "./tsconfig.json" /* Intentionally break typescript-eslint #2878 */
             },
             "node": {
                 "extensions": [".js", ".jsx", ".ts", ".tsx"]
@@ -40,6 +50,7 @@
         }
     },
     "overrides": [
+        /* JEST overrides */
         {
             "files": [
                 "*.test.ts",
@@ -55,18 +66,20 @@
                 "@typescript-eslint/no-unsafe-call": "off" /* jest.Expect is flagged as any type */
             }
         },
+
+        /* Cypress-E2E overrides */
+        {
+            "files": ["*.cy.ts", "*.cy.tsx", "*.cy.js", "*.cy.jsx"],
+            "rules": {
+                "jest/valid-expect-in-promise": "off" /* cy.get().then is flagged as promise */,
+                "no-magic-numbers": "off" /* Disabling due to non-production code */,
+                "@typescript-eslint/no-magic-numbers": "off"
+            }
+        },
+
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
             "extends": ["plugin:@nrwl/nx/typescript"],
-            "parserOptions": {
-                "project": [
-                    "./tsconfig.base.json",
-                    "packages/api/tsconfig.json",
-                    "packages/api/tsconfig.app.json",
-                    "packages/api/tsconfig.spec.json",
-                    "packages/**/tsconfig.*?.?json"
-                ]
-            },
             "rules": {
                 /* eslint */
                 "camelcase": [
@@ -77,16 +90,85 @@
                 ],
                 /* Mix of arrow & function declarations used */
                 "func-style": "off",
+                "id-length": [
+                    "error",
+                    {
+                        "exceptions": ["_", "i", "x", "y"] /* integer index & unused arg */
+                    }
+                ],
+
+                /* Off x4 as per: https://github.com/typescript-eslint/typescript-eslint/blob/f335c504bcf75623d2d671e2e784b047e5e186b9/docs/getting-started/linting/FAQ.md#eslint-plugin-import */
+                "import/named": "off",
+                "import/namespace": "off",
+                "import/default": "off",
+                "import/no-named-as-default-member": "off",
                 /* File extensions not needed for TS files */
-                "import/extensions": "off",
+                "import/extensions": [
+                    "error",
+                    "ignorePackages",
+                    {
+                        "js": "never",
+                        "jsx": "never",
+                        "ts": "never",
+                        "tsx": "never"
+                    }
+                ],
+                "import/no-extraneous-dependencies": [
+                    "error",
+                    {
+                        "devDependencies": [
+                            "**/.storybook/*.js",
+                            "**/.storybook/*.jsx",
+                            "**/*.story.js",
+                            "**/*.story.jsx",
+                            "**/*.stories.js",
+                            "**/*.stories.jsx",
+                            "**/*.test.js",
+                            "**/*.test.jsx",
+                            "**/*.spec.js",
+                            "**/*.spec.jsx",
+                            "**/*.config.js",
+                            "**/*.config.jsx",
+                            "**/.storybook/*.ts",
+                            "**/.storybook/*.tsx",
+                            "**/*.story.ts",
+                            "**/*.story.tsx",
+                            "**/*.stories.ts",
+                            "**/*.stories.tsx",
+                            "**/*.test.ts",
+                            "**/*.test.tsx",
+                            "**/*.spec.ts",
+                            "**/*.spec.tsx",
+                            "**/*.config.ts",
+                            "**/*.config.tsx",
+                            "**/*.cy.ts",
+                            "**/*.cy.tsx"
+                        ]
+                    }
+                ],
+                "max-lines-per-function": [
+                    "warn",
+                    {
+                        "max": 100
+                    }
+                ],
+                "max-lines": "warn",
+                /* Set to warn for now */
+                "max-statements": "warn",
                 /* React function components are pascal cased */
                 "new-cap": "off",
                 /* Multiple imports can occur, 1 for type, 2 for values under TS files */
                 "no-duplicate-imports": "off",
                 "no-magic-numbers": "off" /* Disable in-favour of typescript variant below (which can factor in enums) */,
                 "no-ternary": "off",
+                /* Use '_' prefix used for private functions/variables */
+                "no-underscore-dangle": "off",
                 /* Prefer separate declarations */
                 "one-var": ["error", "never"],
+                /* Set to warn for now */
+                "prefer-template": "warn",
+                /* Typescript variant enabled instead */
+                "prefer-readonly-parameter-types": ["off"],
                 /* Prettier auto formats imports, ignore */
                 "sort-keys": "off",
                 "sort-imports": "off",
@@ -123,49 +205,32 @@
                         ] /* All magic numbers for enums & -1,0,1,10,100 */
                     }
                 ],
+                /* Set to warn for now, Marking parameters as readonly/Readonly/DeepReadonly doesn't fix all issues */
+                "@typescript-eslint/no-type-alias": [
+                    "warn",
+                    {
+                        "allowAliases": "always"
+                    }
+                ],
                 "@typescript-eslint/prefer-readonly-parameter-types": [
-                    "error",
+                    "warn",
                     {
                         "checkParameterProperties": false
                     }
                 ],
+
                 /* Styling preferences */
                 "@typescript-eslint/object-curly-spacing": "off",
-                "@typescript-eslint/quotes": ["error", "single"],
+                "@typescript-eslint/quotes": ["off", "single"],
                 "@typescript-eslint/space-before-function-pare": "off",
                 "@typescript-eslint/comma-dangle": "off",
                 "@typescript-eslint/space-before-function-paren": "off",
-
-                /* Prettier */
-                "indent": ["error", 4],
-                "react/jsx-indent": ["error", 4],
-                "react/jsx-indent-props": ["error", 4],
+                "indent": "off",
+                "react/jsx-indent": "off",
+                "react/jsx-indent-props": "off",
                 "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
                 "react/jsx-filename-extension": ["error", { "extensions": [".tsx", ".ts"] }],
-                "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }],
-                "import/no-extraneous-dependencies": [
-                    "error",
-                    {
-                        "devDependencies": [
-                            "**/*.test.ts",
-                            "**/*.test.tsx",
-                            "**/*.spec.ts",
-                            "**/*.spec.tsx",
-                            "**/*.config.js",
-                            "**/*.config.ts"
-                        ]
-                    }
-                ],
-                "import/extensions": [
-                    "error",
-                    "ignorePackages",
-                    {
-                        "js": "never",
-                        "jsx": "never",
-                        "ts": "never",
-                        "tsx": "never"
-                    }
-                ]
+                "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }]
             }
         }
     ]

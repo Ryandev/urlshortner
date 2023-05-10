@@ -34,14 +34,13 @@
         },
         {
             "name": "DEBUG: api",
-            "program": "${workspaceFolder}/dist/packages/api/main.js",
-            "request": "launch",
-            "skipFiles": ["<node_internals>/**"],
-            "type": "pwa-node",
-            "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
-            "preLaunchTask": "api: build",
-            "envFile": "${workspaceFolder}/packages/api/.env",
-            "outFiles": ["${workspaceFolder}/dist/packages/api/**/*.js", "!**/node_modules/**"]
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "inspect": true,
+            "trace": true,
+            "sourceMaps": true,
+            "preLaunchTask": "api: serve"
         },
         {
             "name": "TEST: api",

@@ -11,3 +11,8 @@ NestJS
 cobertura
 lcov
 bcov
+nprogress
+clsx
+
+#Fonts
+Segoe
