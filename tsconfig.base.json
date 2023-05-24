@@ -24,10 +24,10 @@
         "checkJs": false,
         "baseUrl": ".",
         "paths": {
-            "@url/frontend": ["packages/frontend/src/index.ts"],
-            "@url/frontend/*": ["packages/frontend/src/*"],
             "@url/api": ["packages/api/src/index.ts"],
-            "@url/api/*": ["packages/api/src/*"]
+            "@url/api/*": ["packages/api/src/*"],
+            "@url/frontend": ["packages/frontend/src/index.ts"],
+            "@url/frontend/*": ["packages/frontend/src/*"]
         }
     },
     "exclude": ["node_modules", "tmp"]

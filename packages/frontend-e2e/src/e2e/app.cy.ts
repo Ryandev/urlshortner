@@ -1,15 +1,13 @@
-describe('frontend-index', () => {
+import { getGreeting } from '../support/app.po';
+
+describe('frontend', () => {
     beforeEach(() => cy.visit('/'));
 
     it('should display welcome message', () => {
-        cy.get('h2').should('have.length', 1);
-        cy.get('h2 > span').should('have.length', 2);
+        // Custom command example, see `../support/commands.ts` file
+        cy.login('my-email@something.com', 'myPassword');
 
-        // eslint-disable-next-line jest/valid-expect-in-promise
-        cy.get('h2')
-            .invoke('text')
-            .then(text => {
-                expect(text.trim()).equal('URLShortner');
-            });
+        // Function helper example, see `../support/app.po.ts` file
+        getGreeting().contains('Welcome frontend');
     });
 });

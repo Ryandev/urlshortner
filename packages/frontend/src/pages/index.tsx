@@ -9,7 +9,6 @@ import Head from 'next/head';
 import type { ReactElement } from 'react';
 import BaseLayout from '../layouts/BaseLayout';
 
-// @ts-nocheck Unused error, when referenced from React
 export const OverviewWrapper = styled(Box)(
     ({ theme }) => `
     overflow: auto;

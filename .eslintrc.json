@@ -10,12 +10,12 @@
         "plugin:react/recommended",
         "plugin:jest/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:@nrwl/nx/react-typescript",
+        "plugin:@nx/react-typescript",
         "plugin:@typescript-eslint/all",
         "plugin:jsx-a11y/recommended"
     ],
     "root": true,
-    "plugins": ["@nrwl/nx", "jest", "react"],
+    "plugins": ["@nx", "jest", "react"],
     "rules": {},
     "env": {
         "jest/globals": true,
@@ -50,36 +50,10 @@
         }
     },
     "overrides": [
-        /* JEST overrides */
-        {
-            "files": [
-                "*.test.ts",
-                "*.test.tsx",
-                "*.test.js",
-                "*.test.jsx",
-                "*.spec.ts",
-                "*.spec.tsx",
-                "*.spec.js",
-                "*.spec.jsx"
-            ],
-            "rules": {
-                "@typescript-eslint/no-unsafe-call": "off" /* jest.Expect is flagged as any type */
-            }
-        },
-
-        /* Cypress-E2E overrides */
-        {
-            "files": ["*.cy.ts", "*.cy.tsx", "*.cy.js", "*.cy.jsx"],
-            "rules": {
-                "jest/valid-expect-in-promise": "off" /* cy.get().then is flagged as promise */,
-                "no-magic-numbers": "off" /* Disabling due to non-production code */,
-                "@typescript-eslint/no-magic-numbers": "off"
-            }
-        },
-
+        /* Default JS/TS rules  */
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-            "extends": ["plugin:@nrwl/nx/typescript"],
+            "extends": ["plugin:@nx/typescript"],
             "rules": {
                 /* eslint */
                 "camelcase": [
@@ -225,12 +199,40 @@
                 "@typescript-eslint/space-before-function-pare": "off",
                 "@typescript-eslint/comma-dangle": "off",
                 "@typescript-eslint/space-before-function-paren": "off",
+                "@typescript-eslint/lines-around-comment": "off",
                 "indent": "off",
                 "react/jsx-indent": "off",
                 "react/jsx-indent-props": "off",
                 "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
                 "react/jsx-filename-extension": ["error", { "extensions": [".tsx", ".ts"] }],
                 "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }]
+            }
+        },
+
+        /* JEST overrides */
+        {
+            "files": [
+                "*.test.ts",
+                "*.test.tsx",
+                "*.test.js",
+                "*.test.jsx",
+                "*.spec.ts",
+                "*.spec.tsx",
+                "*.spec.js",
+                "*.spec.jsx"
+            ],
+            "rules": {
+                "@typescript-eslint/no-unsafe-call": "off" /* jest.Expect is flagged as any type */
+            }
+        },
+
+        /* Cypress-E2E overrides */
+        {
+            "files": ["*.cy.ts", "*.cy.tsx", "*.cy.js", "*.cy.jsx"],
+            "rules": {
+                "jest/valid-expect-in-promise": "off" /* cy.get().then is flagged as promise */,
+                "no-magic-numbers": "off" /* Disabling due to non-production code */,
+                "@typescript-eslint/no-magic-numbers": "off"
             }
         }
     ]
