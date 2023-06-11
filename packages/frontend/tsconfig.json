@@ -8,7 +8,7 @@
         "types": ["jest", "node"],
         "allowJs": true
     },
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts", "index.d.ts"],
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
     "exclude": [
         "node_modules",
         "jest.config.ts",
@@ -17,7 +17,10 @@
         "**/*.stories.ts",
         "**/*.stories.js",
         "**/*.stories.jsx",
-        "**/*.stories.tsx"
+        "**/*.stories.tsx",
+        "next.config.js",
+        "sentry.client.config.js",
+        "sentry.server.config.js"
     ],
     "references": [
         {

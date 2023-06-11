@@ -38,10 +38,13 @@
         "@mui/styles": "^5.11.13",
         "@mui/x-data-grid": "^6.1.0",
         "@mui/x-date-pickers": "^6.1.0",
-        "@nestjs/common": "9.4.0",
-        "@nestjs/core": "9.4.0",
+        "@mui/system": "5.11.12",        
+        "@nestjs/common": "^9.0.0",
+        "@nestjs/core": "^9.0.0",
         "@nestjs/devtools-integration": "^0.1.4",
-        "@nestjs/platform-express": "9.4.0",
+        "@nestjs/platform-express": "^9.0.0",
+        "@sentry/nextjs": "7.53.0",
+        "@sentry/node": "7.53.0",
         "apexcharts": "^3.37.1",
         "clsx": "^1.2.1",
         "core-js": "^3.6.5",
@@ -57,7 +60,7 @@
         "regenerator-runtime": "0.13.7",
         "rxjs": "^7.0.0",
         "styled-components": "^5.3.8",
-        "tslib": "^2.3.0"
+        "tslib": "^2.3.0"        
     },
     "devDependencies": {
         "@babel/core": "7.12.13",

@@ -2,7 +2,6 @@
     "extends": "@tsconfig/strictest/tsconfig.json",
     "compileOnSave": false,
     "compilerOptions": {
-        "ignoreDeprecations": "5.0",
         "noPropertyAccessFromIndexSignature": false,
         "noImplicitAny": true,
         "allowSyntheticDefaultImports": false,

@@ -16,3 +16,7 @@ clsx
 
 #Fonts
 Segoe
+
+#Github Actions
+coverallsapp
+creds

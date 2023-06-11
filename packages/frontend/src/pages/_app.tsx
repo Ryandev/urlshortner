@@ -1,5 +1,4 @@
 import type { ReactElement, ReactNode } from 'react';
-
 import type { EmotionCache } from '@emotion/react';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
