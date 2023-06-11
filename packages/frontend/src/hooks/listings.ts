@@ -7,15 +7,15 @@ function useListings(): IListing[] {
     return [
         {
             name: 'test',
-            url: 'http://google.com',
+            url: 'https://google.com',
         },
         {
             name: 'test',
-            url: 'http://google.com',
+            url: 'https://google.com',
         },
         {
             name: 'test',
-            url: 'http://google.com',
+            url: 'https://google.com',
         },
     ];
 }

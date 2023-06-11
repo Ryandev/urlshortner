@@ -15,12 +15,12 @@ const args: IListings = {
     items: [
         {
             name: 'Hello',
-            url: 'http://foo.com',
+            url: 'https://foo.com',
             expiryDate: new Date(),
         },
         {
             name: 'World',
-            url: 'http://bar.com',
+            url: 'https://bar.com',
             expiryDate: new Date(),
         },
     ],
