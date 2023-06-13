@@ -1,18 +1,22 @@
 #Project words
 shortner
 
+#Companies
+airbnb
+
 #Third Party Libraries
 Mongo
 mongodb
 nrwl
 nx
-airbnb
 NestJS
+NextJS
 cobertura
-lcov
-bcov
 nprogress
 clsx
+lcov
+bcov
+
 
 #Fonts
 Segoe
