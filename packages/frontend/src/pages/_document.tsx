@@ -1,5 +1,6 @@
 import createEmotionServer from '@emotion/server/create-instance';
 import type { AppType } from 'next/app';
+import type { Enhancer } from 'next/dist/shared/lib/utils';
 import type { DocumentContext } from 'next/document';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
@@ -46,17 +47,23 @@ class AppDocument extends Document {
         const originalRenderPage = ctx.renderPage;
 
         /*
-         * You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
-         * However, be aware that it can have global side effects.
+         * You can consider sharing the same emotion cache between all the SSR requests
+         * to speed up performance. However, be aware that it can
+         *  have global side effects.
          */
         const cache = createEmotionCache();
         const emotionServer = createEmotionServer(cache);
+        const enhanceApp: Enhancer<AppType> = (App: AppType) => {
+            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+            const documentWithEmotionCache = (props: any) => (
+                <App emotionCache={cache} {...props} />
+            );
+            return documentWithEmotionCache;
+        };
 
         ctx.renderPage = async () =>
             originalRenderPage({
-                // @ts-expect-error emotionCache does not exist on AppType
-                enhanceApp: (App: AppType) => props =>
-                    <App emotionCache={cache} {...props} />,
+                enhanceApp,
             });
 
         const initialProps = await Document.getInitialProps(ctx);
