@@ -50,10 +50,14 @@ export type LinkProps = Omit<MuiLinkProps, 'href'> &
         noLinkStyle?: boolean;
     };
 
+const isExternalLink = (href: unknown) =>
+    typeof href === 'string' && (href.startsWith('http') || href.startsWith('mailto:'));
+
 /*
  * A styled version of the Next.js Link component:
  * https://nextjs.org/docs/api-reference/next/link
  */
+// eslint-disable-next-line max-statements
 function _Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
     const {
         activeClassName = 'active',
@@ -78,16 +82,13 @@ function _Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
         [activeClassName]: router.pathname === pathname && activeClassName,
     });
 
-    const isExternal =
-        typeof href === 'string' &&
-        (href.startsWith('http') || href.startsWith('mailto:'));
-
-    if (isExternal) {
+    if (isExternalLink(href)) {
         if (noLinkStyle ?? false) {
-            return <Anchor className={className} href={href} ref={ref} {...other} />;
+            return (
+                <Anchor className={className} href={String(href)} ref={ref} {...other} />
+            );
         }
-
-        return <MuiLink className={className} href={href} ref={ref} {...other} />;
+        return <MuiLink className={className} href={String(href)} ref={ref} {...other} />;
     }
 
     const linkAs = linkAsProp ?? as;
