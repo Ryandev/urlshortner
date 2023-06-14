@@ -65,6 +65,8 @@
                         "ignoreDestructuring": true
                     }
                 ],
+                /* Prettier rules override this */
+                "dot-location": "off",
                 /* Mix of arrow & function declarations used */
                 "func-style": "off",
                 /* Prettier rules override this */
@@ -151,7 +153,10 @@
                 "no-duplicate-imports": "off",
                 /* Prettier overrides this */
                 "no-extra-parens": "off",
-                "no-magic-numbers": "off" /* Disable in-favour of typescript variant below (which can factor in enums) */,
+                /* Disable in-favour of typescript variant below (which can factor in enums) */
+                "no-magic-numbers": "off",
+                /* Prettier will override */
+                "no-mixed-operators": "off",
                 "no-ternary": "off",
                 /* Use '_' prefix used for private functions/variables */
                 "no-underscore-dangle": "off",
