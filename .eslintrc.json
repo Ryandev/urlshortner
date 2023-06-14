@@ -95,7 +95,6 @@
                 "import/no-extraneous-dependencies": [
                     "warn",
                     {
-                        "packageDir": ["./package.json"],
                         "devDependencies": [
                             "**/.storybook/*.js",
                             "**/.storybook/*.jsx",
@@ -133,7 +132,7 @@
                     }
                 ],
                 "max-lines": "warn",
-                "max-len": "warn",
+                "max-len": ["warn", { "code": 90 }],
                 /* Set to warn for now */
                 "max-statements": "warn",
                 /* Prettier rules override this */
