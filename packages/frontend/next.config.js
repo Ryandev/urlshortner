@@ -21,7 +21,9 @@ const CONFIG_SETTINGS_SENTRY = {
 const nextConfig = {
     /* Ref: https://github.com/nrwl/nx/issues/15214 */
     distDir: ['..', '..', 'dist', 'packages', 'frontend', '.next'].join(path.sep),
-
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
     nx: {
         svgr: false,
     },

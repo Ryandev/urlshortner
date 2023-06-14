@@ -26,11 +26,11 @@ const args: IListings = {
     ],
     onEdit: item => {
         /* eslint-disable-next-line no-console */
-        console.log(`Edit requested for: ${item.name}`);
+        console.log(`Edit requested for: ${String(item.name)}`);
     },
     onDelete: item => {
         /* eslint-disable-next-line no-console */
-        console.log(`Delete requested for: ${item.name}`);
+        console.log(`Delete requested for: ${String(item.name)}`);
     },
 };
 

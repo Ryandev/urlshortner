@@ -102,7 +102,7 @@ function UrlForm(props: {
                         label="Url"
                         error={url.length !== 0 && !_isValidURL(url)}
                         helperText={statusText}
-                        placeholder="http://www.github.com"
+                        placeholder="https://www.github.com"
                         onChange={onURLChange}
                         value={url}
                     />

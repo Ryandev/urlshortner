@@ -56,6 +56,8 @@
             "extends": ["plugin:@nx/typescript"],
             "rules": {
                 /* eslint */
+                /* Prettier rules override this */
+                "arrow-parens": "off",
                 "camelcase": [
                     "error",
                     {
@@ -64,6 +66,9 @@
                 ],
                 /* Mix of arrow & function declarations used */
                 "func-style": "off",
+                /* Prettier rules override this */
+                "function-paren-newline": "off",
+                "function-call-argument-newline": ["error", "consistent"],
                 "id-length": [
                     "error",
                     {
@@ -88,9 +93,9 @@
                     }
                 ],
                 "import/no-extraneous-dependencies": [
-                    "error",
+                    "warn",
                     {
-                        "packageDir": ["./"],
+                        "packageDir": ["./package.json"],
                         "devDependencies": [
                             "**/.storybook/*.js",
                             "**/.storybook/*.jsx",
@@ -128,22 +133,31 @@
                     }
                 ],
                 "max-lines": "warn",
+                "max-len": "warn",
                 /* Set to warn for now */
                 "max-statements": "warn",
+                /* Prettier rules override this */
+                "multiline-ternary": "off",
                 /* React function components are pascal cased */
                 "new-cap": "off",
                 /* Multiple imports can occur, 1 for type, 2 for values under TS files */
                 "no-duplicate-imports": "off",
+                /* Prettier overrides this */
+                "no-extra-parens": "off",
                 "no-magic-numbers": "off" /* Disable in-favour of typescript variant below (which can factor in enums) */,
                 "no-ternary": "off",
                 /* Use '_' prefix used for private functions/variables */
                 "no-underscore-dangle": "off",
                 /* Prefer separate declarations */
                 "one-var": ["error", "never"],
+                /* Prettier will override */
+                "object-property-newline": "off",
+                "padded-blocks": ["error", "never"],
                 /* Set to warn for now */
                 "prefer-template": "warn",
                 /* Typescript variant enabled instead */
                 "prefer-readonly-parameter-types": ["off"],
+                "quote-props": ["error", "as-needed"],
                 /* Prettier auto formats imports, ignore */
                 "sort-keys": "off",
                 "sort-imports": "off",
@@ -156,7 +170,9 @@
                 "react/jsx-uses-react": "off",
                 "react/react-in-jsx-scope": "off",
 
-                /* typescript */
+                /* Typescript */
+                /* Prettier overrides this */
+                "@typescript-eslint/indent": "off",
                 "@typescript-eslint/naming-convention": [
                     "error",
                     {
@@ -170,6 +186,8 @@
                         "trailingUnderscore": "forbid"
                     }
                 ],
+                /* Prettier overrides this */
+                "@typescript-eslint/no-extra-parens": "off",
 
                 "@typescript-eslint/no-magic-numbers": [
                     "warn",

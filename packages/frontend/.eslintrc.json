@@ -6,22 +6,9 @@
         "../../.eslintrc.json"
     ],
     "ignorePatterns": ["!**/*", ".next/**/*"],
-    "overrides": [
-        {
-            "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-            "rules": {
-                "@next/next/no-html-link-for-pages": ["error", "packages/frontend/pages"]
-            }
-        },
-        {
-            "files": ["*.ts", "*.tsx"],
-            "rules": {}
-        },
-        {
-            "files": ["*.js", "*.jsx"],
-            "rules": {}
-        }
-    ],
+    "rules": {
+        "@next/next/no-html-link-for-pages": ["error", "packages/frontend/src/pages/"]
+    },
     "env": {
         "jest": true
     }
