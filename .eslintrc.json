@@ -56,6 +56,7 @@
             "extends": ["plugin:@nx/typescript"],
             "rules": {
                 /* eslint */
+                "array-element-newline": ["error", "consistent"],
                 /* Prettier rules override this */
                 "arrow-parens": "off",
                 "camelcase": [
@@ -72,7 +73,12 @@
                 "id-length": [
                     "error",
                     {
-                        "exceptions": ["_", "i", "x", "y"] /* integer index & unused arg */
+                        "exceptions": [
+                            "_",
+                            "i",
+                            "x",
+                            "y"
+                        ] /* integer index & unused arg */
                     }
                 ],
 
@@ -222,8 +228,14 @@
                 "react/jsx-indent": "off",
                 "react/jsx-indent-props": "off",
                 "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
-                "react/jsx-filename-extension": ["error", { "extensions": [".tsx", ".ts"] }],
-                "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }]
+                "react/jsx-filename-extension": [
+                    "error",
+                    { "extensions": [".tsx", ".ts"] }
+                ],
+                "no-multiple-empty-lines": [
+                    "error",
+                    { "max": 3, "maxEOF": 0, "maxBOF": 0 }
+                ]
             }
         },
 
