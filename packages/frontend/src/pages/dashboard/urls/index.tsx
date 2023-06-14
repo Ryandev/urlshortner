@@ -63,7 +63,9 @@ function DashboardUrls() {
                     >
                         <Grid xs={8}>
                             <Box p={4}>
-                                <Typography variant="h3">All ({allListings.length})</Typography>
+                                <Typography variant="h3">
+                                    All ({allListings.length})
+                                </Typography>
                             </Box>
                         </Grid>
                         <Grid xs={4}>
@@ -86,7 +88,9 @@ function DashboardUrls() {
                     onSubmit={(url, name, expiry) => {
                         // eslint-disable-next-line no-console
                         console.log(
-                            `Submitted request to ${String(url)},${name},${String(expiry ?? '')}`,
+                            `Submitted request to ${String(url)},${name},${String(
+                                expiry ?? '',
+                            )}`,
                         );
                     }}
                 />

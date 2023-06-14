@@ -96,7 +96,12 @@ const NextJsAvatar = styled(Box)(
 function Hero() {
     return (
         <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
-            <Grid spacing={{ xs: 6, md: 10 }} justifyContent="center" alignItems="center" container>
+            <Grid
+                spacing={{ xs: 6, md: 10 }}
+                justifyContent="center"
+                alignItems="center"
+                container
+            >
                 <Grid item md={10} lg={8} mx="auto">
                     <LabelWrapper color="success">Version 1.0.0</LabelWrapper>
                     <TypographyH1 sx={{ mb: 2 }} variant="h1">
@@ -108,9 +113,9 @@ function Hero() {
                         color="text.secondary"
                         fontWeight="normal"
                     >
-                        High performance React template built with lots of powerful Material-UI
-                        components across multiple product niches for fast & perfect apps
-                        development processes
+                        High performance React template built with lots of powerful
+                        Material-UI components across multiple product niches for fast &
+                        perfect apps development processes
                     </TypographyH2>
                     <Button
                         component={Link}
@@ -134,15 +139,18 @@ function Hero() {
                     <Grid container spacing={3} mt={5}>
                         <Grid item md={4}>
                             <MuiAvatar>
-                                <img src="/static/images/logo/material-ui.svg" alt="Material-UI" />
+                                <img
+                                    src="/static/images/logo/material-ui.svg"
+                                    alt="Material-UI"
+                                />
                             </MuiAvatar>
                             <Typography variant="h4">
                                 <Box sx={{ pb: 2 }}>
                                     <b>Powered by MUI (Material-UI)</b>
                                 </Box>
                                 <Typography component="span" variant="subtitle2">
-                                    A simple and customizable component library to build faster,
-                                    beautiful, and accessible React apps.
+                                    A simple and customizable component library to build
+                                    faster, beautiful, and accessible React apps.
                                 </Typography>
                             </Typography>
                         </Grid>
@@ -155,22 +163,25 @@ function Hero() {
                                     <b>Built with Next.js</b>
                                 </Box>
                                 <Typography component="span" variant="subtitle2">
-                                    Next.js gives you the best developer experience with all the
-                                    features you need for production.
+                                    Next.js gives you the best developer experience with
+                                    all the features you need for production.
                                 </Typography>
                             </Typography>
                         </Grid>
                         <Grid item md={4}>
                             <TsAvatar>
-                                <img src="/static/images/logo/typescript.svg" alt="Typescript" />
+                                <img
+                                    src="/static/images/logo/typescript.svg"
+                                    alt="Typescript"
+                                />
                             </TsAvatar>
                             <Typography variant="h4">
                                 <Box sx={{ pb: 2 }}>
                                     <b>Built with Typescript</b>
                                 </Box>
                                 <Typography component="span" variant="subtitle2">
-                                    Tokyo Free Black features a modern technology stack and is built
-                                    with React + Typescript.
+                                    Tokyo Free Black features a modern technology stack
+                                    and is built with React + Typescript.
                                 </Typography>
                             </Typography>
                         </Grid>

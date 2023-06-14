@@ -19,7 +19,9 @@ function ListingHeading(props: DeepReadonly<{ value: string }>): JSX.Element {
     );
 }
 
-function ListingCell(props: DeepReadonly<{ value: JSX.Element | number | string }>): JSX.Element {
+function ListingCell(
+    props: DeepReadonly<{ value: JSX.Element | number | string }>,
+): JSX.Element {
     return (
         <TableCell>
             <Typography variant="body1">{props.value}</Typography>
@@ -55,7 +57,10 @@ function Listing(props: DeepReadonly<IListings>): JSX.Element {
                                 spacing={{ xs: 1, sm: 2, md: 4 }}
                                 divider={<Divider orientation="vertical" flexItem />}
                             >
-                                <Button variant="contained" onClick={() => props.onEdit?.(item)}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => props.onEdit?.(item)}
+                                >
                                     <Typography>Edit</Typography>
                                 </Button>
                                 <Button

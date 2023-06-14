@@ -38,7 +38,10 @@ function NotificationsTab() {
                     <List>
                         <ListItem sx={{ padding: 3 }}>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -56,7 +59,10 @@ function NotificationsTab() {
                         <Divider component="li" />
                         <ListItem sx={{ padding: 3 }}>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -85,7 +91,10 @@ function NotificationsTab() {
                     <List>
                         <ListItem sx={{ padding: 3 }}>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -103,7 +112,10 @@ function NotificationsTab() {
                         <Divider component="li" />
                         <ListItem sx={{ padding: 3 }}>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,

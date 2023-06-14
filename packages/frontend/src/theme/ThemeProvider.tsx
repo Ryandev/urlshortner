@@ -14,7 +14,8 @@ function ThemeProviderWrapper(props: DeepReadonly<{ children: ReactNode }>): JSX
     const [themeName, _setThemeName] = useState<ThemeTypes>('GreenFieldsTheme');
 
     useEffect(() => {
-        const curThemeName = window.localStorage.getItem('appTheme') ?? 'GreenFieldsTheme';
+        const curThemeName =
+            window.localStorage.getItem('appTheme') ?? 'GreenFieldsTheme';
         _setThemeName(curThemeName as ThemeTypes);
     }, []);
 

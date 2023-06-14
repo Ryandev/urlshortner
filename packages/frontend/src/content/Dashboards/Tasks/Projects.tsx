@@ -179,7 +179,11 @@ function Projects() {
                                 </Tooltip>
                             </AvatarGroup>
                             <Box>
-                                <Tooltip arrow title="View project calendar" placement="top">
+                                <Tooltip
+                                    arrow
+                                    title="View project calendar"
+                                    placement="top"
+                                >
                                     <IconButton
                                         size="small"
                                         color="secondary"
@@ -190,7 +194,11 @@ function Projects() {
                                         <CalendarTodayTwoToneIcon fontSize="small" />
                                     </IconButton>
                                 </Tooltip>
-                                <Tooltip arrow title="Mark project as favourite" placement="top">
+                                <Tooltip
+                                    arrow
+                                    title="Mark project as favourite"
+                                    placement="top"
+                                >
                                     <IconButton
                                         size="small"
                                         sx={{
@@ -292,7 +300,11 @@ function Projects() {
                                 </Tooltip>
                             </AvatarGroup>
                             <Box>
-                                <Tooltip arrow title="View project calendar" placement="top">
+                                <Tooltip
+                                    arrow
+                                    title="View project calendar"
+                                    placement="top"
+                                >
                                     <IconButton
                                         size="small"
                                         color="secondary"
@@ -303,7 +315,11 @@ function Projects() {
                                         <CalendarTodayTwoToneIcon fontSize="small" />
                                     </IconButton>
                                 </Tooltip>
-                                <Tooltip arrow title="Mark project as favourite" placement="top">
+                                <Tooltip
+                                    arrow
+                                    title="Mark project as favourite"
+                                    placement="top"
+                                >
                                     <IconButton
                                         size="small"
                                         sx={{
@@ -333,7 +349,11 @@ function Projects() {
                                     }}
                                     overlap="circular"
                                     badgeContent={
-                                        <Tooltip arrow placement="top" title="Online right now">
+                                        <Tooltip
+                                            arrow
+                                            placement="top"
+                                            title="Online right now"
+                                        >
                                             <DotLegend
                                                 style={{
                                                     background: `${theme.colors.success.main}`,
@@ -342,7 +362,10 @@ function Projects() {
                                         </Tooltip>
                                     }
                                 >
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatars/1.jpg" />
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src="/static/images/avatars/1.jpg"
+                                    />
                                 </Badge>
                             }
                             action={
@@ -428,7 +451,11 @@ function Projects() {
                                 </Tooltip>
                             </AvatarGroup>
                             <Box>
-                                <Tooltip arrow title="View project calendar" placement="top">
+                                <Tooltip
+                                    arrow
+                                    title="View project calendar"
+                                    placement="top"
+                                >
                                     <IconButton
                                         size="small"
                                         color="secondary"
@@ -439,7 +466,11 @@ function Projects() {
                                         <CalendarTodayTwoToneIcon fontSize="small" />
                                     </IconButton>
                                 </Tooltip>
-                                <Tooltip arrow title="Mark project as favourite" placement="top">
+                                <Tooltip
+                                    arrow
+                                    title="Mark project as favourite"
+                                    placement="top"
+                                >
                                     <IconButton
                                         size="small"
                                         sx={{

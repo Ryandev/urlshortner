@@ -88,12 +88,19 @@ function Register(props: DeepReadonly<IRegister>): JSX.Element {
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                control={
+                                    <Checkbox value="allowExtraEmails" color="primary" />
+                                }
                                 label="I want to receive inspiration, marketing promotions and updates via email."
                             />
                         </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
                         Sign Up
                     </Button>
                     <Grid container justifyContent="flex-end">

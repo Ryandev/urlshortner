@@ -108,7 +108,11 @@ const ProfileCover = ({
             <CardCoverAction>
                 <Input accept="image/*" id="change-cover" multiple type="file" />
                 <label htmlFor="change-cover">
-                    <Button startIcon={<UploadTwoToneIcon />} variant="contained" component="span">
+                    <Button
+                        startIcon={<UploadTwoToneIcon />}
+                        variant="contained"
+                        component="span"
+                    >
                         Change cover
                     </Button>
                 </label>
@@ -117,7 +121,12 @@ const ProfileCover = ({
         <AvatarWrapper>
             <Avatar variant="rounded" alt={user.name} src={user.avatar} />
             <ButtonUploadWrapper>
-                <Input accept="image/*" id="icon-button-file" name="icon-button-file" type="file" />
+                <Input
+                    accept="image/*"
+                    id="icon-button-file"
+                    name="icon-button-file"
+                    type="file"
+                />
                 <label htmlFor="icon-button-file">
                     <IconButton component="span" color="primary">
                         <UploadTwoToneIcon />

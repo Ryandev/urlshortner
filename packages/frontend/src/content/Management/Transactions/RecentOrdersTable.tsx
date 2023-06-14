@@ -45,7 +45,10 @@ const formatCurrency = (amount: number, currency: string): string =>
 const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
     const map: Record<
         CryptoOrderStatus,
-        { text: 'Completed' | 'Failed' | 'Pending'; color: 'error' | 'success' | 'warning' }
+        {
+            text: 'Completed' | 'Failed' | 'Pending';
+            color: 'error' | 'success' | 'warning';
+        }
     > = {
         failed: {
             text: 'Failed',
@@ -77,8 +80,11 @@ const applyFilters = (cryptoOrders: CryptoOrder[], filters: Filters): CryptoOrde
         return matches;
     });
 
-const applyPagination = (cryptoOrders: CryptoOrder[], page: number, limit: number): CryptoOrder[] =>
-    cryptoOrders.slice(page * limit, page * limit + limit);
+const applyPagination = (
+    cryptoOrders: CryptoOrder[],
+    page: number,
+    limit: number,
+): CryptoOrder[] => cryptoOrders.slice(page * limit, page * limit + limit);
 
 const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>([]);
@@ -153,7 +159,8 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     const filteredCryptoOrders = applyFilters(cryptoOrders, filters);
     const paginatedCryptoOrders = applyPagination(filteredCryptoOrders, page, limit);
     const selectedSomeCryptoOrders =
-        selectedCryptoOrders.length > 0 && selectedCryptoOrders.length < cryptoOrders.length;
+        selectedCryptoOrders.length > 0 &&
+        selectedCryptoOrders.length < cryptoOrders.length;
     const selectedAllCryptoOrders = selectedCryptoOrders.length === cryptoOrders.length;
     const theme = useTheme();
 
@@ -177,7 +184,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                     autoWidth
                                 >
                                     {statusOptions.map(statusOption => (
-                                        <MenuItem key={statusOption.id} value={statusOption.id}>
+                                        <MenuItem
+                                            key={statusOption.id}
+                                            value={statusOption.id}
+                                        >
                                             {statusOption.name}
                                         </MenuItem>
                                     ))}
@@ -224,8 +234,13 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                         <Checkbox
                                             color="primary"
                                             checked={isCryptoOrderSelected}
-                                            onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                                handleSelectOneCryptoOrder(event, cryptoOrder.id);
+                                            onChange={(
+                                                event: ChangeEvent<HTMLInputElement>,
+                                            ) => {
+                                                handleSelectOneCryptoOrder(
+                                                    event,
+                                                    cryptoOrder.id,
+                                                );
                                             }}
                                             value={isCryptoOrderSelected}
                                         />
@@ -240,8 +255,15 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                         >
                                             {cryptoOrder.orderDetails}
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary" noWrap>
-                                            {format(cryptoOrder.orderDate, 'MMMM dd yyyy')}
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            noWrap
+                                        >
+                                            {format(
+                                                cryptoOrder.orderDate,
+                                                'MMMM dd yyyy',
+                                            )}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
@@ -265,7 +287,11 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                         >
                                             {cryptoOrder.sourceName}
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary" noWrap>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            noWrap
+                                        >
                                             {cryptoOrder.sourceDesc}
                                         </Typography>
                                     </TableCell>
@@ -280,7 +306,11 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                             {cryptoOrder.amountCrypto}
                                             {cryptoOrder.cryptoCurrency}
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary" noWrap>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            noWrap
+                                        >
                                             {formatCurrency(
                                                 cryptoOrder.amount,
                                                 cryptoOrder.currency,
@@ -295,7 +325,8 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                             <IconButton
                                                 sx={{
                                                     '&:hover': {
-                                                        background: theme.colors.primary.lighter,
+                                                        background:
+                                                            theme.colors.primary.lighter,
                                                     },
                                                     color: theme.palette.primary.main,
                                                 }}
@@ -309,7 +340,8 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                             <IconButton
                                                 sx={{
                                                     '&:hover': {
-                                                        background: theme.colors.error.lighter,
+                                                        background:
+                                                            theme.colors.error.lighter,
                                                     },
                                                     color: theme.palette.error.main,
                                                 }}

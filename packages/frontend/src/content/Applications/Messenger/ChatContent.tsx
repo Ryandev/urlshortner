@@ -51,9 +51,16 @@ function ChatContent() {
 
     return (
         <Box p={3}>
-            <DividerWrapper>{format(subDays(new Date(), 3), 'MMMM dd yyyy')}</DividerWrapper>
+            <DividerWrapper>
+                {format(subDays(new Date(), 3), 'MMMM dd yyyy')}
+            </DividerWrapper>
 
-            <Box display="flex" alignItems="flex-start" justifyContent="flex-start" py={3}>
+            <Box
+                display="flex"
+                alignItems="flex-start"
+                justifyContent="flex-start"
+                py={3}
+            >
                 <Avatar
                     variant="rounded"
                     sx={{
@@ -103,8 +110,8 @@ function ChatContent() {
                     mr={2}
                 >
                     <CardWrapperPrimary>
-                        Yes, I&apos;ll email them right now. I&apos;ll let you know once the
-                        remaining invoices are done.
+                        Yes, I&apos;ll email them right now. I&apos;ll let you know once
+                        the remaining invoices are done.
                     </CardWrapperPrimary>
                     <Typography
                         variant="subtitle1"
@@ -135,7 +142,9 @@ function ChatContent() {
                     src={user.avatar}
                 />
             </Box>
-            <DividerWrapper>{format(subDays(new Date(), 5), 'MMMM dd yyyy')}</DividerWrapper>
+            <DividerWrapper>
+                {format(subDays(new Date(), 5), 'MMMM dd yyyy')}
+            </DividerWrapper>
 
             <Box display="flex" alignItems="flex-start" justifyContent="flex-end" py={3}>
                 <Box
@@ -183,7 +192,12 @@ function ChatContent() {
                 />
             </Box>
             <DividerWrapper>Today</DividerWrapper>
-            <Box display="flex" alignItems="flex-start" justifyContent="flex-start" py={3}>
+            <Box
+                display="flex"
+                alignItems="flex-start"
+                justifyContent="flex-start"
+                py={3}
+            >
                 <Avatar
                     variant="rounded"
                     sx={{
@@ -237,7 +251,8 @@ function ChatContent() {
                     mr={2}
                 >
                     <CardWrapperPrimary>
-                        Hello, I just got my Amazon order shipped and I’m very happy about that.
+                        Hello, I just got my Amazon order shipped and I’m very happy about
+                        that.
                     </CardWrapperPrimary>
                     <CardWrapperPrimary
                         sx={{

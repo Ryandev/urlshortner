@@ -53,7 +53,8 @@ function PageHeader() {
                         Welcome, {user.name}!
                     </Typography>
                     <Typography variant="subtitle2">
-                        Manage your day to day tasks with style! Enjoy a well built UI system.
+                        Manage your day to day tasks with style! Enjoy a well built UI
+                        system.
                     </Typography>
                 </Box>
             </Box>

@@ -55,7 +55,8 @@ class AppDocument extends Document {
         ctx.renderPage = async () =>
             originalRenderPage({
                 // @ts-expect-error emotionCache does not exist on AppType
-                enhanceApp: (App: AppType) => props => <App emotionCache={cache} {...props} />,
+                enhanceApp: (App: AppType) => props =>
+                    <App emotionCache={cache} {...props} />,
             });
 
         const initialProps = await Document.getInitialProps(ctx);

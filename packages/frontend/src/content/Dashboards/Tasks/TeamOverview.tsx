@@ -56,14 +56,23 @@ function TeamOverview() {
                             }}
                             overlap="circular"
                             badgeContent={
-                                <Tooltip arrow placement="top" title={'Offline since yesterday'}>
+                                <Tooltip
+                                    arrow
+                                    placement="top"
+                                    title={'Offline since yesterday'}
+                                >
                                     <DotLegend
-                                        style={{ background: `${theme.colors.error.main}` }}
+                                        style={{
+                                            background: `${theme.colors.error.main}`,
+                                        }}
                                     />
                                 </Tooltip>
                             }
                         >
-                            <AvatarWrapper alt="Remy Sharp" src="/static/images/avatars/4.jpg" />
+                            <AvatarWrapper
+                                alt="Remy Sharp"
+                                src="/static/images/avatars/4.jpg"
+                            />
                         </Badge>
                         <Box
                             sx={{
@@ -80,10 +89,14 @@ function TeamOverview() {
                     </Box>
 
                     <Typography variant="subtitle2" gutterBottom>
-                        <Text color="black">4</Text> out of <Text color="black">6</Text> tasks
-                        completed
+                        <Text color="black">4</Text> out of <Text color="black">6</Text>{' '}
+                        tasks completed
                     </Typography>
-                    <LinearProgressWrapper value={65} color="primary" variant="determinate" />
+                    <LinearProgressWrapper
+                        value={65}
+                        color="primary"
+                        variant="determinate"
+                    />
                 </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -96,14 +109,23 @@ function TeamOverview() {
                             }}
                             overlap="circular"
                             badgeContent={
-                                <Tooltip arrow placement="top" title={'Online since today'}>
+                                <Tooltip
+                                    arrow
+                                    placement="top"
+                                    title={'Online since today'}
+                                >
                                     <DotLegend
-                                        style={{ background: `${theme.colors.success.main}` }}
+                                        style={{
+                                            background: `${theme.colors.success.main}`,
+                                        }}
                                     />
                                 </Tooltip>
                             }
                         >
-                            <AvatarWrapper alt="Ann Saris" src="/static/images/avatars/3.jpg" />
+                            <AvatarWrapper
+                                alt="Ann Saris"
+                                src="/static/images/avatars/3.jpg"
+                            />
                         </Badge>
                         <Box
                             sx={{
@@ -120,10 +142,14 @@ function TeamOverview() {
                     </Box>
 
                     <Typography variant="subtitle2" gutterBottom>
-                        <Text color="black">2</Text> out of <Text color="black">8</Text> tasks
-                        completed
+                        <Text color="black">2</Text> out of <Text color="black">8</Text>{' '}
+                        tasks completed
                     </Typography>
-                    <LinearProgressWrapper value={25} color="primary" variant="determinate" />
+                    <LinearProgressWrapper
+                        value={25}
+                        color="primary"
+                        variant="determinate"
+                    />
                 </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -136,14 +162,23 @@ function TeamOverview() {
                             }}
                             overlap="circular"
                             badgeContent={
-                                <Tooltip arrow placement="top" title={'Offline since yesterday'}>
+                                <Tooltip
+                                    arrow
+                                    placement="top"
+                                    title={'Offline since yesterday'}
+                                >
                                     <DotLegend
-                                        style={{ background: `${theme.colors.error.main}` }}
+                                        style={{
+                                            background: `${theme.colors.error.main}`,
+                                        }}
                                     />
                                 </Tooltip>
                             }
                         >
-                            <AvatarWrapper alt="James Stanton" src="/static/images/avatars/5.jpg" />
+                            <AvatarWrapper
+                                alt="James Stanton"
+                                src="/static/images/avatars/5.jpg"
+                            />
                         </Badge>
                         <Box
                             sx={{
@@ -160,10 +195,14 @@ function TeamOverview() {
                     </Box>
 
                     <Typography variant="subtitle2" gutterBottom>
-                        <Text color="black">10</Text> out of <Text color="black">20</Text> tasks
-                        completed
+                        <Text color="black">10</Text> out of <Text color="black">20</Text>{' '}
+                        tasks completed
                     </Typography>
-                    <LinearProgressWrapper value={50} color="primary" variant="determinate" />
+                    <LinearProgressWrapper
+                        value={50}
+                        color="primary"
+                        variant="determinate"
+                    />
                 </Box>
             </Grid>
         </Grid>

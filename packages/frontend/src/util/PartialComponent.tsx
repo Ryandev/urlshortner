@@ -1,8 +1,9 @@
 import type { ComponentProps, ElementType, FunctionComponent, ReactNode } from 'react';
 
-function withDefaultProps<C extends ElementType, PartialProps extends Partial<ComponentProps<C>>>(
-    component: C,
-) {
+function withDefaultProps<
+    C extends ElementType,
+    PartialProps extends Partial<ComponentProps<C>>,
+>(component: C) {
     const ResultComponent = component as FunctionComponent<PartialProps>;
     /* We return generic function, that accepts Partial component props as argument */
     const newComponent = (defaultProps: Readonly<PartialProps>) => {

@@ -50,7 +50,10 @@ function Header() {
                         : `0px 2px 8px -3px ${alpha(
                               theme.colors.alpha.black[100],
                               0.2,
-                          )}, 0px 5px 22px -4px ${alpha(theme.colors.alpha.black[100], 0.1)}`,
+                          )}, 0px 5px 22px -4px ${alpha(
+                              theme.colors.alpha.black[100],
+                              0.1,
+                          )}`,
             }}
         >
             <Stack

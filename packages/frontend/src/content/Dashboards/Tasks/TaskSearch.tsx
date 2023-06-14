@@ -192,9 +192,9 @@ function TaskSearch() {
                             }}
                             color="text.secondary"
                         >
-                            It is a long established fact that a reader will be distracted by the
-                            readable content of a page when looking at its layout beatae vitae dicta
-                            sunt explicabo.
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout
+                            beatae vitae dicta sunt explicabo.
                         </Typography>
                         <Button size="small" variant="contained">
                             View task
@@ -211,7 +211,11 @@ function TaskSearch() {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Typography display="flex" alignItems="center" variant="subtitle2">
+                            <Typography
+                                display="flex"
+                                alignItems="center"
+                                variant="subtitle2"
+                            >
                                 <TodayTwoToneIcon
                                     sx={{
                                         mr: 1,
@@ -222,7 +226,10 @@ function TaskSearch() {
                                 })}
                             </Typography>
                             <AvatarGroup>
-                                <Tooltip arrow title={'$"View profile for\')} Remy Sharp'}>
+                                <Tooltip
+                                    arrow
+                                    title={'$"View profile for\')} Remy Sharp'}
+                                >
                                     <Avatar
                                         sx={{
                                             width: 30,
@@ -297,8 +304,8 @@ function TaskSearch() {
                             color="text.secondary"
                         >
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                            illo.
+                            accusantium doloremque laudantium, totam rem aperiam, eaque
+                            ipsa quae ab illo.
                         </Typography>
                         <Button size="small" variant="contained">
                             View task
@@ -315,7 +322,11 @@ function TaskSearch() {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Typography display="flex" alignItems="center" variant="subtitle2">
+                            <Typography
+                                display="flex"
+                                alignItems="center"
+                                variant="subtitle2"
+                            >
                                 <TodayTwoToneIcon
                                     sx={{
                                         mr: 1,
@@ -412,9 +423,9 @@ function TaskSearch() {
                             }}
                             color="text.secondary"
                         >
-                            Nemo enim ipsam voluptatem quia accusantium doloremque laudantium
-                            voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-                            dolores eos qui ratione.
+                            Nemo enim ipsam voluptatem quia accusantium doloremque
+                            laudantium voluptas sit aspernatur aut odit aut fugit, sed
+                            quia consequuntur magni dolores eos qui ratione.
                         </Typography>
                         <Button size="small" variant="contained">
                             View task
@@ -431,7 +442,11 @@ function TaskSearch() {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Typography display="flex" alignItems="center" variant="subtitle2">
+                            <Typography
+                                display="flex"
+                                alignItems="center"
+                                variant="subtitle2"
+                            >
                                 <TodayTwoToneIcon
                                     sx={{
                                         mr: 1,

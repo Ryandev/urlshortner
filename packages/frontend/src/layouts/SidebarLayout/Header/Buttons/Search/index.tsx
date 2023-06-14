@@ -26,8 +26,16 @@ import type { TransitionProps } from '@mui/material/transitions';
 import type { ChangeEvent, ReactElement, Ref } from 'react';
 import { forwardRef, useState } from 'react';
 
-const _Transition = (props: TransitionProps & { children: ReactElement }, ref: Ref<unknown>) => (
-    <Slide direction="down" ref={ref} appear={props.appear ?? false} {...(props as SlideProps)} />
+const _Transition = (
+    props: TransitionProps & { children: ReactElement },
+    ref: Ref<unknown>,
+) => (
+    <Slide
+        direction="down"
+        ref={ref}
+        appear={props.appear ?? false}
+        {...(props as SlideProps)}
+    />
 );
 const Transition = forwardRef(_Transition);
 
@@ -123,7 +131,11 @@ function HeaderSearch() {
 
                 {openSearchResults && (
                     <DialogContent>
-                        <Box sx={{ pt: 0, pb: 1 }} display="flex" justifyContent="space-between">
+                        <Box
+                            sx={{ pt: 0, pb: 1 }}
+                            display="flex"
+                            justifyContent="space-between"
+                        >
                             <Typography variant="body2" component="span">
                                 Search results for{' '}
                                 <Typography
@@ -169,11 +181,14 @@ function HeaderSearch() {
                                         variant="body2"
                                         sx={{
                                             color: (theme: Theme) =>
-                                                lighten(theme.palette.secondary.main, 0.5),
+                                                lighten(
+                                                    theme.palette.secondary.main,
+                                                    0.5,
+                                                ),
                                         }}
                                     >
-                                        This page contains all the necessary information for
-                                        managing all hospital staff.
+                                        This page contains all the necessary information
+                                        for managing all hospital staff.
                                     </Typography>
                                 </Box>
                                 <ChevronRightTwoToneIcon />
@@ -208,10 +223,14 @@ function HeaderSearch() {
                                         variant="body2"
                                         sx={{
                                             color: (theme: Theme) =>
-                                                lighten(theme.palette.secondary.main, 0.5),
+                                                lighten(
+                                                    theme.palette.secondary.main,
+                                                    0.5,
+                                                ),
                                         }}
                                     >
-                                        This is yet another search result pointing to a app page.
+                                        This is yet another search result pointing to a
+                                        app page.
                                     </Typography>
                                 </Box>
                                 <ChevronRightTwoToneIcon />
@@ -246,11 +265,14 @@ function HeaderSearch() {
                                         variant="body2"
                                         sx={{
                                             color: (theme: Theme) =>
-                                                lighten(theme.palette.secondary.main, 0.5),
+                                                lighten(
+                                                    theme.palette.secondary.main,
+                                                    0.5,
+                                                ),
                                         }}
                                     >
-                                        Choose if you would like to show or not this typography
-                                        section here...
+                                        Choose if you would like to show or not this
+                                        typography section here...
                                     </Typography>
                                 </Box>
                                 <ChevronRightTwoToneIcon />

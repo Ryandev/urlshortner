@@ -84,15 +84,21 @@ function Checklist() {
                         </Typography>
                         <FormGroup>
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Prepare website launch"
                             />
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Build React Native application"
                             />
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Fix remaining bugs for first 4 pages"
                             />
                         </FormGroup>
@@ -116,11 +122,15 @@ function Checklist() {
                         </Typography>
                         <FormGroup>
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Complete sales pitch"
                             />
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Improve SEO visibility"
                             />
                         </FormGroup>
@@ -144,11 +154,15 @@ function Checklist() {
                         </Typography>
                         <FormGroup>
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Create marketing campaign"
                             />
                             <FormControlLabel
-                                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                                control={
+                                    <CheckboxWrapper color="primary" name="checkedC" />
+                                }
                                 label="Sign business contract with partners"
                             />
                         </FormGroup>

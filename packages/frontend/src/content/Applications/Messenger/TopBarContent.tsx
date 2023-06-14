@@ -91,9 +91,10 @@ function TopBarContent() {
 
     const [expanded, setExpanded] = useState<string | false>('section1');
 
-    const handleChange = (section: string) => (_event: SyntheticEvent, isExpanded: boolean) => {
-        setExpanded(isExpanded ? section : false);
-    };
+    const handleChange =
+        (section: string) => (_event: SyntheticEvent, isExpanded: boolean) => {
+            setExpanded(isExpanded ? section : false);
+        };
 
     return (
         <>
@@ -276,7 +277,9 @@ function TopBarContent() {
                                         primary="Something's Wrong"
                                         primaryTypographyProps={{ variant: 'h5' }}
                                         secondary="Report the conversation and provide feedback"
-                                        secondaryTypographyProps={{ variant: 'subtitle1' }}
+                                        secondaryTypographyProps={{
+                                            variant: 'subtitle1',
+                                        }}
                                     />
                                 </ListItem>
                             </List>
@@ -303,7 +306,9 @@ function TopBarContent() {
                                         primary="HolidayPictures.zip"
                                         primaryTypographyProps={{ variant: 'h5' }}
                                         secondary="You opened in the past year"
-                                        secondaryTypographyProps={{ variant: 'subtitle1' }}
+                                        secondaryTypographyProps={{
+                                            variant: 'subtitle1',
+                                        }}
                                     />
                                 </ListItem>
                                 <ListItem button>
@@ -314,7 +319,9 @@ function TopBarContent() {
                                         primary="2021Screenshot.jpg"
                                         primaryTypographyProps={{ variant: 'h5' }}
                                         secondary="You edited this file yesterday"
-                                        secondaryTypographyProps={{ variant: 'subtitle1' }}
+                                        secondaryTypographyProps={{
+                                            variant: 'subtitle1',
+                                        }}
                                     />
                                 </ListItem>
                                 <ListItem button>
@@ -325,7 +332,9 @@ function TopBarContent() {
                                         primary="PresentationDeck.pdf"
                                         primaryTypographyProps={{ variant: 'h5' }}
                                         secondary="Never opened"
-                                        secondaryTypographyProps={{ variant: 'subtitle1' }}
+                                        secondaryTypographyProps={{
+                                            variant: 'subtitle1',
+                                        }}
                                     />
                                 </ListItem>
                             </List>

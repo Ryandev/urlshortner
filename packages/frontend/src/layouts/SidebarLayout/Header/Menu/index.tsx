@@ -89,14 +89,20 @@ function HeaderMenu() {
                         component={Link}
                         href="/components/buttons"
                     >
-                        <ListItemText primaryTypographyProps={{ noWrap: true }} primary="Buttons" />
+                        <ListItemText
+                            primaryTypographyProps={{ noWrap: true }}
+                            primary="Buttons"
+                        />
                     </ListItemButton>
                     <ListItemButton
                         classes={{ root: 'MuiListItem-indicators' }}
                         component={Link}
                         href="/components/forms"
                     >
-                        <ListItemText primaryTypographyProps={{ noWrap: true }} primary="Forms" />
+                        <ListItemText
+                            primaryTypographyProps={{ noWrap: true }}
+                            primary="Forms"
+                        />
                     </ListItemButton>
                     <ListItemButton
                         classes={{ root: 'MuiListItem-indicators' }}

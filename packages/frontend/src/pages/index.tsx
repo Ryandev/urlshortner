@@ -44,25 +44,41 @@ function Index() {
                         </Typography>
                     </Typography>
                     <Container maxWidth="sm">
-                        <Typography variant="subtitle1" color="textSecondary" paragraph={true}>
+                        <Typography
+                            variant="subtitle1"
+                            color="textSecondary"
+                            paragraph={true}
+                        >
                             Easy quick links
                         </Typography>
                     </Container>
                     <Box padding={2}>
                         <Link href="/profile/login">
-                            <Button variant="contained" color="secondary" sx={{ marginRight: 1 }}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                sx={{ marginRight: 1 }}
+                            >
                                 Login
                             </Button>
                         </Link>
                         <Link href="/profile/register">
-                            <Button variant="outlined" color="primary" sx={{ marginLeft: 1 }}>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                sx={{ marginLeft: 1 }}
+                            >
                                 Register
                             </Button>
                         </Link>
                     </Box>
                     <Typography textAlign="center" variant="subtitle1">
                         Crafted by{' '}
-                        <Link href="https://bloomui.com" target="_blank" rel="noopener noreferrer">
+                        <Link
+                            href="https://bloomui.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             BloomUI.com
                         </Link>
                     </Typography>

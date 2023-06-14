@@ -125,7 +125,11 @@ function Performance() {
                     </Box>
                 </Box>
                 <Box pt={3}>
-                    <LinearProgressWrapper value={73} color="primary" variant="determinate" />
+                    <LinearProgressWrapper
+                        value={73}
+                        color="primary"
+                        variant="determinate"
+                    />
                 </Box>
             </CardContent>
         </RootWrapper>

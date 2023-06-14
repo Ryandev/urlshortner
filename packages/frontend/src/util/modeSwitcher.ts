@@ -7,7 +7,10 @@ const DEFAULT_SET_MODE = (_mode: DefaultColorScheme) => {
     /* No-Op */
 };
 
-export function useModeSwitcher(): [DefaultColorScheme, (mode: DefaultColorScheme) => void] {
+export function useModeSwitcher(): [
+    DefaultColorScheme,
+    (mode: DefaultColorScheme) => void,
+] {
     const { mode, setMode } = useColorScheme();
     const [isMounted, setMounted] = useState(false);
 

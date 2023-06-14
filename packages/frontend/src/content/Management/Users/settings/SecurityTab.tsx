@@ -59,7 +59,10 @@ function SecurityTab() {
     const [page, setPage] = useState(2);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const handleChangePage = (_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    const handleChangePage = (
+        _event: MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
         setPage(newPage);
     };
 
@@ -124,7 +127,10 @@ function SecurityTab() {
                                 <AvatarWrapper src="/static/images/logo/google.svg" />
                             </ListItemAvatar>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -149,7 +155,10 @@ function SecurityTab() {
                                 </AvatarSuccess>
                             </ListItemAvatar>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -169,7 +178,10 @@ function SecurityTab() {
                                 </AvatarSuccess>
                             </ListItemAvatar>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -195,7 +207,10 @@ function SecurityTab() {
                     <List>
                         <ListItem sx={{ padding: 3 }}>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -210,7 +225,10 @@ function SecurityTab() {
                         <Divider component="li" />
                         <ListItem sx={{ padding: 3 }}>
                             <ListItemText
-                                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                                primaryTypographyProps={{
+                                    variant: 'h5',
+                                    gutterBottom: true,
+                                }}
                                 secondaryTypographyProps={{
                                     variant: 'subtitle2',
                                     lineHeight: 1,
@@ -250,14 +268,19 @@ function SecurityTab() {
                                         <TableCell>{log.ipaddress}</TableCell>
                                         <TableCell>{log.location}</TableCell>
                                         <TableCell>
-                                            {format(log.date, 'dd MMMM, yyyy - h:mm:ss a')}
+                                            {format(
+                                                log.date,
+                                                'dd MMMM, yyyy - h:mm:ss a',
+                                            )}
                                         </TableCell>
                                         <TableCell align="right">
                                             <Tooltip placement="top" title="Delete" arrow>
                                                 <IconButton
                                                     sx={{
                                                         '&:hover': {
-                                                            background: theme.colors.error.lighter,
+                                                            background:
+                                                                theme.colors.error
+                                                                    .lighter,
                                                         },
                                                         color: theme.palette.error.main,
                                                     }}

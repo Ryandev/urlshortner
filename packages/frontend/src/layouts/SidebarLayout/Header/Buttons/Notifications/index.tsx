@@ -87,20 +87,31 @@ function HeaderNotifications() {
                 <Divider />
                 <List sx={{ padding: 0 }}>
                     <ListItem
-                        sx={{ padding: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}
+                        sx={{
+                            padding: 2,
+                            minWidth: 350,
+                            display: { xs: 'block', sm: 'flex' },
+                        }}
                     >
                         <Box flex="1">
                             <Box display="flex" justifyContent="space-between">
                                 <Typography sx={{ fontWeight: 'bold' }}>
                                     Messaging Platform
                                 </Typography>
-                                <Typography variant="caption" sx={{ textTransform: 'none' }}>
+                                <Typography
+                                    variant="caption"
+                                    sx={{ textTransform: 'none' }}
+                                >
                                     {formatDistance(subDays(new Date(), 3), new Date(), {
                                         addSuffix: true,
                                     })}
                                 </Typography>
                             </Box>
-                            <Typography component="span" variant="body2" color="text.secondary">
+                            <Typography
+                                component="span"
+                                variant="body2"
+                                color="text.secondary"
+                            >
                                 {' '}
                                 new messages in your inbox
                             </Typography>

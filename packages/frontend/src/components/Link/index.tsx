@@ -35,9 +35,10 @@ const _NextLinkComposed = (props: NextLinkComposedProps, ref: Ref<HTMLAnchorElem
         </NextLink>
     );
 };
-export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(
-    _NextLinkComposed,
-);
+export const NextLinkComposed = React.forwardRef<
+    HTMLAnchorElement,
+    NextLinkComposedProps
+>(_NextLinkComposed);
 
 export type LinkProps = Omit<MuiLinkProps, 'href'> &
     Omit<NextLinkComposedProps, 'href' | 'linkAs' | 'to'> & {
@@ -78,7 +79,8 @@ function _Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
     });
 
     const isExternal =
-        typeof href === 'string' && (href.startsWith('http') || href.startsWith('mailto:'));
+        typeof href === 'string' &&
+        (href.startsWith('http') || href.startsWith('mailto:'));
 
     if (isExternal) {
         if (noLinkStyle ?? false) {
@@ -100,7 +102,14 @@ function _Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
     };
 
     if (noLinkStyle ?? false) {
-        return <NextLinkComposed className={className} ref={ref} {...nextJSProps} {...other} />;
+        return (
+            <NextLinkComposed
+                className={className}
+                ref={ref}
+                {...nextJSProps}
+                {...other}
+            />
+        );
     }
 
     return (
