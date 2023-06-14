@@ -1,3 +1,4 @@
+# Directories Hidden/Build-Output
 .github/
 .husky/
 .vscode/
@@ -8,30 +9,36 @@ scripts/
 tools/
 packages/frontend/.next
 
+# Config files
 .env
 .editorconfig
 .gitignore
 .prettierignore
 .prettierrc
-
-**/.storybook/*.js
-**/.storybook/*.jsx
-**/.storybook/*.ts
-**/.storybook/*.tsx
-*.stories.ts
-*.stories.tsx
-*.spec.ts
-*.spec.tsx
-*.test.ts
-*.test.tsx
-*.d.ts
-
 babel.config.json
 jest.*.json
 
+# JS Config files
 lighthouserc.js
 next.config.js
 jest.config.ts
 jest.preset.js
 sentry.client.config.js
 sentry.server.config.js
+
+# Storybook
+**/.storybook/*.js
+**/.storybook/*.jsx
+**/.storybook/*.ts
+**/.storybook/*.tsx
+*.stories.ts
+*.stories.tsx
+
+# Test files
+**/*.spec.ts
+**/*.spec.tsx
+**/*.test.ts
+**/*.test.tsx
+
+# Typescript module definitions
+**/*.d.ts
