@@ -55,7 +55,7 @@
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": ["packages/frontend/**/*.{ts,tsx,js,jsx}"],
-                "maxWarnings": 1465
+                "maxWarnings": 850
             }
         },
         "lighthouse": {
