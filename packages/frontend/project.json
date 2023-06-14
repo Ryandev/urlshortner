@@ -59,7 +59,7 @@
             }
         },
         "lighthouse": {
-            "executor": "@nx/workspace:run-commands",
+            "executor": "nx:run-commands",
             "options": {
                 "cwd": ".",
                 "parallel": false,
