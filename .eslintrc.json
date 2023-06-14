@@ -81,6 +81,8 @@
                         ] /* integer index & unused arg */
                     }
                 ],
+                /* Prettier rules override this */
+                "implicit-arrow-linebreak": "off",
 
                 /* Off x4 as per: https://github.com/typescript-eslint/typescript-eslint/blob/f335c504bcf75623d2d671e2e784b047e5e186b9/docs/getting-started/linting/FAQ.md#eslint-plugin-import */
                 "import/named": "off",
