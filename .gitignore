@@ -1,6 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# compiled output
+# Compiled output
 dist
 tmp
 /out-tsc
@@ -8,8 +8,10 @@ dist/
 deploy.log
 scripts/azure/deploy_as.zip
 
-# dependencies
+# Dependencies
 node_modules
+packages/api/node_modules
+packages/frontend/node_modules
 
 # IDEs and editors
 /.idea
@@ -28,27 +30,35 @@ node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
+# NextJS
+.next
+packages/frontend/package.json
+
+# Log files
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
-package-lock.json
-.secrets
-.mailmap
+
 
 # System Files
 .DS_Store
 Thumbs.db
 
-# Next.js
-.next
-
 # Test output
 junit.xml
 reports/*
 
+# Prevent npm (yarn only)
+package-lock.json
+
+# Misc
+/.sass-cache
+/connect.lock
+/coverage
+/typings
+.secrets
+.mailmap
+.cache
+.data
+.dccache

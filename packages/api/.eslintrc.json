@@ -4,7 +4,10 @@
     "overrides": [
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-            "rules": {}
+            "rules": {
+                /* Readonly parameters breaks NestJS DI */
+                "@typescript-eslint/prefer-readonly-parameter-types": "off"
+            }
         },
         {
             "files": ["*.ts", "*.tsx"],

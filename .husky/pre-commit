@@ -18,8 +18,10 @@ VALIDATE_TASKS=(
     'yarn run check-audit' 
     'yarn run lint' 
     'yarn run test --skip-nx-cache --coverage' 
-    'yarn run e2e --skip-nx-cache' 
+    'yarn run e2e --skip-nx-cache'
     'yarn run build --skip-nx-cache'
+    'yarn run build-storybook --skip-nx-cache'
+    'yarn run package --skip-nx-cache'
 )
 
 
