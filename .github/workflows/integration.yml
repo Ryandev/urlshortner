@@ -42,7 +42,7 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
-            - run: sudo apt-get install spellcheck
+            - run: sudo apt-get install shellcheck
             - run: yarn install
             - run: yarn setup
             # Must ensure no-cache, otherwise the side-effects of report generation doesn't happen
