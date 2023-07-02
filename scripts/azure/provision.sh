@@ -32,18 +32,18 @@ function loadGlobalArgs {
         esac
     done
 
-    [ -z "$BICEP_FILE" ] && usage
+    [ -n "$BICEP_FILE" ] || usage
     [ -f "$BICEP_FILE" ] || abort "Cannot find bicep file: $BICEP_FILE"
 
-    SUBSCRIPTION_ID=$(cat "$BICEP_FILE" | jq -cre '.metadata.subscriptionId.value')
-    [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
-    [ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
+    SUBSCRIPTION_ID=$(jq -cre '.metadata.subscriptionId.value' < "$BICEP_FILE")
+    [ -n "$SUBSCRIPTION_ID" ] || abort "Missing subscription ID"
+    [ ${#SUBSCRIPTION_ID} -eq 36 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
 
-    LOCATION=$(cat "$BICEP_FILE" | jq -cre '.parameters.location.value')
-    [ -z "$LOCATION" ] && abort "Missing LOCATION"
+    LOCATION=$(jq -cre '.parameters.location.value' < "$BICEP_FILE")
+    [ -n "$LOCATION" ] || abort "Missing LOCATION"
 
-    RESOURCE_GROUP=$(cat "$BICEP_FILE" | jq -cre '.parameters.resourceGroupName.value')
-    [ -z "$RESOURCE_GROUP" ] && abort "Missing RESOURCE_GROUP"
+    RESOURCE_GROUP=$(jq -cre '.parameters.resourceGroupName.value' < "$BICEP_FILE")
+    [ -n "$RESOURCE_GROUP" ] || abort "Missing RESOURCE_GROUP"
 
     return 0
 }
@@ -53,7 +53,8 @@ function checkEnv {
     return 0
 }
 
-checkEnv && loadGlobalArgs $@ || usage
+checkEnv || usage
+loadGlobalArgs "$@" || usage
 
 echo "Using bicep file $BICEP_FILE to provisioning azure with subscription:$SUBSCRIPTION_ID, resource-group:$RESOURCE_GROUP, location:$LOCATION"
 
