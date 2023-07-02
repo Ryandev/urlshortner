@@ -2,12 +2,18 @@
 
 #Global args
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+[ -d "$SCRIPT_DIR" ] || abort "Missing dir: $SCRIPT_DIR"
+
 BUILD_OUTPUT_FRONTEND="$SCRIPT_DIR/../../dist/packages/frontend/exported"
+[ -d "$BUILD_OUTPUT_FRONTEND" ] || abort "Missing dir: $BUILD_OUTPUT_FRONTEND"
+
 BUILD_OUTPUT_API="$SCRIPT_DIR/../../dist/packages/api"
+[ -d "$BUILD_OUTPUT_API" ] || abort "Missing dir: $BUILD_OUTPUT_API"
+
 STORAGE_NAME=''
+# shellcheck disable=SC2016
 STORAGE_CONTAINER='$web'
 APPSERVICE_NAME=''
-DEPLOYMENT_FILE=""
 SUBSCRIPTION_ID=''
 RESOURCE_GROUP=''
 STORAGE_NAME=''
@@ -34,33 +40,35 @@ function loadGlobalArgs {
         esac
     done
 
+    [ -n "$DEPLOYMENT_OUTPUT" ] || abort "Missing deployment output"
     [ -f "$DEPLOYMENT_OUTPUT" ] || abort "Cannot find deployment file: $DEPLOYMENT_OUTPUT"
 
-    SUBSCRIPTION_ID=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.name')
-    [ -z "$SUBSCRIPTION_ID" ] && abort "Missing subscription ID"
-    [ $(echo "$SUBSCRIPTION_ID" | wc -m) -eq 37 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
+    SUBSCRIPTION_ID=$(jq -cre '.name' < "$DEPLOYMENT_OUTPUT")
+    [ -n "$SUBSCRIPTION_ID" ] || abort "Missing subscription ID"
+    [ ${#SUBSCRIPTION_ID} -eq 36 ] || abort "Incorrect subscription_id length, check subscription: $SUBSCRIPTION_ID"
 
-    RESOURCE_GROUP=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.resourceGroup.value.parameters.name.value')
-    [ -z "$RESOURCE_GROUP" ] && abort "Missing RESOURCE_GROUP"
+    RESOURCE_GROUP=$(jq -cre '.properties.outputs.resourceGroup.value.parameters.name.value' < "$DEPLOYMENT_OUTPUT")
+    [ -n "$RESOURCE_GROUP" ] || abort "Missing RESOURCE_GROUP"
 
-    STORAGE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.storage.value.outputs.storage.value.resourceId' | sed 's/Microsoft.Storage\/storageAccounts\///g')
-    [ -z "$STORAGE_NAME" ] && abort "Missing STORAGE_NAME"
+    STORAGE_NAME=$(jq -cre '.properties.outputs.storage.value.outputs.storage.value.resourceId' < "$DEPLOYMENT_OUTPUT" | sed 's/Microsoft.Storage\/storageAccounts\///g')
+    [ -n "$STORAGE_NAME" ] || abort "Missing STORAGE_NAME"
 
-    APPSERVICE_NAME=$(cat "$DEPLOYMENT_OUTPUT" | jq -cre '.properties.outputs.appService.value.outputs.appService.value.properties.deploymentId')
-    [ -z "$APPSERVICE_NAME" ] && abort "Missing APPSERVICE_NAME"
+    APPSERVICE_NAME=$(jq -cre '.properties.outputs.appService.value.outputs.appService.value.properties.deploymentId' < "$DEPLOYMENT_OUTPUT")
+    [ -n "$APPSERVICE_NAME" ] || abort "Missing APPSERVICE_NAME"
 
     return 0
 }
 
 function checkEnv {
     which az 1>/dev/null || abort "Missing az cli, aborting deploy"
+    which zip 1>/dev/null || abort "Missing zip command, aborting deploy"
     [ -d "$BUILD_OUTPUT_FRONTEND" ] || abort "Missing build output for frontend"
     [ -d "$BUILD_OUTPUT_API" ] || abort "Missing build output for frontend"
     return 0
 }
 
-checkEnv && loadGlobalArgs $@ || usage
-
+checkEnv || usage
+loadGlobalArgs "$@" || usage
 
 echo "1. Publishing new frontend to storageaccount:$STORAGE_NAME"
 

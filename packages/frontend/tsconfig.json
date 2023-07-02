@@ -1,6 +1,7 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
         "jsx": "preserve",
         "noEmit": true,
         "isolatedModules": true,
@@ -13,8 +14,17 @@
         "jest.config.ts",
         "src/**/*.spec.ts",
         "src/**/*.test.ts",
+        "**/*.stories.ts",
+        "**/*.stories.js",
+        "**/*.stories.jsx",
+        "**/*.stories.tsx",
         "next.config.js",
         "sentry.client.config.js",
         "sentry.server.config.js"
+    ],
+    "references": [
+        {
+            "path": "./.storybook/tsconfig.json"
+        }
     ]
 }
