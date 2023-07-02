@@ -54,8 +54,21 @@ module appServiceModule './appservice/index.bicep' = {
   }
 }
 
+module dbModule './cosmosdb/index.bicep' = {
+  name: 'db-${resourceGroupName}'
+  scope: resourceGroup
+  dependsOn: [ resourceGroupModule ]
+  params: {
+    apiInterface: 'MongoDB'
+    location: location
+    tags: tags
+  }
+}
+
 output resourceGroup object = resourceGroupModule
 
 output storage object = storageModule
 
 output appService object = appServiceModule
+
+output db object = dbModule
