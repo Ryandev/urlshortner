@@ -2518,7 +2518,7 @@
     react-is "^18.2.0"
     react-transition-group "^4.4.5"
 
-"@mui/private-theming@^5.11.12", "@mui/private-theming@^5.13.1":
+"@mui/private-theming@^5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@mui/private-theming/-/private-theming-5.13.1.tgz#c3e9a0b44f9c5a51b92cfcfb660536060cb61ed7"
   integrity sha512-HW4npLUD9BAkVppOUZHeO1FOKUJWAwbpy0VQoGe3McUYTlck1HezGHQCfBQ5S/Nszi7EViqiimECVl9xi+/WjQ==
@@ -2535,7 +2535,7 @@
     "@babel/runtime" "^7.21.0"
     prop-types "^15.8.1"
 
-"@mui/styled-engine@^5.11.11", "@mui/styled-engine@^5.13.2":
+"@mui/styled-engine@^5.13.2":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine/-/styled-engine-5.13.2.tgz#c87bd61c0ab8086d34828b6defe97c02bcd642ef"
   integrity sha512-VCYCU6xVtXOrIN8lcbuPmoG+u7FYuOERG++fpY74hPpEWkyFQG97F+/XfTQVYzlR2m7nPjnwVUgATcTCMEaMvw==
@@ -2568,18 +2568,18 @@
     jss-plugin-vendor-prefixer "^10.10.0"
     prop-types "^15.8.1"
 
-"@mui/system@5.11.12":
-  version "5.11.12"
-  resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.11.12.tgz#e7234c4e73e9af2b8e985fbed048d8b274338561"
-  integrity sha512-sYjsXkiwKpZDC3aS6O/6KTjji0jGINLQcrD5EJ5NTkIDiLf19I4HJhnufgKqlTWNfoDBlRohuTf3TzfM06c4ug==
+"@mui/system@5.13.5":
+  version "5.13.5"
+  resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.13.5.tgz#9f67ea0c4f6974713f90b7b94c999fd3f40f8de3"
+  integrity sha512-n0gzUxoZ2ZHZgnExkh2Htvo9uW2oakofgPRQrDoa/GQOWyRD0NH9MDszBwOb6AAoXZb+OV5TE7I4LeZ/dzgHYA==
   dependencies:
     "@babel/runtime" "^7.21.0"
-    "@mui/private-theming" "^5.11.12"
-    "@mui/styled-engine" "^5.11.11"
-    "@mui/types" "^7.2.3"
-    "@mui/utils" "^5.11.12"
+    "@mui/private-theming" "^5.13.1"
+    "@mui/styled-engine" "^5.13.2"
+    "@mui/types" "^7.2.4"
+    "@mui/utils" "^5.13.1"
     clsx "^1.2.1"
-    csstype "^3.1.1"
+    csstype "^3.1.2"
     prop-types "^15.8.1"
 
 "@mui/system@^5.13.2":
@@ -2596,12 +2596,12 @@
     csstype "^3.1.2"
     prop-types "^15.8.1"
 
-"@mui/types@^7.2.3", "@mui/types@^7.2.4":
+"@mui/types@^7.2.4":
   version "7.2.4"
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.2.4.tgz#b6fade19323b754c5c6de679a38f068fd50b9328"
   integrity sha512-LBcwa8rN84bKF+f5sDyku42w1NTxaPgPyYKODsh01U1fVstTClbUoSA96oyRBnSNyEiAVjKm6Gwx9vjR+xyqHA==
 
-"@mui/utils@^5.1.0", "@mui/utils@^5.11.12", "@mui/utils@^5.13.1":
+"@mui/utils@^5.1.0", "@mui/utils@^5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.13.1.tgz#86199e46014215f95da046a5ec803f4a39c96eee"
   integrity sha512-6lXdWwmlUbEU2jUI8blw38Kt+3ly7xkmV9ljzY4Q20WhsJMWiNry9CX8M+TaP/HbtuyR8XKsdMgQW7h7MM3n3A==
@@ -7147,7 +7147,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.2, csstype@^3.1.1, csstype@^3.1.2:
+csstype@^3.0.2, csstype@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==

@@ -36,7 +36,7 @@
         "@mui/material": "^5.11.12",
         "@mui/styled-engine-sc": "^5.11.11",
         "@mui/styles": "^5.11.13",
-        "@mui/system": "5.11.12",
+        "@mui/system": "5.13.5",
         "@mui/x-data-grid": "^6.1.0",
         "@mui/x-date-pickers": "^6.1.0",
         "@nestjs/common": "^9.0.0",
