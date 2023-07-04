@@ -24,6 +24,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - run: 'curl -H "Cache-Control: no-cache" https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.sh | bash'
+            - run: sudo apt-get install shellcheck
+            - run: "find ./scripts -name '*.sh' -exec shellcheck {} +"
+            - run: yarn install
             - run: yarn setup
             - run: yarn check-pretty
             - run: yarn check-spell
@@ -42,6 +45,7 @@ jobs:
               with:
                   node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
+            - run: yarn install
             - run: yarn setup
             # Must ensure no-cache, otherwise the side-effects of report generation doesn't happen
             - run: yarn test --coverage --skip-nx-cache
