@@ -1,16 +1,25 @@
 #Project words
 shortner
 
+#Companies
+airbnb
+
 #Third Party Libraries
 Mongo
 mongodb
 nrwl
 nx
-airbnb
 NestJS
+NextJS
 cobertura
+nprogress
+clsx
 lcov
 bcov
+
+
+#Fonts
+Segoe
 
 #Github Actions
 coverallsapp

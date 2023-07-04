@@ -9,7 +9,7 @@ import { init as sentryInit } from '@sentry/node';
 import AppModule from './app/app.module';
 
 const DEFAULT_PORT = 3333;
-const SENTRY_DSN = String(process.env.SENTRY_DSN);
+const SENTRY_DSN = String(process.env.BACKEND_SENTRY_DSN ?? process.env.SENTRY_DSN);
 
 if (SENTRY_DSN.length > 0) {
     sentryInit({

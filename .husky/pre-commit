@@ -9,31 +9,43 @@ function abort {
 ### Start ###
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+[ -d "$SCRIPT_DIR" ] || abort "Invalid script dir: $SCRIPT_DIR"
+
 PROJECT_DIR="$SCRIPT_DIR/../"
+[ -d "$PROJECT_DIR" ] || abort "Invalid project dir: $PROJECT_DIR"
+
 HUSKY_INIT_SCRIPT="$SCRIPT_DIR/_/husky.sh"
+[ -f "$HUSKY_INIT_SCRIPT" ] || abort "Invalid husky script: $HUSKY_INIT_SCRIPT"
+
 VALIDATE_TASKS=(
+    # Verify shell commands for lint warnings
+    'which shellcheck'
+    "find $PROJECT_DIR/scripts -name '*.sh' -exec shellcheck {} +"
+
+    # Verify project via yarn commands
+    'which yarn'
     'yarn run clear-cache' 
     'yarn run check-spell' 
     'yarn run check-pretty' 
     'yarn run check-audit' 
     'yarn run lint' 
     'yarn run test --skip-nx-cache --coverage' 
-    'yarn run e2e --skip-nx-cache' 
+    'yarn run e2e --skip-nx-cache'
     'yarn run build --skip-nx-cache'
+    'yarn run build-storybook --skip-nx-cache'
+    'yarn run package --skip-nx-cache'
 )
 
 
 echo "Initializing husky"
-[ -z "$HUSKY_INIT_SCRIPT" ] && abort "Missing husky init script"
+[ -n "$HUSKY_INIT_SCRIPT" ] || abort "Missing husky init script"
 . "$HUSKY_INIT_SCRIPT"
 
-cd "$PROJECT_DIR"
-[ $? -ne 0 ] && abort "Failed to navigate to project dir"
+cd "$PROJECT_DIR" || abort "Failed to navigate to project dir"
 
 for task in "${VALIDATE_TASKS[@]}"; do
     echo "Running validate task: $task"
-    eval "$task"
-    [ $? -ne 0 ] && abort "Failed task: $task"
+    eval "$task" || abort "Failed task: $task"
 done
 
 echo '*** All checks passed ***'
