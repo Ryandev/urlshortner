@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-namespace,
-    @typescript-eslint/no-unused-vars, no-unused-vars, no-console */
-
 /*
  * ***********************************************
  * This example commands.js shows you how to
@@ -13,34 +10,31 @@
  * ***********************************************
  */
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
-        /* eslint-disable-next-line @typescript-eslint/method-signature-style */
-        login(email: string, password: string): void;
+        login: (email: string, password: string) => void;
     }
 }
-
 /*
  *
  * -- This is a parent command --
  */
 Cypress.Commands.add('login', (email, password) => {
+    /* eslint-disable-next-line no-console */
     console.log('Custom command example: Login', email, password);
 });
-
 /*
  *
  * -- This is a child command --
- * Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { callback })
+ * Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
  *
  *
  * -- This is a dual command --
- * Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { callback })
+ * Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
  *
  *
  * -- This will overwrite an existing command --
- * Cypress.Commands.overwrite("visit", (originalFn, url, options) => { callback })
+ * Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
  */
-
-/* eslint-enable @typescript-eslint/no-namespace,
-    @typescript-eslint/no-unused-vars, no-unused-vars, no-console */

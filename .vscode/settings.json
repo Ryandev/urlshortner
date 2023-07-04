@@ -2,7 +2,7 @@
     "editor.snippetSuggestions": "top",
     "editor.minimap.enabled": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.detectIndentation": false,
+    "editor.detectIndentation": true,
     /* Pretty code on save from .prettierrc config */
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
@@ -55,8 +55,9 @@
     "jestrunner.jestCommand": "yarn run test --",
     "testEnvironment": "node",
     "workbench.welcome.enabled": false,
-    "workbench.preferredDarkColorTheme": true,
+    "workbench.preferredDarkColorTheme": "Visual Studio Dark",
     "[bicep]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-bicep"
-    }
+    },
+    "debug.javascript.autoAttachFilter": "disabled"
 }
