@@ -43,7 +43,7 @@
         "@nestjs/core": "^9.3.10",
         "@nestjs/devtools-integration": "^0.1.4",
         "@nestjs/platform-express": "^9.3.10",
-        "@sentry/nextjs": "7.53.0",
+        "@sentry/nextjs": "7.55.2",
         "@sentry/node": "7.53.0",
         "apexcharts": "^3.37.1",
         "clsx": "^1.2.1",
