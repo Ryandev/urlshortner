@@ -47,7 +47,7 @@
         "@sentry/node": "7.53.0",
         "apexcharts": "^3.37.1",
         "clsx": "^1.2.1",
-        "core-js": "3.29.1",
+        "core-js": "3.31.0",
         "date-fns": "^2.29.3",
         "next": "13.3.0",
         "nprogress": "^0.2.0",
