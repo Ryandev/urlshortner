@@ -10,6 +10,9 @@ scripts/azure/deploy_as.zip
 scripts/azure/provision.log
 
 # Dependencies
+.yarn
+.pnp.cjs
+.pnp.loader.mjs
 node_modules
 packages/api/node_modules
 packages/frontend/node_modules

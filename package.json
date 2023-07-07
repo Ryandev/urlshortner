@@ -5,8 +5,8 @@
     "private": true,
     "scripts": {
         "setup": "yarn setup-install && yarn setup-hooks",
-        "setup-install": "yarn install --non-interactive --frozen-lockfile",
-        "setup-hooks": "node ./node_modules/husky/lib/bin.js install",
+        "setup-install": "yarn install --immutable --check-cache",
+        "setup-hooks": "yarn run husky install",
         "uninstall": "rm -rf node_modules",
         "start": "yarn run nx serve frontend",
         "build": "yarn run nx run-many --all --target=build",
@@ -20,8 +20,6 @@
         "check-pretty": "prettier --check --config .prettierrc 'packages/'",
         "check-spell": "yarn run cspell lint --config 'cspell.json' '**/*.ts'",
         "check-licensing": "fossa analyze && fossa test",
-        "check-audit": "yarn run improved-yarn-audit --ignore-dev-deps",
-        "clear-cache": "yarn cache clean && rm -rf packages/frontend/.next && rm -rf node_modules/.cache/*",
         "upgrade-nx": "yarn run nx migrate latest --verbose && yarn run nx migrate --run-migrations"
     },
     "dependencies": {
@@ -66,6 +64,7 @@
         "@babel/core": "7.12.13",
         "@babel/preset-react": "^7.14.5",
         "@babel/preset-typescript": "7.12.13",
+        "@cspell/cspell-types": "^6.31.1",
         "@nestjs/schematics": "9.1.0",
         "@nestjs/testing": "9.4.0",
         "@nx/cypress": "16.3.2",
@@ -104,6 +103,7 @@
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-next": "13.1.1",
         "eslint-config-prettier": "8.1.0",
+        "eslint-import-resolver-typescript": "^3.5.5",
         "eslint-plugin-cypress": "^2.10.3",
         "eslint-plugin-import": "2.26.0",
         "eslint-plugin-jest": "^27.2.1",
@@ -138,5 +138,6 @@
     "engineStrict": true,
     "engines": {
         "node": ">=16.7"
-    }
+    },
+    "packageManager": "yarn@3.6.1"
 }

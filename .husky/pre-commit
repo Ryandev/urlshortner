@@ -24,10 +24,9 @@ VALIDATE_TASKS=(
 
     # Verify project via yarn commands
     'which yarn'
-    'yarn run clear-cache' 
     'yarn run check-spell' 
     'yarn run check-pretty' 
-    'yarn run check-audit' 
+    'yarn npm audit' 
     'yarn run lint' 
     'yarn run test --skip-nx-cache --coverage' 
     'yarn run e2e --skip-nx-cache'
