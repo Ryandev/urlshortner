@@ -49,7 +49,7 @@
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/jest",
             "args": [
                 "test",
-                "--config=${workspaceRoot}/packages/api/jest.config.cjs",
+                "--config=${workspaceRoot}/packages/api/jest.config.ts",
                 "--runInBand",
                 "--no-cache",
                 "--watchAll"

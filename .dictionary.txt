@@ -24,3 +24,8 @@ Segoe
 #Github Actions
 coverallsapp
 creds
+
+#Units
+Kibibyte
+Mebibyte
+Gibibyte

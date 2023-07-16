@@ -144,7 +144,9 @@
                 "max-lines": "warn",
                 "max-len": ["warn", { "code": 90 }],
                 /* Set to warn for now */
-                "max-statements": "warn",
+                "max-statements": ["warn", { "max": 12 }],
+                /* TS eliminates alot of the issues, however there should be an upper limit */
+                "max-params": ["error", { "max": 6 }],
                 /* Prettier rules override this */
                 "multiline-ternary": "off",
                 /* React function components are pascal cased */
@@ -157,6 +159,7 @@
                 "no-magic-numbers": "off",
                 /* Prettier will override */
                 "no-mixed-operators": "off",
+                "no-negated-condition": "off",
                 "no-ternary": "off",
                 /* Use '_' prefix used for private functions/variables */
                 "no-underscore-dangle": "off",

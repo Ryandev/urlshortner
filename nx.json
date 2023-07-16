@@ -5,7 +5,13 @@
         "default": {
             "runner": "nx-cloud",
             "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"],
+                "cacheableOperations": [
+                    "build",
+                    "lint",
+                    "test",
+                    "e2e",
+                    "build-storybook"
+                ],
                 "accessToken": "ZTMzMTRkN2MtNjUyZi00OGM5LWE2MDMtYjk0MDEwZmJiMjU2fHJlYWQtd3JpdGU="
             }
         }
@@ -16,7 +22,12 @@
             "inputs": ["production", "^production"]
         },
         "test": {
-            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+            "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js",
+                "{workspaceRoot}/jest.preset.js"
+            ]
         },
         "e2e": {
             "inputs": ["default", "^production"]
@@ -49,6 +60,9 @@
         "@nx/react": {
             "application": {
                 "babel": true
+            },
+            "library": {
+                "unitTestRunner": "jest"
             }
         },
         "@nx/next": {

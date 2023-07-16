@@ -1,5 +1,10 @@
 {
-    "extends": ["../../.eslintrc.json"],
+    "extends": [
+        "../../.eslintrc.json",
+        "plugin:@darraghor/nestjs-typed/recommended",
+        "plugin:@darraghor/nestjs-typed/no-swagger"
+    ],
+    "plugins": ["@darraghor/nestjs-typed"],
     "ignorePatterns": ["!**/*"],
     "overrides": [
         {
@@ -17,5 +22,14 @@
             "files": ["*.js", "*.jsx"],
             "rules": {}
         }
-    ]
+    ],
+    "rules": {
+        "@darraghor/nestjs-typed/injectable-should-be-provided": [
+            "error",
+            {
+                "src": ["packages/api/src/**/*.ts"],
+                "filterFromPaths": ["node_modules", ".test.", ".spec."]
+            }
+        ]
+    }
 }

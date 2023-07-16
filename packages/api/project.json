@@ -11,9 +11,8 @@
                 "target": "node",
                 "compiler": "tsc",
                 "outputPath": "dist/packages/api",
-                "main": "packages/api/src/main.ts",
-                "tsConfig": "packages/api/tsconfig.app.json",
-                "assets": ["packages/api/src/assets"]
+                "main": "packages/api/src/index.ts",
+                "tsConfig": "packages/api/tsconfig.app.json"
             },
             "configurations": {
                 "production": {
