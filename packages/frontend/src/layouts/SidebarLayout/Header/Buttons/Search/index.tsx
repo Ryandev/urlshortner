@@ -181,14 +181,11 @@ function HeaderSearch() {
                                         variant="body2"
                                         sx={{
                                             color: (theme: Theme) =>
-                                                lighten(
-                                                    theme.palette.secondary.main,
-                                                    0.5,
-                                                ),
+                                                lighten(theme.palette.secondary.main, 0.5),
                                         }}
                                     >
-                                        This page contains all the necessary information
-                                        for managing all hospital staff.
+                                        This page contains all the necessary information for
+                                        managing all hospital staff.
                                     </Typography>
                                 </Box>
                                 <ChevronRightTwoToneIcon />
@@ -223,14 +220,11 @@ function HeaderSearch() {
                                         variant="body2"
                                         sx={{
                                             color: (theme: Theme) =>
-                                                lighten(
-                                                    theme.palette.secondary.main,
-                                                    0.5,
-                                                ),
+                                                lighten(theme.palette.secondary.main, 0.5),
                                         }}
                                     >
-                                        This is yet another search result pointing to a
-                                        app page.
+                                        This is yet another search result pointing to a app
+                                        page.
                                     </Typography>
                                 </Box>
                                 <ChevronRightTwoToneIcon />
@@ -265,10 +259,7 @@ function HeaderSearch() {
                                         variant="body2"
                                         sx={{
                                             color: (theme: Theme) =>
-                                                lighten(
-                                                    theme.palette.secondary.main,
-                                                    0.5,
-                                                ),
+                                                lighten(theme.palette.secondary.main, 0.5),
                                         }}
                                     >
                                         Choose if you would like to show or not this

@@ -1,16 +1,19 @@
-import path from 'path';
+import { Config } from 'jest';
+import * as path from 'path';
 
-const coverage = Object.freeze({
-    statements: 0,
-    branches: 0,
-    functions: 0,
-    lines: 0,
-});
+const coverage: Readonly<Required<Required<Config>['coverageThreshold']['global']>> =
+    Object.freeze({
+        statements: 0,
+        branches: 0,
+        functions: 0,
+        lines: 0,
+    });
+
 const packageName = __dirname.split(path.sep).slice(-1).join(path.sep) || 'unknown';
 
-export default {
+const config: Config = {
+    preset: ['..', '..', 'jest.preset.js'].join(path.sep),
     rootDir: __dirname,
-    preset: ['..', '..', 'jest-preset.js'].join(path.sep),
     displayName: packageName || 'unknown',
     reporters: [
         'default',
@@ -28,3 +31,5 @@ export default {
     },
     testEnvironment: 'jsdom',
 };
+
+export default config;

@@ -163,8 +163,8 @@ function Hero() {
                                     <b>Built with Next.js</b>
                                 </Box>
                                 <Typography component="span" variant="subtitle2">
-                                    Next.js gives you the best developer experience with
-                                    all the features you need for production.
+                                    Next.js gives you the best developer experience with all
+                                    the features you need for production.
                                 </Typography>
                             </Typography>
                         </Grid>
@@ -180,8 +180,8 @@ function Hero() {
                                     <b>Built with Typescript</b>
                                 </Box>
                                 <Typography component="span" variant="subtitle2">
-                                    Tokyo Free Black features a modern technology stack
-                                    and is built with React + Typescript.
+                                    Tokyo Free Black features a modern technology stack and
+                                    is built with React + Typescript.
                                 </Typography>
                             </Typography>
                         </Grid>

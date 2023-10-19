@@ -11,9 +11,18 @@
         {
             "type": "shell",
             "command": "yarn run nx serve api",
-            "group": "build",
+            "isBackground": true,
             "label": "api: serve",
-            "detail": "yarn run nx serve api"
+            "detail": "yarn run nx serve api",
+            "presentation": {
+                "focus": true,
+                "panel": "dedicated"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$tsc-watch"
         }
     ]
 }

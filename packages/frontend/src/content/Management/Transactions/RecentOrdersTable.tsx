@@ -260,10 +260,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                                             color="text.secondary"
                                             noWrap
                                         >
-                                            {format(
-                                                cryptoOrder.orderDate,
-                                                'MMMM dd yyyy',
-                                            )}
+                                            {format(cryptoOrder.orderDate, 'MMMM dd yyyy')}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>

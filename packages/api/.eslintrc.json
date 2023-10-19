@@ -10,8 +10,21 @@
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
             "rules": {
+                /* Not all methods use this, but are required to be overridden */
+                "class-methods-use-this": "off",
                 /* Readonly parameters breaks NestJS DI */
-                "@typescript-eslint/prefer-readonly-parameter-types": "off"
+                "@typescript-eslint/prefer-readonly-parameter-types": "off",
+                "@typescript-eslint/no-magic-numbers": [
+                    "warn",
+                    {
+                        "ignoreEnums": true,
+                        "ignore": [
+                            -1, 0, 1, 10, 100, 200
+                        ] /* All magic numbers for parent & http status codes */
+                    }
+                ],
+                /* Used for #(Model)OnlyFields */
+                "@typescript-eslint/no-type-alias": "off"
             }
         },
         {

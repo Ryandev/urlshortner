@@ -1,9 +1,11 @@
-export interface IEnvironment {
+export interface IConfiguration {
     deployment: 'development' | 'production';
     networkPort: number;
     urlPrefix: string;
     mongoDB: {
         connectionString: string;
+        /* Timeout in milliseconds */
+        connectionTimeout: number;
         databaseName: string;
     };
     sentry: {

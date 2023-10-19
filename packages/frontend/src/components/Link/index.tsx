@@ -35,10 +35,9 @@ const _NextLinkComposed = (props: NextLinkComposedProps, ref: Ref<HTMLAnchorElem
         </NextLink>
     );
 };
-export const NextLinkComposed = React.forwardRef<
-    HTMLAnchorElement,
-    NextLinkComposedProps
->(_NextLinkComposed);
+export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(
+    _NextLinkComposed,
+);
 
 export type LinkProps = Omit<MuiLinkProps, 'href'> &
     Omit<NextLinkComposedProps, 'href' | 'linkAs' | 'to'> & {
@@ -57,7 +56,7 @@ const isExternalLink = (href: unknown) =>
  * A styled version of the Next.js Link component:
  * https://nextjs.org/docs/api-reference/next/link
  */
-// eslint-disable-next-line max-statements
+/* eslint-disable-next-line max-statements */
 function _Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
     const {
         activeClassName = 'active',
@@ -104,12 +103,7 @@ function _Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
 
     if (noLinkStyle ?? false) {
         return (
-            <NextLinkComposed
-                className={className}
-                ref={ref}
-                {...nextJSProps}
-                {...other}
-            />
+            <NextLinkComposed className={className} ref={ref} {...nextJSProps} {...other} />
         );
     }
 

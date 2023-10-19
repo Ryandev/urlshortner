@@ -8,7 +8,6 @@
         "eslint:recommended",
         "eslint:all",
         "plugin:react/recommended",
-        "plugin:jest/recommended",
         "plugin:react-hooks/recommended",
         "plugin:@nx/react-typescript",
         "plugin:@typescript-eslint/all",
@@ -39,9 +38,11 @@
         },
         "import/resolver": {
             "typescript": {
+                "project": ["tsconfig.base.json", "package/tsconfig.json"],
                 "directory": "./tsconfig.json" /* Intentionally break typescript-eslint #2878 */
             },
             "node": {
+                "project": ["tsconfig.base.json", "package/tsconfig.json"],
                 "extensions": [".js", ".jsx", ".ts", ".tsx"]
             }
         },
@@ -50,6 +51,20 @@
         }
     },
     "overrides": [
+        /* Test rules */
+        {
+            "files": [
+                "*.test.ts",
+                "*.test.tsx",
+                "*.test.js",
+                "*.test.jsx",
+                "*.spec.ts",
+                "*.spec.tsx",
+                "*.spec.js",
+                "*.spec.jsx"
+            ],
+            "extends": ["plugin:jest/all"]
+        },
         /* Default JS/TS rules  */
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -75,12 +90,7 @@
                 "id-length": [
                     "error",
                     {
-                        "exceptions": [
-                            "_",
-                            "i",
-                            "x",
-                            "y"
-                        ] /* integer index & unused arg */
+                        "exceptions": ["_", "i", "x", "y"] /* integer index & unused arg */
                     }
                 ],
                 /* Prettier rules override this */
@@ -142,9 +152,9 @@
                     }
                 ],
                 "max-lines": "warn",
-                "max-len": ["warn", { "code": 90 }],
+                "max-len": ["warn", { "code": 92 }],
                 /* Set to warn for now */
-                "max-statements": ["warn", { "max": 12 }],
+                "max-statements": ["warn", { "max": 13 }],
                 /* TS eliminates alot of the issues, however there should be an upper limit */
                 "max-params": ["error", { "max": 6 }],
                 /* Prettier rules override this */
@@ -242,10 +252,7 @@
                     "error",
                     { "extensions": [".tsx", ".ts"] }
                 ],
-                "no-multiple-empty-lines": [
-                    "error",
-                    { "max": 3, "maxEOF": 0, "maxBOF": 0 }
-                ]
+                "no-multiple-empty-lines": ["error", { "max": 3, "maxEOF": 0, "maxBOF": 0 }]
             }
         },
 

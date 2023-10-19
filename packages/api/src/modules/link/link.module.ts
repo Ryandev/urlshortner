@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import LinkController from './link.controller';
-import { Link, LinkSchema } from './link.schema';
-import LinkService from './link.service';
+import { Link } from './link.schema';
+import { LinkService } from './link.service';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: Link.name, schema: LinkSchema }])],
+    imports: [TypeOrmModule.forFeature([Link])],
     controllers: [LinkController],
     providers: [LinkService],
     exports: [LinkService],

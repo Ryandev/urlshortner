@@ -28,8 +28,8 @@
             "@url/api/*": ["packages/api/src/*"],
             "@url/frontend": ["packages/frontend/src/index.ts"],
             "@url/frontend/*": ["packages/frontend/src/*"],
-            "@urlshortner/shared": ["packages/shared/src/index.ts"],
-            "@urlshortner/shared/server": ["packages/shared/src/server.ts"]
+            "@url/shared": ["packages/shared/src/index.ts"],
+            "@url/shared/*": ["packages/shared/src/*"]
         }
     },
     "exclude": ["node_modules", "tmp"]

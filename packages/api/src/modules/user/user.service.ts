@@ -1,41 +1,93 @@
-import { Injectable } from '@nestjs/common';
-import type { IUser } from './interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ObjectId } from 'mongodb';
+import { MongoRepository } from 'typeorm';
+import type { UserOnlyFields } from './user.schema';
+import { User } from './user.schema';
 
 @Injectable()
 export class UserService {
-    private users: IUser[] = [
-        {
-            id: 1,
-            email: 'john.asdf@website.com',
-            password: 'changeMe',
-        },
-        {
-            id: 2,
-            email: 'maria.asdf@website.com',
-            password: 'guess',
-        },
-    ];
+    readonly objectStore: Readonly<MongoRepository<User>>;
 
-    async all(): Promise<IUser[]> {
-        return Promise.resolve(this.users);
+    public constructor(@InjectRepository(User) objectStore: MongoRepository<User>) {
+        this.objectStore = Object.freeze(objectStore);
     }
 
-    async get(id: number): Promise<IUser | undefined> {
-        return Promise.resolve(this.users.find(user => user.id === id));
+    async create(model: Omit<Required<UserOnlyFields>, 'links'>): Promise<User> {
+        const newObject = new User({
+            links: [],
+            ...model,
+        });
+
+        const savedObject = await this.objectStore.save(newObject);
+        return savedObject;
     }
 
-    async find(email: string): Promise<IUser | undefined> {
-        return Promise.resolve(this.users.find(user => user.email === email));
+    async all(): Promise<User[]> {
+        return this.objectStore.find();
     }
 
-    async delete(id: number): Promise<void> {
-        this.users = this.users.filter(user => user.id !== id);
-        return Promise.resolve();
+    async get(id: string): Promise<User> {
+        if (!ObjectId.isValid(id)) {
+            throw new NotFoundException();
+        }
+
+        const item = await this.objectStore.findOne({
+            where: { _id: new ObjectId(id) },
+        });
+
+        if (item === null) {
+            throw new NotFoundException();
+        }
+
+        return item;
     }
 
-    async create(email: string, password: string): Promise<IUser> {
-        const record: IUser = { id: this.users.length + 1, email, password };
-        this.users = [...this.users, record];
-        return Promise.resolve(record);
+    async update(id: string, partial: Partial<UserOnlyFields>): Promise<User> {
+        if (!ObjectId.isValid(id)) {
+            throw new NotFoundException();
+        }
+
+        const data: Partial<User> = {
+            ...partial,
+            updatedAt: new Date(),
+        };
+
+        return this.objectStore.findOneAndUpdate(
+            { _id: new ObjectId(id) },
+            { $set: data },
+            { returnDocument: 'after' },
+        ) as Promise<User>;
+    }
+
+    async delete(id: string): Promise<User> {
+        if (!ObjectId.isValid(id)) {
+            throw new NotFoundException();
+        }
+
+        const item = (await this.objectStore.findOneAndDelete({
+            _id: new ObjectId(id),
+        })) as User | null;
+
+        if (item === null) {
+            throw new NotFoundException();
+        }
+
+        return item;
+    }
+
+    async find(item: Partial<UserOnlyFields>): Promise<User[]> {
+        if (Object.keys(item).length <= 0) {
+            throw new NotFoundException();
+        }
+
+        return this.objectStore.find({
+            ...item,
+        });
+    }
+
+    async exists(item: Partial<UserOnlyFields>): Promise<boolean> {
+        const match = (await this.find(item).catch(_ => [])).at(0);
+        return typeof match !== 'undefined';
     }
 }

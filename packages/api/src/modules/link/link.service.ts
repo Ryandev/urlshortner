@@ -1,42 +1,86 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import type { CreateILinkDto } from './dto/create.dto';
-import type { UpdateILinkDto } from './dto/update.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ObjectId } from 'mongodb';
+import { MongoRepository } from 'typeorm';
+import type { LinkOnlyFields } from './link.schema';
 import { Link } from './link.schema';
 
 @Injectable()
-export default class LinkService {
-    readonly linkModel: Readonly<Model<Link>>;
+export class LinkService {
+    readonly objectStore: Readonly<MongoRepository<Link>>;
 
-    public constructor(@InjectModel(Link.name) linkModel: Model<Link>) {
-        this.linkModel = Object.freeze(linkModel);
+    public constructor(@InjectRepository(Link) objectStore: MongoRepository<Link>) {
+        this.objectStore = Object.freeze(objectStore);
     }
 
-    async create(model: CreateILinkDto): Promise<Link> {
-        const object = await this.linkModel.create({
+    async create(model: Required<LinkOnlyFields>): Promise<Link> {
+        const newObject = new Link({
             ...model,
-            creationDate: new Date(),
-            modifiedDate: new Date(),
         });
-        await object.save();
-        return object;
+        const savedObject = await this.objectStore.save(newObject);
+        return savedObject;
     }
 
     async all(): Promise<Link[]> {
-        return this.linkModel.find().exec();
+        return this.objectStore.find();
     }
 
-    async get(id: string): Promise<Link | null> {
-        return this.linkModel.findOne({ _id: id }).exec();
+    async get(id: string): Promise<Link> {
+        if (!ObjectId.isValid(id)) {
+            throw new NotFoundException();
+        }
+
+        const item = await this.objectStore.findOne({
+            where: { _id: new ObjectId(id) },
+        });
+
+        if (item === null) {
+            throw new NotFoundException();
+        }
+
+        return item;
     }
 
-    async update(id: string, partial: UpdateILinkDto): Promise<void> {
-        await this.linkModel.findByIdAndUpdate(id, partial);
+    async update(id: string, partial: Partial<LinkOnlyFields>): Promise<Link> {
+        if (!ObjectId.isValid(id)) {
+            throw new NotFoundException();
+        }
+
+        const data: Partial<Link> = {
+            ...partial,
+            updatedAt: new Date(),
+        };
+
+        return this.objectStore.findOneAndUpdate(
+            { _id: new ObjectId(id) },
+            { $set: data },
+            { returnDocument: 'after' },
+        ) as Promise<Link>;
     }
 
-    async delete(id: string) {
-        const deletedLink = await this.linkModel.findByIdAndRemove({ _id: id }).exec();
-        return deletedLink;
+    async delete(id: string): Promise<Link> {
+        if (!ObjectId.isValid(id)) {
+            throw new NotFoundException();
+        }
+
+        const item = (await this.objectStore.findOneAndDelete({
+            _id: new ObjectId(id),
+        })) as Link | null;
+
+        if (item === null) {
+            throw new NotFoundException();
+        }
+
+        return item;
+    }
+
+    async find(item: Partial<LinkOnlyFields>): Promise<Link[]> {
+        if (Object.keys(item).length <= 0) {
+            throw new NotFoundException();
+        }
+
+        return this.objectStore.find({
+            ...item,
+        });
     }
 }

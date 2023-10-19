@@ -1,2 +1,10 @@
 # improved-yarn-audit ignore file
 GHSA-c2qf-rxjj-qqgw
+
+
+# To be resolved as part of #37
+GHSA-m95q-7qp3-xv42
+GHSA-7fh5-64p2-3v2j
+GHSA-j5g3-5c8r-7qfx
+GHSA-9pv7-vfvm-6vr7
+GHSA-67hx-6x53-jw92

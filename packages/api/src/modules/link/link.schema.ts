@@ -1,46 +1,33 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import type { HydratedDocument } from 'mongoose';
-import { Schema as MongooseSchema, now } from 'mongoose';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '../../database/model/base.entity';
 
-/* eslint-disable-next-line @typescript-eslint/no-type-alias */
-export type LinkDocument = HydratedDocument<Link>;
-
-@Schema({ timestamps: true })
+@Entity({ name: 'link' })
 @ObjectType()
-export class Link {
-    @Field(() => String)
-    _id: MongooseSchema.Types.ObjectId;
-
-    @Prop()
+export class Link extends BaseEntity {
+    @Column()
     @Field(() => String, { description: 'Name' })
     name: string;
 
-    @Prop()
+    @Column()
     @Field(() => String, { description: 'URL' })
     url: string;
 
-    @Prop({ default: now() })
-    @Field(() => Date, { description: 'Created At' })
-    createdAt: Date;
-
-    @Prop({ default: now() })
-    @Field(() => Date, { description: 'Updated At' })
-    updatedAt: Date;
-
     constructor(
-        id: MongooseSchema.Types.ObjectId,
-        name: string,
-        url: string,
-        createdAt: Date,
-        updatedAt: Date,
+        {
+            name,
+            url,
+        }: {
+            name: string;
+            url: string;
+        } = { name: '', url: '' },
     ) {
-        this._id = id;
+        super();
         this.name = name;
         this.url = url;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }
 
-export const LinkSchema = SchemaFactory.createForClass(Link);
+export const Keys: (keyof Link)[] = ['name', 'url'];
+
+export type LinkOnlyFields = Required<Omit<Link, 'createdAt' | 'id' | 'updatedAt'>>;

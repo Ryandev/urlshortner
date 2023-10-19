@@ -109,11 +109,7 @@ function TeamOverview() {
                             }}
                             overlap="circular"
                             badgeContent={
-                                <Tooltip
-                                    arrow
-                                    placement="top"
-                                    title={'Online since today'}
-                                >
+                                <Tooltip arrow placement="top" title={'Online since today'}>
                                     <DotLegend
                                         style={{
                                             background: `${theme.colors.success.main}`,

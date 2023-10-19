@@ -1,24 +1,13 @@
 import bootstrap from './start';
 
 describe('Start', () => {
-    // let app: INestApplication | null = null;
-
-    // beforeAll(async () => {
-    //     const moduleRef = await Test.createTestingModule({
-    //         imports: [AppModule],
-    //     }).compile();
-
-    //     app = moduleRef.createNestApplication();
-    //     await app.init();
-    // });
-
-    // afterAll(async () => {
-    //     await app?.close();
-    // });
-
     it('should start the application', async () => {
         const spy = jest.spyOn(console, 'error');
-        await bootstrap();
+        const app = await bootstrap();
+        /* wait 5s */
+        await new Promise(timer => setTimeout(timer, 5000));
         expect(spy).not.toHaveBeenCalled();
+
+        await app.close();
     });
 });

@@ -1,12 +1,24 @@
 #Project words
 shortner
 
+#NestJS
+Middleware
+Middlewares
+
+#Eslint
+darraghor
+
+#TypeORM
+timestamptz
+appname
+
 #Companies
 airbnb
 
 #Third Party Libraries
 Mongo
 mongodb
+TypeORM
 nrwl
 nx
 NestJS
@@ -16,7 +28,7 @@ nprogress
 clsx
 lcov
 bcov
-
+TS-DeepMerge
 
 #Fonts
 Segoe

@@ -1,12 +1,14 @@
 import { Logger } from '@nestjs/common';
-import env from './environment';
+import configuration from './configuration';
 import start from './start';
 
 start()
     .then(() => {
-        Logger.log(`Serving: http://localhost:${env.networkPort}/${env.urlPrefix}`);
+        const settings = configuration.load();
+        Logger.log(`Serving localhost:${settings.networkPort}/${settings.urlPrefix}`);
     })
     .catch(error => {
-        Logger.error(`Failed to boot, error: ${JSON.stringify(error)}`);
+        Logger.error(`Failed to run, error occurred: ${JSON.stringify(error)}`);
         process.exitCode = -1;
+        throw error;
     });

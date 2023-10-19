@@ -268,10 +268,7 @@ function SecurityTab() {
                                         <TableCell>{log.ipaddress}</TableCell>
                                         <TableCell>{log.location}</TableCell>
                                         <TableCell>
-                                            {format(
-                                                log.date,
-                                                'dd MMMM, yyyy - h:mm:ss a',
-                                            )}
+                                            {format(log.date, 'dd MMMM, yyyy - h:mm:ss a')}
                                         </TableCell>
                                         <TableCell align="right">
                                             <Tooltip placement="top" title="Delete" arrow>
@@ -279,8 +276,7 @@ function SecurityTab() {
                                                     sx={{
                                                         '&:hover': {
                                                             background:
-                                                                theme.colors.error
-                                                                    .lighter,
+                                                                theme.colors.error.lighter,
                                                         },
                                                         color: theme.palette.error.main,
                                                     }}

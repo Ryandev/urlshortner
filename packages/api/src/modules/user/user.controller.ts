@@ -3,21 +3,25 @@
  */
 
 import {
+    BadRequestException,
+    Body,
     Controller,
     Delete,
     Get,
-    NotFoundException,
+    HttpCode,
     Param,
-    ParseIntPipe,
+    Post,
     Request,
 } from '@nestjs/common';
-import { IUser } from './interface';
+import { SetPublic } from '../../decorator/public';
+import type { UserOnlyFields } from './user.schema';
+import { User } from './user.schema';
 import { UserService } from './user.service';
 
-function userFromRequest(request: Request): IUser {
+function userFromRequest(request: Request): User {
     const record = request as unknown as Record<string, unknown>;
     const { user } = record;
-    return user as IUser;
+    return user as User;
 }
 
 @Controller({
@@ -25,34 +29,50 @@ function userFromRequest(request: Request): IUser {
     version: '1',
 })
 export class UserController {
-    readonly userService: Readonly<UserService>;
+    readonly service: Readonly<UserService>;
 
-    public constructor(userService: UserService) {
-        this.userService = Object.freeze(userService);
+    public constructor(service: UserService) {
+        this.service = Object.freeze(service);
     }
 
     @Get('/')
-    async all(): Promise<IUser[]> {
-        return this.userService.all();
+    async all(): Promise<User[]> {
+        return this.service.all();
+    }
+
+    @Get(':id')
+    async get(@Param('id') id: string): Promise<User> {
+        return this.service.get(id);
     }
 
     /* eslint-disable-next-line class-methods-use-this */
     @Get('/profile')
-    profile(@Request() request: Request): IUser {
+    profile(@Request() request: Request): User {
         return userFromRequest(request);
     }
 
-    @Get(':id')
-    async get(@Param('id', ParseIntPipe) id: number): Promise<IUser> {
-        const result = await this.userService.get(id);
-        if (typeof result === 'undefined') {
-            throw new NotFoundException();
+    @SetPublic()
+    @Post('/')
+    async create(@Body() model: Required<UserOnlyFields>) {
+        const isAlreadyRegistered = await this.service.exists(model);
+
+        if (isAlreadyRegistered) {
+            throw new BadRequestException(`Account already exists for ${model.email}`);
         }
-        return result;
+
+        const user = await this.service.create(model);
+
+        return user;
+    }
+
+    @HttpCode(200)
+    @Post('/search')
+    async search(@Body() model: Partial<UserOnlyFields>) {
+        return this.service.find(model);
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number) {
-        return this.userService.delete(id);
+    async delete(@Param('id') id: string) {
+        return this.service.delete(id);
     }
 }

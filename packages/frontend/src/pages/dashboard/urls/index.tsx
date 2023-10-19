@@ -86,7 +86,7 @@ function DashboardUrls() {
             <Modal isOpen={true}>
                 <UrlForm
                     onSubmit={(url, name, expiry) => {
-                        // eslint-disable-next-line no-console
+                        /* eslint-disable-next-line no-console */
                         console.log(
                             `Submitted request to ${String(url)},${name},${String(
                                 expiry ?? '',

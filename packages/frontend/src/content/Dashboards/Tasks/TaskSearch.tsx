@@ -226,10 +226,7 @@ function TaskSearch() {
                                 })}
                             </Typography>
                             <AvatarGroup>
-                                <Tooltip
-                                    arrow
-                                    title={'$"View profile for\')} Remy Sharp'}
-                                >
+                                <Tooltip arrow title={'$"View profile for\')} Remy Sharp'}>
                                     <Avatar
                                         sx={{
                                             width: 30,
@@ -304,8 +301,8 @@ function TaskSearch() {
                             color="text.secondary"
                         >
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque
-                            ipsa quae ab illo.
+                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                            quae ab illo.
                         </Typography>
                         <Button size="small" variant="contained">
                             View task
@@ -424,8 +421,8 @@ function TaskSearch() {
                             color="text.secondary"
                         >
                             Nemo enim ipsam voluptatem quia accusantium doloremque
-                            laudantium voluptas sit aspernatur aut odit aut fugit, sed
-                            quia consequuntur magni dolores eos qui ratione.
+                            laudantium voluptas sit aspernatur aut odit aut fugit, sed quia
+                            consequuntur magni dolores eos qui ratione.
                         </Typography>
                         <Button size="small" variant="contained">
                             View task

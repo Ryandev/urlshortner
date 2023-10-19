@@ -5,7 +5,7 @@ describe('frontend-index', () => {
         cy.get('h2').should('have.length', 1);
         cy.get('h2 > span').should('have.length', 2);
 
-        // eslint-disable-next-line jest/valid-expect-in-promise
+        /* eslint-disable-next-line jest/valid-expect-in-promise */
         cy.get('h2')
             .invoke('text')
             .then(text => {

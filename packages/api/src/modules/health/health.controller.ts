@@ -1,14 +1,19 @@
 import { Controller, Get } from '@nestjs/common';
+import type { HealthIndicatorFunction } from '@nestjs/terminus';
 import {
     DiskHealthIndicator,
     HealthCheck,
     HealthCheckService,
     HttpHealthIndicator,
     MemoryHealthIndicator,
-    MongooseHealthIndicator,
 } from '@nestjs/terminus';
+import { InjectRepository } from '@nestjs/typeorm';
+import type { IConfiguration } from '@url/api/configuration/interface';
+import { MongoRepository } from 'typeorm';
+import configuration from '../../configuration';
 import { SetPublic } from '../../decorator/public';
-import environment from '../../environment';
+import { User } from '../user/user.schema';
+import { OrmHealthIndicator } from './checks/check.orm.user';
 
 @Controller({
     path: '/health',
@@ -23,53 +28,78 @@ export class HealthController {
 
     readonly memoryIndicator: Readonly<MemoryHealthIndicator>;
 
-    readonly mongoHealth: Readonly<MongooseHealthIndicator>;
+    readonly databaseIndicator: Readonly<OrmHealthIndicator>;
+
+    readonly objectStore: Readonly<MongoRepository<User>>;
 
     public constructor(
+        @InjectRepository(User) objectStore: MongoRepository<User>,
         healthService: HealthCheckService,
         httpIndicator: HttpHealthIndicator,
         diskIndicator: DiskHealthIndicator,
         memoryIndicator: MemoryHealthIndicator,
-        mongoHealth: MongooseHealthIndicator,
+        databaseIndicator: OrmHealthIndicator,
     ) {
+        this.objectStore = Object.freeze(objectStore);
         this.healthService = Object.freeze(healthService);
         this.httpIndicator = Object.freeze(httpIndicator);
         this.diskIndicator = Object.freeze(diskIndicator);
         this.memoryIndicator = Object.freeze(memoryIndicator);
-        this.mongoHealth = Object.freeze(mongoHealth);
+        this.databaseIndicator = Object.freeze(databaseIndicator);
     }
 
     @Get()
     @SetPublic()
     @HealthCheck()
     async check() {
-        return this.healthService.check([
-            async () =>
-                this.httpIndicator.pingCheck(
-                    'internet-access',
-                    environment.healthCheck.urlCheck,
-                ),
-            async () =>
+        const checks = this.checksList(configuration.load().healthCheck);
+        return this.healthService.check(checks);
+    }
+
+    /* eslint-disable-next-line max-statements */
+    private checksList(settings: IConfiguration['healthCheck']) {
+        const checks: HealthIndicatorFunction[] = [];
+
+        if (settings.urlCheck.length > 0) {
+            checks.push(async () =>
+                this.httpIndicator.pingCheck('internet-access', settings.urlCheck),
+            );
+        }
+
+        if (settings.diskSpaceUsed > 0) {
+            checks.push(async () =>
                 this.diskIndicator.checkStorage('storage-used', {
                     path: process.cwd(),
-                    threshold: environment.healthCheck.diskSpaceUsed,
+                    threshold: settings.diskSpaceUsed,
                 }),
-            async () =>
+            );
+        }
+
+        if (settings.diskSpacePercent > 0) {
+            checks.push(async () =>
                 this.diskIndicator.checkStorage('storage-percent', {
                     path: process.cwd(),
-                    thresholdPercent: environment.healthCheck.diskSpacePercent,
+                    thresholdPercent: settings.diskSpacePercent,
                 }),
-            async () =>
-                this.memoryIndicator.checkHeap(
-                    'memory-heap',
-                    environment.healthCheck.memoryHeapMaximum,
-                ),
-            async () =>
-                this.memoryIndicator.checkRSS(
-                    'memory-rss',
-                    environment.healthCheck.memoryRSSMaximum,
-                ),
-            async () => this.mongoHealth.pingCheck('db'),
-        ]);
+            );
+        }
+
+        if (settings.memoryHeapMaximum > 0) {
+            checks.push(async () =>
+                this.memoryIndicator.checkHeap('memory-heap', settings.memoryHeapMaximum),
+            );
+        }
+
+        if (settings.memoryRSSMaximum > 0) {
+            checks.push(async () =>
+                this.memoryIndicator.checkRSS('memory-rss', settings.memoryRSSMaximum),
+            );
+        }
+
+        checks.push(async () =>
+            this.databaseIndicator.isHealthy('database', this.objectStore),
+        );
+
+        return checks;
     }
 }

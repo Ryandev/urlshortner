@@ -22,3 +22,6 @@ Analyze frontend js sizes:
 ```yarn add -D 'source-map-explorer' && yarn package && yarn run source-map-explorer dist/packages/frontend/exported/_next/static/chunks/*
 
 ```
+
+MacOS kill node process using port 3000
+`PID=$(sudo lsof -i -P | grep '(LISTEN)' | grep ':3000' | sed 's/^node      //g' | cut -d' ' -f1); kill -9 $PID`

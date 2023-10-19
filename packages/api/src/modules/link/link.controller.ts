@@ -1,55 +1,47 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    NotFoundException,
-    Param,
-    Post,
-    Put,
-} from '@nestjs/common';
-import { CreateILinkDto } from './dto/create.dto';
-import { UpdateILinkDto } from './dto/update.dto';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import type { ILinkData } from './link.interface';
-import LinkService from './link.service';
+import type { LinkOnlyFields } from './link.schema';
+import { LinkService } from './link.service';
 
 @Controller({
     path: '/link',
     version: '1',
 })
 export default class LinkController {
-    readonly linkService: Readonly<LinkService>;
+    readonly service: Readonly<LinkService>;
 
-    public constructor(linkService: LinkService) {
-        this.linkService = Object.freeze(linkService);
-    }
-
-    @Post('/')
-    async create(@Body() model: CreateILinkDto) {
-        return this.linkService.create(model);
-    }
-
-    @Put('/:id')
-    async update(@Param('id') id: string, @Body() model: UpdateILinkDto) {
-        await this.linkService.update(id, model);
+    public constructor(service: LinkService) {
+        this.service = Object.freeze(service);
     }
 
     @Get('/')
     async all(): Promise<ILinkData[]> {
-        return this.linkService.all();
+        return this.service.all();
     }
 
     @Get(':id')
     async get(@Param('id') id: string): Promise<ILinkData> {
-        const result = await this.linkService.get(id);
-        if (result === null) {
-            throw new NotFoundException();
-        }
-        return result;
+        return this.service.get(id);
+    }
+
+    @Post('/')
+    async create(@Body() model: Required<LinkOnlyFields>) {
+        return this.service.create(model);
+    }
+
+    @HttpCode(200)
+    @Post('/search')
+    async search(@Body() model: Partial<LinkOnlyFields>) {
+        return this.service.find(model);
+    }
+
+    @Put('/:id')
+    async update(@Param('id') id: string, @Body() model: Partial<LinkOnlyFields>) {
+        return this.service.update(id, model);
     }
 
     @Delete(':id')
     async delete(@Param('id') id: string) {
-        return this.linkService.delete(id);
+        return this.service.delete(id);
     }
 }
