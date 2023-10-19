@@ -34,7 +34,7 @@ describe('Link', () => {
                 databaseName: 'test',
             },
             healthCheck: {
-                urlCheck: 'http://www.google.com',
+                urlCheck: 'https://www.google.com',
                 memoryHeapMaximum: 16_000_000_000,
                 memoryRSSMaximum: 16_000_000_000,
                 diskSpaceUsed: 0,
