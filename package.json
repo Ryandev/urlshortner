@@ -29,7 +29,7 @@
         "@emotion/react": "^11.10.6",
         "@emotion/server": "^11.10.0",
         "@emotion/styled": "^11.10.6",
-        "@lhci/cli": "^0.11.0",
+        "@lhci/cli": "^0.12.0",
         "@mui/core": "^5.0.0-alpha.54",
         "@mui/icons-material": "^5.11.11",
         "@mui/lab": "^5.0.0-alpha.123",
