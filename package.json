@@ -39,7 +39,7 @@
         "@mui/system": "5.13.5",
         "@mui/x-data-grid": "^6.1.0",
         "@mui/x-date-pickers": "^6.1.0",
-        "@nestjs/common": "^9.3.10",
+        "@nestjs/common": "^11.0.16",
         "@nestjs/core": "^9.3.10",
         "@nestjs/devtools-integration": "^0.1.4",
         "@nestjs/platform-express": "^9.3.10",
